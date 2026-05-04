@@ -1,5 +1,3 @@
-import { AdminNavbar } from "@/components/layouts/admin-navbar";
-
 export default function AdminLayout({
   children,
 }: {
@@ -7,10 +5,7 @@ export default function AdminLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <AdminNavbar />
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
     </div>
   );
 }

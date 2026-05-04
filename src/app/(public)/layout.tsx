@@ -1,4 +1,4 @@
-import { PublicNavbar } from "@/components/layouts/public-navbar";
+import { PublicNavbar } from '@/components/layouts/public/navbar/PublicNavbar';
 
 export default function PublicLayout({
   children,
@@ -7,10 +7,8 @@ export default function PublicLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <PublicNavbar />
-      <main className="flex-1">
-        {children}
-      </main>
+      <PublicNavbar></PublicNavbar>
+      <main className="flex-1">{children}</main>
     </div>
   );
 }

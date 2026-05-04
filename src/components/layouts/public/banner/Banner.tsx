@@ -180,16 +180,10 @@ const Banner = () => {
           {/* RIGHT SIDE - 70% - Images Only */}
           <div className="w-full lg:w-[70%]">
             <Swiper
-              modules={[Navigation, Pagination, Autoplay, EffectFade]}
-              navigation
+              modules={[Pagination, Autoplay, EffectFade]}
               pagination={{ clickable: true }}
-              autoplay={{
-                delay: 4000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-              }}
+              autoplay={{ delay: 4000, disableOnInteraction: false }}
               effect="fade"
-              navigation={false}
               fadeEffect={{ crossFade: true }}
               loop
               className="h-[500px] rounded-xs overflow-hidden shadow-2xl"

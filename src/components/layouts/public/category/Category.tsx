@@ -1,3 +1,4 @@
+import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
@@ -88,8 +89,21 @@ const Category = () => {
   return (
     <div className="w-full py-10 bg-white">
       <div className="container mx-auto px-4 md:px-0">
-        {/* Header */}
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Categories</h2>
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+              Categories
+            </h2>
+          </div>
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-semibold mt-3 sm:mt-0 group"
+          >
+            View more
+            <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+        </div>
 
         {/* Grid */}
         <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 ">

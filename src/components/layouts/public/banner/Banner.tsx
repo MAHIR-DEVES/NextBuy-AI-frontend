@@ -101,7 +101,7 @@ const LeftOfferSlider = () => {
               ${idx === currentIndex ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}
             `}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-2xl">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xs p-4 shadow-2xl">
               <p className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 {offer.discount}
               </p>
@@ -149,7 +149,7 @@ const Banner = () => {
     {
       id: 1,
       image:
-        'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=500&fit=crop',
+        'https://img.lazcdn.com/us/domino/a6b9387b-e053-430e-aacd-01969bb73c80_BD-1976-688.jpg_2200x2200q80.jpg_.avif',
     },
     {
       id: 2,

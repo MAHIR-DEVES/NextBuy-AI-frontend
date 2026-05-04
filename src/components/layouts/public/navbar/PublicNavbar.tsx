@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import AllCategories from './AllCategories';
 import OrderProtectionModal from './OrderProtectionModal';
+import { PromoBanner1 } from '@/components/promo-banner1';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
 
   return (
     <section className={cn('border-b bg-white relative', className)}>
+      <PromoBanner1></PromoBanner1>
       <div className="container mx-auto px-4">
         {/* Top row - Main navbar */}
         <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">

@@ -178,13 +178,17 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             {/* Sign in / Create account */}
             <div className="hidden lg:flex items-center gap-1 text-sm">
-              <Button variant="ghost" size="sm" className="text-gray-700">
-                Sign in
-              </Button>
+              <Link href="/login">
+                <Button variant="ghost" size="sm" className="text-gray-700">
+                  Sign in
+                </Button>
+              </Link>
               <span className="text-gray-300">|</span>
-              <Button variant="ghost" size="sm" className="text-gray-700">
-                Create account
-              </Button>
+              <Link href="/register">
+                <Button variant="ghost" size="sm" className="text-gray-700">
+                  Create account
+                </Button>
+              </Link>
             </div>
             {/* Cart */}
             <Button variant="ghost" size="icon" className="relative">

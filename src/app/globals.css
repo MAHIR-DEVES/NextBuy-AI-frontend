@@ -141,3 +141,22 @@
   width: 20px;
   border-radius: 10px;
 }
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6; /* light gray track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f97316; /* orange */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ea580c; /* darker orange on hover */
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star, ChevronRight, Truck, Shield } from 'lucide-react';
+import Link from 'next/link';
 
 const TopDeal = () => {
   const products = [
@@ -57,7 +58,7 @@ const TopDeal = () => {
 
   return (
     <div className="w-full pb-10 bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-4 md:px-0">
+      <div className="container mx-auto  md:px-0">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
           <div>
@@ -65,17 +66,17 @@ const TopDeal = () => {
               Top Deals
             </h2>
           </div>
-          <a
-            href="#"
+          <Link
+            href="/products"
             className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-semibold mt-3 sm:mt-0 group"
           >
             View more
             <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 ">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 ">
           {products.map(product => (
             <div
               key={product.id}

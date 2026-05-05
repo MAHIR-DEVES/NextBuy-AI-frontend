@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 import AllCategories from './AllCategories';
 import OrderProtectionModal from './OrderProtectionModal';
 import { PromoBanner1 } from '@/components/promo-banner1';
+import Link from 'next/link';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -106,14 +107,14 @@ const PublicNavbar = ({ className }: { className?: string }) => {
             {/* Left: Logo and category dropdown */}
             <div className="flex items-center gap-4">
               {/* Logo */}
-              <a href="#" className="flex items-center gap-2 shrink-0">
+              <Link className="flex items-center gap-2 shrink-0 " href="/">
                 <div className="flex items-center">
                   <span className="text-2xl font-bold text-orange-500">
                     NEXT
                   </span>
                   <span className="text-2xl font-bold text-gray-800">BUY</span>
                 </div>
-              </a>
+              </Link>
             </div>
 
             {/* Center: Search bar */}

@@ -5,16 +5,15 @@ import React, { useEffect, useState } from 'react';
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 
 // Icons
 import { Zap } from 'lucide-react';
 
-/* ---------------- LEFT OFFER SLIDER WITH SMOOTH ANIMATION ---------------- */
+/* ---------------- LEFT OFFER SLIDER ---------------- */
 const offerImages = [
   {
     id: 1,
@@ -56,11 +55,9 @@ const LeftOfferSlider = () => {
   }, []);
 
   return (
-    <div className="relative h-[500px] overflow-hidden group cursor-pointer">
-      {/* Background gradient animation */}
+    <div className="relative h-[250px] sm:h-[350px] lg:h-[500px] overflow-hidden group cursor-pointer">
       <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-black/20 z-10" />
 
-      {/* Image Slides */}
       {offerImages.map((offer, idx) => (
         <div
           key={offer.id}
@@ -79,34 +76,36 @@ const LeftOfferSlider = () => {
             className="w-full h-full object-cover"
           />
 
-          {/* Offer Badge - Animated */}
+          {/* Badge */}
           <div
-            className={`absolute top-6 left-6 z-20 transition-all duration-700 delay-300 transform
+            className={`absolute top-4 sm:top-6 left-4 sm:left-6 z-20 transition-all duration-700
               ${idx === currentIndex ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}
             `}
           >
             <div
-              className={`bg-gradient-to-r ${offer.bgColor} rounded-xs px-4 py-2 shadow-lg`}
+              className={`bg-gradient-to-r ${offer.bgColor} rounded-xs px-3 sm:px-4 py-1 sm:py-2 shadow-lg`}
             >
-              <p className="text-white text-sm font-semibold flex items-center gap-1">
+              <p className="text-white text-xs sm:text-sm font-semibold flex items-center gap-1">
                 <Zap className="h-3 w-3" />
                 {offer.tag}
               </p>
             </div>
           </div>
 
-          {/* Discount Card - Animated */}
+          {/* Discount Card */}
           <div
-            className={`absolute bottom-6 left-6 right-6 z-20 transition-all duration-700 delay-500 transform
+            className={`absolute bottom-4 sm:bottom-6 left-4 right-4 sm:left-6 sm:right-6 z-20 transition-all duration-700
               ${idx === currentIndex ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}
             `}
           >
-            <div className="bg-white/95 backdrop-blur-sm rounded-xs p-4 shadow-2xl">
-              <p className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xs p-3 sm:p-4 shadow-2xl">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 {offer.discount}
               </p>
-              <p className="text-gray-600 text-sm mt-1">Limited time offer</p>
-              <button className="mt-3 bg-orange-500 text-white px-4 py-2 rounded-xs text-sm font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105 w-full">
+              <p className="text-gray-600 text-xs sm:text-sm mt-1">
+                Limited time offer
+              </p>
+              <button className="mt-2 sm:mt-3 bg-orange-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xs font-semibold hover:bg-orange-600 transition-all w-full">
                 Grab Deal
               </button>
             </div>
@@ -114,36 +113,21 @@ const LeftOfferSlider = () => {
         </div>
       ))}
 
-      {/* Progress Bar - Animated */}
+      {/* Progress */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30 z-20">
         <div
-          className="h-full bg-orange-500 rounded-full transition-all duration-3000 ease-linear"
+          className="h-full bg-orange-500"
           style={{
             width: `${((currentIndex + 1) / offerImages.length) * 100}%`,
             transition: 'width 3s linear',
           }}
         />
       </div>
-
-      {/* Dot Indicators */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
-        {offerImages.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`transition-all duration-300 rounded-full ${
-              idx === currentIndex
-                ? 'w-8 h-2 bg-orange-500'
-                : 'w-2 h-2 bg-white/50 hover:bg-white/80'
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 };
 
-/* ---------------- MAIN BANNER - IMAGES ONLY ---------------- */
+/* ---------------- MAIN BANNER ---------------- */
 const Banner = () => {
   const slides = [
     {
@@ -172,37 +156,31 @@ const Banner = () => {
     <div className="w-full bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto ">
         <div className="flex flex-col lg:flex-row ">
-          {/* LEFT SIDE - 30% */}
+          {/* LEFT */}
           <div className="w-full lg:w-[30%]">
             <LeftOfferSlider />
           </div>
 
-          {/* RIGHT SIDE - 70% - Images Only */}
-          <div className="w-full lg:w-[70%]">
+          {/* RIGHT */}
+          <div className="w-full lg:w-[70%] hidden lg:block">
             <Swiper
               modules={[Pagination, Autoplay, EffectFade]}
               pagination={{ clickable: true }}
-              autoplay={{ delay: 4000, disableOnInteraction: false }}
+              autoplay={{ delay: 4000 }}
               effect="fade"
-              fadeEffect={{ crossFade: true }}
               loop
-              className="h-[500px] rounded-xs overflow-hidden shadow-2xl"
+              className="h-[250px] sm:h-[350px] lg:h-[500px] rounded-xs overflow-hidden shadow-2xl"
             >
               {slides.map(slide => (
                 <SwiperSlide key={slide.id}>
-                  <div className="relative w-full h-full group">
-                    <img
-                      src={slide.image}
-                      className="w-full h-full object-cover transition-transform duration-10000 group-hover:scale-110"
-                      alt={`Banner ${slide.id}`}
-                    />
-                    {/* Subtle gradient overlay for better image visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  </div>
+                  <img
+                    src={slide.image}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                    alt="banner"
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className="custom-pagination flex justify-center gap-2 mt-3" />
           </div>
         </div>
       </div>

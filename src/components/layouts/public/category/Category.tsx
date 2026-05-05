@@ -1,5 +1,6 @@
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const Category = () => {
@@ -88,7 +89,7 @@ const Category = () => {
 
   return (
     <div className="w-full py-10 bg-white">
-      <div className="container mx-auto px-4 md:px-0">
+      <div className="container mx-auto  md:px-0">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
           <div>
@@ -96,39 +97,64 @@ const Category = () => {
               Categories
             </h2>
           </div>
-          <a
-            href="#"
+          <Link
             className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-semibold mt-3 sm:mt-0 group"
+            href="/products"
           >
             View more
             <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </a>
+          </Link>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 ">
-          {categories.map((cat, idx) => (
-            <div
-              key={idx}
-              className="text-center cursor-pointer group border  border-gray-200 py-5"
-            >
-              {/* Image */}
-              <div className="w-16 h-16 mx-auto overflow-hidden  group-hover:scale-105 transition ">
-                <Image
-                  src={cat.image}
-                  alt={cat.name}
-                  width={64}
-                  height={64}
-                  className="w-16 h-16 object-cover rounded-full"
-                />
-              </div>
+        <div className="overflow-x-auto md:overflow-visible scrollbar-thin scrollbar-thumb-orange-400 scrollbar-track-gray-100">
+          {/* Mobile (scroll + 2 rows) */}
+          <div className="grid grid-rows-2 grid-flow-col auto-cols-[25%] md:hidden">
+            {categories.map((cat, idx) => (
+              <div
+                key={idx}
+                className="text-center cursor-pointer group border border-gray-200 py-5"
+              >
+                <div className="w-16 h-16 mx-auto overflow-hidden group-hover:scale-105 transition">
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 object-cover rounded-full"
+                  />
+                </div>
 
-              {/* Title */}
-              <p className="text-xs mt-2 text-gray-600 group-hover:text-orange-500 transition">
-                {cat.name}
-              </p>
-            </div>
-          ))}
+                <p className="text-xs mt-2 text-gray-600 group-hover:text-orange-500 transition">
+                  {cat.name}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop (2 rows grid) */}
+          <div className="hidden md:grid grid-cols-8 gap-0">
+            {categories.map((cat, idx) => (
+              <div
+                key={idx}
+                className="text-center cursor-pointer group border border-gray-200 py-5"
+              >
+                <div className="w-16 h-16 mx-auto overflow-hidden group-hover:scale-105 transition">
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 object-cover rounded-full"
+                  />
+                </div>
+
+                <p className="text-xs mt-2 text-gray-600 group-hover:text-orange-500 transition">
+                  {cat.name}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

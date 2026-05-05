@@ -68,8 +68,8 @@ const ProductCard1 = ({
             </Badge>
           )}
         </CardHeader>
-        <CardContent className="flex h-full flex-col gap-4 pb-6">
-          <CardTitle className="text-xl font-semibold">
+        <CardContent className="flex h-full flex-col md:gap-4 pb-6">
+          <CardTitle className="md:text-xl font-semibold">
             {product.name}
           </CardTitle>
           <CardDescription className="font-medium text-muted-foreground">

@@ -109,10 +109,31 @@ const Products = () => {
       rating: 4.5,
       moq: 10,
     },
+    {
+      id: 6,
+      name: 'Fitness Tracker Band',
+      image: {
+        src: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop',
+        alt: 'Fitness Tracker',
+      },
+      link: '#',
+      description: 'Track your steps, sleep and health metrics easily.',
+      price: {
+        regular: 725.23,
+        sale: 580.18,
+        currency: 'USD',
+      },
+      badge: {
+        text: 'Discount',
+        backgroundColor: 'oklch(58% 0.22 30)',
+      },
+      rating: 4.5,
+      moq: 10,
+    },
   ];
   return (
     <div className="w-full pb-10 bg-white">
-      <div className="container mx-auto px-4 md:px-0">
+      <div className="container mx-auto  md:px-0">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
           <div>
@@ -123,7 +144,7 @@ const Products = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
           {products.map(product => (
             <ProductCard1 key={product.id} product={product} />
           ))}

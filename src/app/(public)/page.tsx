@@ -5,7 +5,7 @@ import TopDeal from '@/components/layouts/public/topdeal/TopDeal';
 
 export default function Home() {
   return (
-    <div className="container mx-auto  px-4">
+    <div className="container mx-auto  px-2">
       <Banner></Banner>
       <Category></Category>
       <TopDeal></TopDeal>

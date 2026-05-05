@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface ProductPrice {
   regular: number;
@@ -17,6 +17,7 @@ interface ProductPrice {
 }
 
 interface Product {
+  id: number;
   name: string;
   image: {
     src: string;
@@ -33,7 +34,6 @@ interface Product {
 
 const ProductCard1 = ({
   product,
-  className,
 }: {
   product: Product;
   className?: string;
@@ -41,13 +41,7 @@ const ProductCard1 = ({
   const { regular, sale, currency } = product.price;
 
   return (
-    <a
-      href={product.link}
-      className={cn(
-        'block max-w-md transition-opacity hover:opacity-80',
-        className,
-      )}
-    >
+    <Link href={`/products/${product.id}`}>
       <Card className="h-full overflow-hidden p-0">
         <CardHeader className="relative block p-0">
           <AspectRatio ratio={1.268115942} className="overflow-hidden">
@@ -87,7 +81,7 @@ const ProductCard1 = ({
           </div>
         </CardContent>
       </Card>
-    </a>
+    </Link>
   );
 };
 

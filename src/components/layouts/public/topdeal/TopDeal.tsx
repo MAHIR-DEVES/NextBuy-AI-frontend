@@ -1,60 +1,32 @@
 import React from 'react';
-import { Star, ChevronRight, Truck, Shield } from 'lucide-react';
+import { Star, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { getProducts } from '@/services/product.service';
+import Image from 'next/image';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
-const TopDeal = () => {
-  const products = [
-    {
-      id: 1,
-      title: 'yawell',
-      rating: 4.84,
-      price: 463.18,
-      originalPrice: 493.15,
-      moq: 200,
-      image:
-        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop',
-    },
-    {
-      id: 2,
-      title: 'Smart Watch',
-      rating: 4.7,
-      price: 116.04,
-      originalPrice: 145.05,
-      moq: 2,
-      image:
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
-    },
-    {
-      id: 3,
-      title: 'Wireless Earbuds',
-      rating: 4.9,
-      price: 88.0,
-      originalPrice: 110.0,
-      moq: 1,
-      image:
-        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop',
-    },
-    {
-      id: 4,
-      title: 'Smart Speaker',
-      rating: 4.6,
-      price: 1017.25,
-      originalPrice: 1271.56,
-      moq: 5,
-      image:
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
-    },
-    {
-      id: 5,
-      title: 'Fitness Tracker',
-      rating: 4.5,
-      price: 580.18,
-      originalPrice: 725.23,
-      moq: 10,
-      image:
-        'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop',
-    },
-  ];
+export interface IProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  discount?: number;
+  images: string[];
+  thumbnail: string;
+  brand: string;
+  category: string;
+  rating: number;
+  reviewCount: number;
+  stock: number;
+  slug: string;
+}
+
+const TopDeal = async () => {
+  const data = await getProducts({
+    isFeatured: true,
+    limit: 10,
+  });
+  const isProducts: IProduct[] = data?.data?.data || [];
 
   return (
     <div className="w-full pb-10 bg-gradient-to-b from-white to-gray-50">
@@ -77,27 +49,24 @@ const TopDeal = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 ">
-          {products.map(product => (
+          {isProducts.map(product => (
             <Link key={product.id} href={`/products/${product.id}`}>
               {' '}
               <div className="group bg-white rounded-xs shadow-md  overflow-hidden cursor-pointer border border-gray-100 hover:border-orange-200">
                 {/* Product Image */}
                 <div className="relative h-56 overflow-hidden bg-gray-100">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                  <AspectRatio ratio={1.268115942} className="overflow-hidden">
+                    <Image
+                      src={product.thumbnail}
+                      alt={product.name}
+                      fill
+                      className="block size-full object-cover object-center"
+                    />
+                  </AspectRatio>
                   {/* Discount Badge */}
-                  {product.originalPrice && (
+                  {product.discount && (
                     <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      -
-                      {Math.round(
-                        ((product.originalPrice - product.price) /
-                          product.originalPrice) *
-                          100,
-                      )}
-                      %
+                      -{product.discount}%
                     </div>
                   )}
                 </div>
@@ -106,7 +75,7 @@ const TopDeal = () => {
                 <div className="p-4">
                   {/* Title */}
                   <h3 className="font-semibold text-gray-800 text-lg mb-2 line-clamp-1">
-                    {product.title}
+                    {product.name}
                   </h3>
 
                   {/* Rating */}
@@ -126,9 +95,9 @@ const TopDeal = () => {
                       <span className="text-2xl font-bold text-orange-500">
                         ${product.price.toFixed(2)}
                       </span>
-                      {product.originalPrice && (
+                      {product.price && (
                         <span className="text-sm text-gray-400 line-through">
-                          ${product.originalPrice.toFixed(2)}
+                          ${product?.discount.toFixed(2)}
                         </span>
                       )}
                     </div>

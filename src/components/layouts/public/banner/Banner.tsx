@@ -12,26 +12,27 @@ import { Pagination, Autoplay, EffectFade } from 'swiper/modules';
 
 // Icons
 import { Zap } from 'lucide-react';
+import Image from 'next/image';
 
 /* ---------------- LEFT OFFER SLIDER ---------------- */
 const offerImages = [
   {
     id: 1,
-    url: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&h=500&fit=crop',
+    url: '/images/offer1.png',
     discount: '70% OFF',
     tag: 'Flash Sale',
     bgColor: 'from-red-600 to-orange-600',
   },
   {
     id: 2,
-    url: 'https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=600&h=500&fit=crop',
+    url: '/images/offer2.png',
     discount: '50% OFF',
     tag: 'Limited Time',
     bgColor: 'from-purple-600 to-pink-600',
   },
   {
     id: 3,
-    url: 'https://images.unsplash.com/photo-1607083206325-caf1edba7a0f?w=600&h=500&fit=crop',
+    url: '/images/offer3.png',
     discount: '40% OFF',
     tag: 'Special Deal',
     bgColor: 'from-blue-600 to-cyan-600',
@@ -70,11 +71,14 @@ const LeftOfferSlider = () => {
                   : 'opacity-0 scale-90 -translate-x-10 z-0'
             }`}
         >
-          <img
-            src={offer.url}
-            alt={`Offer ${idx + 1}`}
-            className="w-full h-full object-cover"
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={offer.url}
+              alt={`Offer ${idx + 1}`}
+              fill
+              className="object-cover"
+            />
+          </div>
 
           {/* Badge */}
           <div
@@ -132,23 +136,20 @@ const Banner = () => {
   const slides = [
     {
       id: 1,
-      image:
-        'https://img.lazcdn.com/us/domino/a6b9387b-e053-430e-aacd-01969bb73c80_BD-1976-688.jpg_2200x2200q80.jpg_.avif',
+
+      image: '/images/banner1.png',
     },
     {
       id: 2,
-      image:
-        'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=1200&h=500&fit=crop',
+      image: '/images/banner2.png',
     },
     {
       id: 3,
-      image:
-        'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&h=500&fit=crop',
+      image: '/images/banner3.png',
     },
     {
       id: 4,
-      image:
-        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&h=500&fit=crop',
+      image: '/images/banner4.png',
     },
   ];
 
@@ -173,11 +174,14 @@ const Banner = () => {
             >
               {slides.map(slide => (
                 <SwiperSlide key={slide.id}>
-                  <img
-                    src={slide.image}
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                    alt="banner"
-                  />
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={slide.image}
+                      alt="banner"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>

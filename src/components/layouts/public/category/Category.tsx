@@ -6,84 +6,68 @@ import React from 'react';
 const Category = () => {
   const categories = [
     {
-      name: 'Other Projector Accessories',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes ',
+      image: '/images/category1.png',
     },
     {
-      name: 'Kitchen Fittings',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category2.png',
     },
     {
-      name: 'Womens Fashion',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category3.png',
     },
     {
-      name: 'Watches & Accessories',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes ',
+      image: '/images/category4.png',
     },
     {
-      name: 'Kitchen Items',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category5.png',
     },
     {
-      name: 'Fashion',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category3.png',
     },
     {
-      name: 'Accessories',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category2.png',
     },
     {
-      name: 'More',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category1.png',
     },
     {
-      name: 'Other Projector Accessories',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category4.png',
     },
     {
-      name: 'Kitchen Fittings',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category3.png',
     },
     {
-      name: 'Womens Fashion',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category2.png',
     },
     {
-      name: 'Watches & Accessories',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category1.png',
     },
     {
-      name: 'Kitchen Items',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category4.png',
     },
     {
-      name: 'Fashion',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category3.png',
     },
     {
-      name: 'Accessories',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category2.png',
     },
     {
-      name: 'More',
-      image:
-        '/images/Sca9b307a0df741e8b032edc53ae94b00o.jpg_170x170q80.jpg_.avif',
+      name: 'Shoes',
+      image: '/images/category1.png',
     },
   ];
 
@@ -121,7 +105,7 @@ const Category = () => {
                     alt={cat.name}
                     width={64}
                     height={64}
-                    className="w-16 h-16 object-cover rounded-full"
+                    className="w-16 h-16 object-cover "
                   />
                 </div>
 
@@ -143,15 +127,11 @@ const Category = () => {
                   <Image
                     src={cat.image}
                     alt={cat.name}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 object-cover rounded-full"
+                    width={200}
+                    height={200}
+                    className="w-16 h-16 object-cover "
                   />
                 </div>
-
-                <p className="text-xs mt-2 text-gray-600 group-hover:text-orange-500 transition">
-                  {cat.name}
-                </p>
               </div>
             ))}
           </div>

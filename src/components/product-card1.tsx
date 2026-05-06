@@ -30,7 +30,7 @@ interface Product {
   badge?: {
     text: string;
     backgroundColor?: string;
-  }; // ✅ optional
+  };
 }
 
 const ProductCard1 = ({
@@ -67,11 +67,11 @@ const ProductCard1 = ({
         </CardHeader>
 
         <CardContent className="flex h-full flex-col md:gap-4 pb-6">
-          <CardTitle className="md:text-xl font-semibold">
+          <CardTitle className="md:text-xl font-semibold line-clamp-1">
             {product.name}
           </CardTitle>
 
-          <CardDescription className="font-medium text-muted-foreground">
+          <CardDescription className="font-medium text-muted-foreground line-clamp-2">
             {product.description}
           </CardDescription>
 

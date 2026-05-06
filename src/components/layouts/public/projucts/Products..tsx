@@ -22,13 +22,13 @@ const Products = async () => {
   const data = await getProducts();
   const products: IProduct[] = data?.data?.data || [];
 
-  // 🔥 mapping layer (MAIN FIX)
+  //  mapping layer
   const formattedProducts = products.map(p => ({
     id: p.id,
     name: p.name,
     description: p.description,
 
-    link: `/products/${p.slug}`, // ✅ fix
+    link: `/products/${p.slug}`,
 
     image: {
       src: p.thumbnail,

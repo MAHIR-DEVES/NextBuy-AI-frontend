@@ -42,3 +42,18 @@ export const getProducts = async (params?: ProductQuery) => {
 
   return res.json();
 };
+
+export const getSingleProduct = async (id: string) => {
+  const res = await fetch(`http://localhost:5000/api/v1/products/${id}`, {
+    method: 'GET',
+    cache: 'no-store',
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.message || 'Failed to fetch product');
+  }
+
+  return result;
+};

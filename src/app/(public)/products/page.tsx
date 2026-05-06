@@ -340,9 +340,9 @@ const ProductListing = () => {
             {/* Products Grid */}
             {products.length > 0 ? (
               <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-2">
-                {products.map(product => (
+                {/* {products.map(product => (
                   <ProductCard1 key={product.id} product={product} />
-                ))}
+                ))} */}
               </div>
             ) : (
               <div className="bg-white rounded-xs shadow-sm p-12 text-center">

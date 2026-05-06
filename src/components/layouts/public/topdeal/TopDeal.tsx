@@ -95,11 +95,11 @@ const TopDeal = async () => {
                       <span className="text-2xl font-bold text-orange-500">
                         ${product.price.toFixed(2)}
                       </span>
-                      {product.price && (
+                      {/* {product.price && (
                         <span className="text-sm text-gray-400 line-through">
                           ${product?.discount.toFixed(2)}
                         </span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

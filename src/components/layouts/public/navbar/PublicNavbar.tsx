@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Search,
   ShoppingCart,
   Menu,
   User,
@@ -20,15 +19,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import AllCategories from './AllCategories';
 import OrderProtectionModal from './OrderProtectionModal';
 import { PromoBanner1 } from '@/components/promo-banner1';
 import Link from 'next/link';
+import SearchBar from './SearchBar';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const [isFullscreenMenuOpen, setIsFullscreenMenuOpen] = useState(false);
   const [isOrderProtectionOpen, setIsOrderProtectionOpen] = useState(false);
@@ -159,20 +157,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           </div>
 
           {/* Center: Search bar */}
-          <div className="flex-1 w-full mx-0 md:mx-4">
-            <div className="relative flex w-full items-stretch">
-              <Input
-                placeholder="Search products, manufacturers, suppliers..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="flex-1 h-11 text-base border-r-0 rounded-r-none focus-visible:ring-1 text-sm sm:text-base"
-              />
-              <Button className="h-11 rounded-l-none px-4 sm:px-6 bg-orange-500 hover:bg-orange-600">
-                <Search className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
-                <span className="hidden sm:inline">Search</span>
-              </Button>
-            </div>
-          </div>
+          <SearchBar></SearchBar>
 
           {/* RIGHT DESKTOP */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">

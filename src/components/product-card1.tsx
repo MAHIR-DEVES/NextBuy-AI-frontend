@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ProductPrice {
@@ -17,7 +18,7 @@ interface ProductPrice {
 }
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   image: {
     src: string;
@@ -26,10 +27,10 @@ interface Product {
   link: string;
   description: string;
   price: ProductPrice;
-  badge: {
+  badge?: {
     text: string;
     backgroundColor?: string;
-  };
+  }; // ✅ optional
 }
 
 const ProductCard1 = ({
@@ -45,12 +46,14 @@ const ProductCard1 = ({
       <Card className="h-full overflow-hidden p-0">
         <CardHeader className="relative block p-0">
           <AspectRatio ratio={1.268115942} className="overflow-hidden">
-            <img
+            <Image
               src={product.image.src}
               alt={product.image.alt}
+              fill
               className="block size-full object-cover object-center"
             />
           </AspectRatio>
+
           {product.badge && (
             <Badge
               style={{
@@ -62,13 +65,16 @@ const ProductCard1 = ({
             </Badge>
           )}
         </CardHeader>
+
         <CardContent className="flex h-full flex-col md:gap-4 pb-6">
           <CardTitle className="md:text-xl font-semibold">
             {product.name}
           </CardTitle>
+
           <CardDescription className="font-medium text-muted-foreground">
             {product.description}
           </CardDescription>
+
           <div className="mt-auto">
             <Price onSale={sale != null} className="text-lg font-semibold">
               <PriceValue

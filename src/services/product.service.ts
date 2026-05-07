@@ -1,3 +1,5 @@
+import { getToken } from '@/utils/auth';
+
 type ProductQuery = {
   page?: number;
   limit?: number;
@@ -9,6 +11,7 @@ type ProductQuery = {
   sortOrder?: 'asc' | 'desc';
   isFeatured?: boolean;
 };
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export const getProducts = async (params?: ProductQuery) => {
   //  build query string dynamically
@@ -56,4 +59,17 @@ export const getSingleProduct = async (id: string) => {
   }
 
   return result;
+};
+
+export const deleteProduct = async (id: string) => {
+  const token = getToken();
+
+  const res = await fetch(`${BASE_URL}/products/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.json();
 };

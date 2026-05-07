@@ -1,0 +1,608 @@
+{
+  "info": {
+    "_postman_id": "01eed735-1166-4fc6-a8b4-f673674b95d4",
+    "name": "Next Buy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45050453"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Meherab Hossain\",\r\n  \"email\": \"customer@gmail.com\",\r\n  \"password\": \"12445678\",\r\n  \"phone\": \"05714345654\",\r\n  \"photoUrl\": \"https://example.com/avatar.png\",\r\n  \"role\": \"CUSTOMER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://next-buy-ai-backend.vercel.app/api/v1/users",
+              "protocol": "https",
+              "host": [
+                "next-buy-ai-backend",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n \r\n  \"email\": \"customer@gmail.com\",\r\n  \"password\": \"12445678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/users/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMmQyYmRmLTYzOGQtNGJhZC04NTU1LTY2MWRmMTAwNTZmNiIsImVtYWlsIjoidXNlckBnbWFpbC5jb20iLCJyb2xlIjoiQ1VTVE9NRVIiLCJuYW1lIjoiTWVoZXJhYiBIb3NzYWluIiwicGhvbmUiOiIwMTcxMjM0NTY3NCIsInBob3RvVXJsIjoiaHR0cHM6Ly9leGFtcGxlLmNvbS9hdmF0YXIucG5nIiwic3RhdHVzIjoiQUNUSVZFIiwiaWF0IjoxNzc3OTcxNjA0LCJleHAiOjE3Nzg1NzY0MDR9.F0t--5beYJ9ZS2okBiNkTJCD92J-AO1rPgMsSZpRQ7c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Meherab Hossain\",\r\n  \"email\": \"seller@gmail.com\",\r\n  \"password\": \"12345678\",\r\n  \"phone\": \"01712345624\",\r\n  \"photoUrl\": \"https://example.com/avatar.png\",\r\n  \"role\": \"SELLER\"\r\n}"
+            },
+            "url": {
+              "raw": "https://next-buy-ai-backend.vercel.app/api/v1/users/me",
+              "protocol": "https",
+              "host": [
+                "next-buy-ai-backend",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Createproducts",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwODVmNTZkLWI2NTMtNDJjOC1iMmRiLTMxOGYyNmJiMTA2NiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDE3MTQzNDU2MjQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk3NDkxNywiZXhwIjoxNzc4NTc5NzE3fQ.wPPimpeVyRPpJIxfDRnDwsZFR2f4sgblhIh0W7IjShQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Apple iPhone 15 Pro Max 333\",\r\n  \"slug\": \"apple-iphone-15-pro-max\",\r\n  \"description\": \"Updated version with larger display and better battery\",\r\n  \"price\": 1399.99,\r\n  \"discount\": 12,\r\n  \"stock\": 40,\r\n  \"thumbnail\": \"https://images.unsplash.com/photo-1557935728-e6d1eaabe558?w=300&h=300&fit=crop\",\r\n  \"images\": [\r\n   \" https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop\",\r\n    \"https://images.unsplash.com/photo-1557935728-e6d1eaabe558?w=300&h=300&fit=crop\"\r\n  ],\r\n  \"brand\": \"Apple\",\r\n  \"category\": \"Smartphones\",\r\n  \"rating\": 4.9,\r\n  \"reviewCount\": 150,\r\n  \"isFeatured\": true,\r\n  \"isPublished\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all products",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwODVmNTZkLWI2NTMtNDJjOC1iMmRiLTMxOGYyNmJiMTA2NiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDE3MTQzNDU2MjQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk3NDkxNywiZXhwIjoxNzc4NTc5NzE3fQ.wPPimpeVyRPpJIxfDRnDwsZFR2f4sgblhIh0W7IjShQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "iphone",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "Smartphones",
+                  "disabled": true
+                },
+                {
+                  "key": "minPrice",
+                  "value": "500",
+                  "disabled": true
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "1500",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "price",
+                  "disabled": true
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "asc",
+                  "disabled": true
+                },
+                {
+                  "key": "isFeatured",
+                  "value": "true",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get products by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwODVmNTZkLWI2NTMtNDJjOC1iMmRiLTMxOGYyNmJiMTA2NiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDE3MTQzNDU2MjQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk3NDkxNywiZXhwIjoxNzc4NTc5NzE3fQ.wPPimpeVyRPpJIxfDRnDwsZFR2f4sgblhIh0W7IjShQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"MacBook Air M3\",\r\n  \"slug\": \"macbook-air-m3\",\r\n  \"description\": \"Lightweight Apple laptop with M3 chip\",\r\n  \"price\": 1499.99,\r\n  \"discount\": 8,\r\n  \"stock\": 15,\r\n  \"thumbnail\": \"https://example.com/images/macbookair-thumb.jpg\",\r\n  \"images\": [\r\n    \"https://example.com/images/macbookair-1.jpg\"\r\n  ],\r\n  \"brand\": \"Apple\",\r\n  \"category\": \"Laptops\",\r\n  \"rating\": 4.9,\r\n  \"reviewCount\": 210,\r\n  \"isFeatured\": true,\r\n  \"isPublished\": true\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/products/e05409ab-3a9e-43cf-ad47-4c897c51e8fb",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "e05409ab-3a9e-43cf-ad47-4c897c51e8fb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwODVmNTZkLWI2NTMtNDJjOC1iMmRiLTMxOGYyNmJiMTA2NiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDE3MTQzNDU2MjQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk3NDkxNywiZXhwIjoxNzc4NTc5NzE3fQ.wPPimpeVyRPpJIxfDRnDwsZFR2f4sgblhIh0W7IjShQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n    {\r\n  \"price\": 999.99,\r\n  \"stock\": 50,\r\n  \"discount\": 15\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/products/4f88d15c-73e3-4538-8cee-5666a68f0fc2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "4f88d15c-73e3-4538-8cee-5666a68f0fc2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwODVmNTZkLWI2NTMtNDJjOC1iMmRiLTMxOGYyNmJiMTA2NiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDE3MTQzNDU2MjQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk3NDkxNywiZXhwIjoxNzc4NTc5NzE3fQ.wPPimpeVyRPpJIxfDRnDwsZFR2f4sgblhIh0W7IjShQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/products/4f88d15c-73e3-4538-8cee-5666a68f0fc2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "4f88d15c-73e3-4538-8cee-5666a68f0fc2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "item": [
+        {
+          "name": "Single Orders  Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjNDdkNDUyLWUwMWUtNDQzYS04ZmE4LTQ5MDQxYjdjYzNhOCIsImVtYWlsIjoiYWRtaW4xQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsIm5hbWUiOiJNZWhlcmFiIEhvc3NhaW4iLCJwaG9uZSI6IjAxNzE0MzQ1NjU0IiwicGhvdG9VcmwiOiJodHRwczovL2V4YW1wbGUuY29tL2F2YXRhci5wbmciLCJzdGF0dXMiOiJBQ1RJVkUiLCJpYXQiOjE3Nzc5ODAyOTUsImV4cCI6MTc3ODU4NTA5NX0.1cBjhPLfZDfPJc1L1_WQufWH17bSMrlZgGBdO_ht43c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"618e84c5-719f-407e-92bc-3e80285a0eba\",\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/orders/buy-now",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "buy-now"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iphone",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "multiple oder",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMGRmMTM3LWFkMjQtNDRjMC1hYmRmLTIxNTJhOThmNDcwYiIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwicm9sZSI6IkNVU1RPTUVSIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDU3MTQzNDU2NTQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk4Mzc0NiwiZXhwIjoxNzc4NTg4NTQ2fQ.fjhEk7laAb1qvS7vLP-ACDWjscCuL_cpHp_QHyv4pgQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n  {\r\n    \"productId\": \"618e84c5-719f-407e-92bc-3e80285a0eba\",\r\n    \"quantity\": 1\r\n  },\r\n  {\r\n    \"productId\": \"e16cc900-b58a-4bc6-9988-5ac3375666d4\",\r\n    \"quantity\": 1\r\n  },\r\n  \r\n]"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/orders/checkout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "checkout"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iphone",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjNDdkNDUyLWUwMWUtNDQzYS04ZmE4LTQ5MDQxYjdjYzNhOCIsImVtYWlsIjoiYWRtaW4xQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsIm5hbWUiOiJNZWhlcmFiIEhvc3NhaW4iLCJwaG9uZSI6IjAxNzE0MzQ1NjU0IiwicGhvdG9VcmwiOiJodHRwczovL2V4YW1wbGUuY29tL2F2YXRhci5wbmciLCJzdGF0dXMiOiJBQ1RJVkUiLCJpYXQiOjE3Nzc5ODAyOTUsImV4cCI6MTc3ODU4NTA5NX0.1cBjhPLfZDfPJc1L1_WQufWH17bSMrlZgGBdO_ht43c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/orders/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get order by usre",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjNDdkNDUyLWUwMWUtNDQzYS04ZmE4LTQ5MDQxYjdjYzNhOCIsImVtYWlsIjoiYWRtaW4xQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsIm5hbWUiOiJNZWhlcmFiIEhvc3NhaW4iLCJwaG9uZSI6IjAxNzE0MzQ1NjU0IiwicGhvdG9VcmwiOiJodHRwczovL2V4YW1wbGUuY29tL2F2YXRhci5wbmciLCJzdGF0dXMiOiJBQ1RJVkUiLCJpYXQiOjE3Nzc5ODAyOTUsImV4cCI6MTc3ODU4NTA5NX0.1cBjhPLfZDfPJc1L1_WQufWH17bSMrlZgGBdO_ht43c",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"618e84c5-719f-407e-92bc-3e80285a0eba\",\r\n  \"quantity\": 1\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iphone",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMGRmMTM3LWFkMjQtNDRjMC1hYmRmLTIxNTJhOThmNDcwYiIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwicm9sZSI6IkNVU1RPTUVSIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDU3MTQzNDU2NTQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk4MjY4NywiZXhwIjoxNzc4NTg3NDg3fQ.Ga-sBlvjGe-U9NBv8QO8RMoCRypSk_MH88jo3DuWeC8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"e05409ab-3a9e-43cf-ad47-4c897c51e8fb\",\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/cart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iphone",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMGRmMTM3LWFkMjQtNDRjMC1hYmRmLTIxNTJhOThmNDcwYiIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwicm9sZSI6IkNVU1RPTUVSIiwibmFtZSI6Ik1laGVyYWIgSG9zc2FpbiIsInBob25lIjoiMDU3MTQzNDU2NTQiLCJwaG90b1VybCI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLnBuZyIsInN0YXR1cyI6IkFDVElWRSIsImlhdCI6MTc3Nzk4Mzc0NiwiZXhwIjoxNzc4NTg4NTQ2fQ.fjhEk7laAb1qvS7vLP-ACDWjscCuL_cpHp_QHyv4pgQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/cart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

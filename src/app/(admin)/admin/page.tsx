@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import {
   Users,
   ShoppingBag,
-  FileText,
-  TrendingUp,
   ArrowUpRight,
   ArrowDownRight,
   Download,
@@ -14,10 +12,7 @@ import {
   DollarSign,
   Eye,
   ShoppingCart,
-  Clock,
   Star,
-  Truck,
-  RefreshCw,
   Zap,
   Award,
   BarChart3,
@@ -41,14 +36,12 @@ import {
 } from 'recharts';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getUser } from '@/utils/auth';
 import Link from 'next/link';
 
 export default function AdminDashboard() {
   const [timeRange, setTimeRange] = useState('month');
   const [statsData, setStatsData] = useState<any>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = getUser();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -228,26 +221,26 @@ export default function AdminDashboard() {
       </button>
 
       {/* Main Content */}
-      <div className="p-4 md:p-6 lg:p-8">
+      <div className="">
         <div className=" space-y-6">
           {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative overflow-hidden rounded-xs bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 p-6 md:p-8 shadow-xl"
+            className="relative overflow-hidden rounded-xs bg-white border border-gray-200 p-6 md:p-8 shadow-sm"
           >
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-96 h-96 bg-black rounded-full blur-3xl" />
+            {/* Subtle background accent instead of heavy gradients */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-gray-900 rounded-full blur-3xl" />
             </div>
 
             <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white">
+                  <span className="px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-700">
                     E-COMMERCE DASHBOARD
                   </span>
-                  <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs text-white">
+                  <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600">
                     {new Date().toLocaleDateString('en-US', {
                       month: 'long',
                       day: 'numeric',
@@ -255,21 +248,21 @@ export default function AdminDashboard() {
                     })}
                   </span>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                  Welcome back, {user?.name || 'Admin'}! 👋
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                  Welcome back, Admin Dashboard ! 👋
                 </h1>
-                <p className="text-orange-100 text-sm md:text-base">
-                  Here's what's happening with your store today.
+                <p className="text-gray-500 text-sm md:text-base">
+                  Here&apos;s what&apos;s happening with your store today.
                 </p>
               </div>
 
               <div className="flex gap-3">
-                <button className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl text-white font-medium transition-all duration-300 flex items-center gap-2 backdrop-blur-sm">
+                <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl text-gray-700 font-medium transition-all duration-300 flex items-center gap-2">
                   <Download size={18} />
                   Export Report
                 </button>
                 <Link href="/admin/products/add">
-                  <button className="px-4 py-2 bg-white text-orange-600 hover:bg-orange-50 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 shadow-lg">
+                  <button className="px-4 py-2  bg-gradient-to-r from-orange-500 to-amber-500 text-white  rounded-xl font-medium transition-all duration-300 flex items-center gap-2 shadow-sm">
                     <Package size={18} />
                     Add Product
                   </button>
@@ -277,23 +270,22 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Mini Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-4 border-t border-white/20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-4 border-t border-gray-100">
               <div>
-                <p className="text-orange-100 text-xs">Today's Sales</p>
-                <p className="text-white text-xl font-bold">$2,847</p>
+                <p className="text-gray-500 text-xs">Today&apos;s Sales</p>
+                <p className="text-gray-900 text-xl font-bold">$2,847</p>
               </div>
               <div>
-                <p className="text-orange-100 text-xs">Pending Orders</p>
-                <p className="text-white text-xl font-bold">23</p>
+                <p className="text-gray-500 text-xs">Pending Orders</p>
+                <p className="text-gray-900 text-xl font-bold">23</p>
               </div>
               <div>
-                <p className="text-orange-100 text-xs">Conversion Rate</p>
-                <p className="text-white text-xl font-bold">3.24%</p>
+                <p className="text-gray-500 text-xs">Conversion Rate</p>
+                <p className="text-gray-900 text-xl font-bold">3.24%</p>
               </div>
               <div>
-                <p className="text-orange-100 text-xs">Page Views</p>
-                <p className="text-white text-xl font-bold">12.4K</p>
+                <p className="text-gray-500 text-xs">Page Views</p>
+                <p className="text-gray-900 text-xl font-bold">12.4K</p>
               </div>
             </div>
           </motion.div>

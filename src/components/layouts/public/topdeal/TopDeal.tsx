@@ -49,7 +49,7 @@ const TopDeal = async () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2">
-          {isProducts.map(product => {
+          {isProducts.slice(0, 5).map(product => {
             const originalPrice = product.price;
             const discount = product.discount || 0;
 

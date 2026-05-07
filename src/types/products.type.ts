@@ -18,7 +18,19 @@ export interface IProduct {
   stock: number;
 
   slug: string;
+  isFeatured: boolean;
 
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IProductsResponse {
+  success: boolean;
+  message: string;
+  data: IProduct[];
+  meta?: {
+    page: number;
+    limit: number;
+    total: number;
+  };
 }

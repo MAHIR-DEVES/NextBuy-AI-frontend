@@ -1,4 +1,4 @@
-import FloatingIcon from '@/components/layouts/public/FlotingIcon/FlotingIcon';
+import FloatingIcon from '@/components/layouts/public/FloatingIcon/FloatingIcon';
 import Footer from '@/components/layouts/public/footer/Footer';
 import { PublicNavbar } from '@/components/layouts/public/navbar/PublicNavbar';
 

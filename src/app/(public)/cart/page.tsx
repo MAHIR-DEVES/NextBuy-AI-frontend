@@ -10,25 +10,7 @@ import {
 } from '@/services/cart.service';
 import { useCartStore } from '@/store/cart.store';
 import CheckoutForm from '@/components/layouts/public/cart/CheckoutForm';
-
-interface CartItem {
-  id: string;
-  quantity: number;
-  productId: string;
-  userId: string;
-
-  product: {
-    id: string;
-    name: string;
-    thumbnail: string;
-    price: number;
-    discount: number;
-    stock: number;
-    brand: string;
-    category: string;
-    images: string[];
-  };
-}
+import { CartItem } from '@/types/cart.type';
 
 const CartPage = () => {
   const [items, setItems] = useState<CartItem[]>([]);

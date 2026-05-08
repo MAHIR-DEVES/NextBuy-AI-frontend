@@ -25,11 +25,17 @@ import OrderProtectionModal from './OrderProtectionModal';
 import { PromoBanner1 } from '@/components/promo-banner1';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
+import { useCartStore } from '@/store/cart.store';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isFullscreenMenuOpen, setIsFullscreenMenuOpen] = useState(false);
   const [isOrderProtectionOpen, setIsOrderProtectionOpen] = useState(false);
+  const fetchCart = useCartStore(state => state.fetchCart);
+  const count = useCartStore(state => state.count);
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -176,12 +182,16 @@ const PublicNavbar = ({ className }: { className?: string }) => {
               </Link>
             </div>
             {/* Cart */}
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] font-bold text-white">
-                0
-              </span>
-            </Button>
+            <div className="relative">
+              <Link href={'/cart'}>
+                <Button variant="ghost" size="icon">
+                  <ShoppingCart className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] font-bold text-white">
+                    {count}
+                  </span>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 

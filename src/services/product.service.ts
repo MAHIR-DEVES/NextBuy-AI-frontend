@@ -10,6 +10,8 @@ type ProductQuery = {
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
   isFeatured?: boolean;
+  brand?: string;
+  rating?: number;
 };
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
@@ -27,6 +29,8 @@ export const getProducts = async (params?: ProductQuery) => {
   if (params?.sortOrder) query.append('sortOrder', params.sortOrder);
   if (params?.isFeatured !== undefined)
     query.append('isFeatured', String(params.isFeatured));
+  if (params?.brand) query.append('brand', params.brand);
+  if (params?.rating) query.append('rating', String(params.rating));
 
   const url = `${process.env.NEXT_PUBLIC_BASE_API}/products${
     query.toString() ? `?${query.toString()}` : ''
@@ -47,7 +51,7 @@ export const getProducts = async (params?: ProductQuery) => {
 };
 
 export const getSingleProduct = async (id: string) => {
-  const res = await fetch(`http://localhost:5000/api/v1/products/${id}`, {
+  const res = await fetch(`${BASE_URL}/products/${id}`, {
     method: 'GET',
     cache: 'no-store',
   });

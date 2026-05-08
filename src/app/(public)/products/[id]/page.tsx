@@ -1,3 +1,5 @@
+import ProductActions from '@/components/layouts/public/cart/ProductActions';
+import AddToCartButton from '@/components/layouts/public/cart/ProductActions';
 import { getSingleProduct } from '@/services/product.service';
 import {
   Star,
@@ -6,10 +8,6 @@ import {
   RotateCcw,
   Store,
   MapPin,
-  Minus,
-  Plus,
-  Heart,
-  Share2,
   CheckCircle,
   Award,
   ChevronRight,
@@ -141,36 +139,9 @@ export default async function ProductDetailsPage({
               </div>
             </div>
 
-            {/* Quantity */}
-            <div className="mb-6">
-              <span className="text-sm text-gray-600 block mb-2">Quantity</span>
-              <div className="flex items-center gap-3">
-                <button className="w-8 h-8 border rounded-lg flex items-center justify-center hover:border-orange-500 transition-colors">
-                  <Minus className="h-3 w-3" />
-                </button>
-                <span className="w-12 text-center font-semibold">1</span>
-                <button className="w-8 h-8 border rounded-lg flex items-center justify-center hover:border-orange-500 transition-colors">
-                  <Plus className="h-3 w-3" />
-                </button>
-              </div>
-            </div>
-
             {/* Action Buttons */}
-            <div className="flex gap-3 mb-6">
-              <button className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors">
-                Buy Now
-              </button>
-              <button className="flex-1 border-2 border-orange-500 text-orange-500 py-3 rounded-lg font-semibold hover:bg-orange-50 transition-colors">
-                Add to Cart
-              </button>
-              <button className="w-12 h-12 border rounded-lg flex items-center justify-center hover:border-orange-500 transition-colors">
-                <Heart className="h-5 w-5" />
-              </button>
-              <button className="w-12 h-12 border rounded-lg flex items-center justify-center hover:border-orange-500 transition-colors">
-                <Share2 className="h-5 w-5" />
-              </button>
-            </div>
 
+            <ProductActions product={product} productId={product.id} />
             {/* Delivery Options */}
             <div className="border-t pt-4 mb-4">
               <h3 className="font-semibold text-gray-800 mb-3">

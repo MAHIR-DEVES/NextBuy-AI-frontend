@@ -31,8 +31,8 @@ interface Product {
     text: string;
     backgroundColor?: string;
   };
-  rating: number;
-  moq: number;
+  rating?: number;
+  moq?: number;
 }
 
 const ProductCard1 = ({

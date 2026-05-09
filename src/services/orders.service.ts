@@ -60,3 +60,13 @@ export const singleOrder = async (payload: ISingleOrder) => {
 
   return res.data;
 };
+
+export const getAllOrders = async () => {
+  const res = await axios.get(`${BASE_URL}/orders/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

@@ -1,3 +1,7 @@
+import { IUser } from '@/types/auth';
+import { getToken } from '@/utils/auth';
+const token = getToken();
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -29,6 +33,7 @@ export const loginUser = async (
   });
 
   const result = await res.json();
+  console.log('result', result);
 
   if (!res.ok) {
     throw new Error(result.message || 'Login failed');
@@ -68,6 +73,30 @@ export const registerUser = async (
 
   if (!res.ok) {
     throw new Error(result.message || 'Registration failed');
+  }
+
+  return result;
+};
+
+export interface GetAllUsersResponse {
+  success: boolean;
+  message: string;
+  data: IUser[];
+}
+
+export const getAllUsers = async (): Promise<GetAllUsersResponse> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.message || 'Failed to fetch users');
   }
 
   return result;

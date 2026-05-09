@@ -6,18 +6,17 @@ export const setAuthData = (token: string, user: IAuthUser) => {
     name: user.name,
     email: user.email,
     role: user.role,
-
-    phone: '',
+    phone: user.phone,
     status: 'ACTIVE',
-    avatar: '',
+    avatar: user.avatar,
 
-    address: null,
-    city: null,
-    country: null,
+    address: user.address,
+    city: user.city,
+    country: user.country,
 
-    provider: null,
-    emailVerified: false,
-    lastLogin: null,
+    provider: user.provider,
+    emailVerified: user.emailVerified,
+    lastLogin: user.lastLogin,
 
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

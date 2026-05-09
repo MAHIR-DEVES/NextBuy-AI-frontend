@@ -37,6 +37,7 @@ import SearchBar from './SearchBar';
 import { useCartStore } from '@/store/cart.store';
 import { getUser } from '@/utils/auth';
 import Image from 'next/image';
+import UserDropdown from './UserDropdown';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -93,7 +94,6 @@ const PublicNavbar = ({ className }: { className?: string }) => {
               </div>
             </Link>
 
-            {/* Mobile Menu Button */}
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 md:hidden">
               <Button variant="ghost" size="icon" className="relative">
@@ -266,21 +266,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
             {/* Sign in */}
             <div className="hidden lg:flex items-center gap-2 text-sm">
               {user ? (
-                <div className="flex items-center gap-2">
-                  {user?.avatar ? (
-                    <Image
-                      src={user.avatar}
-                      alt="User avatar"
-                      width={32}
-                      height={32}
-                      className="rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                      <User className="h-6 w-6 text-gray-600" />
-                    </div>
-                  )}
-                </div>
+                <UserDropdown></UserDropdown>
               ) : (
                 <Link href="/login">
                   <Button

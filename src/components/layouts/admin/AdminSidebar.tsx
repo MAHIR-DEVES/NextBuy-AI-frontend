@@ -23,9 +23,9 @@ const AdminSidebar = ({ isOpen }: { isOpen: boolean }) => {
 
     { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
 
-    { name: 'Sellers', href: '/admin/sellers', icon: Store },
+    // { name: 'Sellers', href: '/admin/sellers', icon: Store },
 
-    { name: 'Customers', href: '/admin/customers', icon: Users },
+    { name: 'Customers', href: '/admin/users', icon: Users },
 
     { name: 'Messages', href: '/admin/messages', icon: MessageSquare },
 

@@ -109,7 +109,7 @@ const SearchBar = () => {
                 setIsOpen(true);
               }}
               onFocus={() => setIsOpen(true)}
-              className="flex-1 h-12 text-sm border-r-0 rounded-l-xl rounded-r-none focus:ring-2 focus:ring-orange-500/20 pr-10"
+              className="flex-1 h-11 text-sm border-r-0 rounded-l-xl rounded-r-none focus:ring-2 focus:ring-orange-500/20 pr-10"
             />
 
             {searchQuery && (
@@ -129,7 +129,7 @@ const SearchBar = () => {
                 setIsOpen(false);
               }
             }}
-            className="h-12 rounded-r-xl rounded-l-none px-6 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-md hover:shadow-lg"
+            className="h-11 rounded-r-xl rounded-l-none px-6 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-md hover:shadow-lg"
           >
             <Search className="h-4 w-4 mr-2" />
             Search

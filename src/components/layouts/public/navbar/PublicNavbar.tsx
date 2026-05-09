@@ -8,6 +8,15 @@ import {
   FileText,
   Package,
   Zap,
+  Smartphone,
+  Laptop,
+  Shirt,
+  Gamepad2,
+  Watch,
+  Shield,
+  Home,
+  Monitor,
+  Trophy,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -26,6 +35,8 @@ import { PromoBanner1 } from '@/components/promo-banner1';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
 import { useCartStore } from '@/store/cart.store';
+import { getUser } from '@/utils/auth';
+import Image from 'next/image';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -33,6 +44,13 @@ const PublicNavbar = ({ className }: { className?: string }) => {
   const [isOrderProtectionOpen, setIsOrderProtectionOpen] = useState(false);
   const fetchCart = useCartStore(state => state.fetchCart);
   const count = useCartStore(state => state.count);
+
+  const [user, setUser] = useState<ReturnType<typeof getUser> | null>(null);
+
+  useEffect(() => {
+    setUser(getUser());
+  }, []);
+
   useEffect(() => {
     fetchCart();
   }, [fetchCart]);
@@ -44,13 +62,6 @@ const PublicNavbar = ({ className }: { className?: string }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const categories = [
-    { name: 'Electronics' },
-    { name: 'Fashion' },
-    { name: 'Home & Garden' },
-    { name: 'Sports & Entertainment' },
-  ];
 
   return (
     <section
@@ -83,9 +94,13 @@ const PublicNavbar = ({ className }: { className?: string }) => {
             </Link>
 
             {/* Mobile Menu Button */}
+            {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 md:hidden">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
+                <span className="absolute -top-1 -right-1 h-4 w-4 bg-orange-500 rounded-full text-[10px] text-white flex items-center justify-center">
+                  0
+                </span>
               </Button>
 
               <Sheet>
@@ -96,65 +111,146 @@ const PublicNavbar = ({ className }: { className?: string }) => {
                 </SheetTrigger>
 
                 <SheetContent side="left" className="w-80 p-0">
-                  <SheetHeader className="p-4 border-b">
-                    <SheetTitle className="flex items-center gap-2">
-                      <Link
-                        className="flex items-center gap-2 shrink-0"
-                        href="/"
-                      >
-                        <div className="flex items-center">
-                          <span className="text-xl sm:text-2xl font-bold text-orange-500">
-                            NEXT
-                          </span>
-                          <span className="text-xl sm:text-2xl font-bold text-gray-800">
-                            BUY
-                          </span>
-                        </div>
-                      </Link>
-                    </SheetTitle>
-                  </SheetHeader>
+                  {/* Header */}
+                  <div className="p-4 border-b">
+                    <SheetHeader className="p-0">
+                      <SheetTitle className="flex items-center justify-between">
+                        <Link
+                          className="flex items-center gap-2 shrink-0"
+                          href="/"
+                        >
+                          <div className="flex items-center">
+                            <span className="text-xl font-bold text-orange-500">
+                              NEXT
+                            </span>
+                            <span className="text-xl font-bold text-gray-800">
+                              BUY
+                            </span>
+                          </div>
+                        </Link>
+                      </SheetTitle>
+                    </SheetHeader>
+                  </div>
 
                   <div className="p-4 space-y-6">
-                    <div className="space-y-2">
-                      <Button
-                        variant="outline"
-                        className="w-full justify-start gap-2"
-                      >
-                        <User className="h-4 w-4" /> Sign in
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-start gap-2"
-                      >
-                        <Briefcase className="h-4 w-4" /> Create account
-                      </Button>
+                    {/* USER SECTION */}
+                    <div className="space-y-3">
+                      {user ? (
+                        <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
+                          {user?.avatar ? (
+                            <Image
+                              src={user.avatar}
+                              alt="User avatar"
+                              width={40}
+                              height={40}
+                              className="rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                              <User className="h-5 w-5 text-gray-600" />
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900">
+                              {user?.name || 'User'}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {user?.email || 'user@example.com'}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <Link href="/login">
+                            <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                              Sign in
+                            </Button>
+                          </Link>
+                          <Link href="/register">
+                            <Button variant="outline" className="w-full">
+                              Create account
+                            </Button>
+                          </Link>
+                        </>
+                      )}
                     </div>
 
+                    {/* CATEGORY SECTION */}
                     <div>
-                      <h3 className="font-semibold mb-3">All categories</h3>
-                      <div className="space-y-2">
-                        {categories.map(cat => (
-                          <a
-                            key={cat.name}
-                            href="#"
-                            className="block py-2 text-gray-600 hover:text-orange-500"
-                          >
-                            {cat.name}
-                          </a>
-                        ))}
+                      <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                        Categories
+                      </h3>
+                      <div className="space-y-1">
+                        {[
+                          { name: 'Smartphones', icon: Smartphone },
+                          { name: 'Laptop', icon: Laptop },
+                          { name: 'Fashion', icon: Shirt },
+                          { name: 'Gaming', icon: Gamepad2 },
+                          { name: 'Accessories', icon: Watch },
+                          { name: 'Electronics', icon: Monitor },
+                          { name: 'Home & Garden', icon: Home },
+                          { name: 'Sports & Entertainment', icon: Trophy },
+                        ].map(cat => {
+                          const Icon = cat.icon;
+                          return (
+                            <Link
+                              key={cat.name}
+                              href={`/products?category=${cat.name}`}
+                              className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
+                            >
+                              <Icon className="h-5 w-5" />
+                              <span>{cat.name}</span>
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
 
+                    {/* BRAND SECTION */}
+                    <div>
+                      <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                        Brands
+                      </h3>
+                      <div className="space-y-1">
+                        {['Apple', 'Samsung', 'Sony', 'Xiaomi', 'Dell'].map(
+                          brand => (
+                            <Link
+                              key={brand}
+                              href={`/products?brand=${brand}`}
+                              className="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
+                            >
+                              {brand}
+                            </Link>
+                          ),
+                        )}
+                      </div>
+                    </div>
+
+                    {/* EXTRA LINKS */}
                     <div className="pt-4 border-t space-y-3">
-                      <a className="flex items-center gap-2 text-sm text-gray-600">
-                        <Zap className="h-4 w-4" /> Verified manufacturers
-                      </a>
-                      <a className="flex items-center gap-2 text-sm text-gray-600">
-                        <Package className="h-4 w-4" /> Order protections
-                      </a>
-                      <a className="flex items-center gap-2 text-sm text-gray-600">
-                        <FileText className="h-4 w-4" /> Tax exemption
-                      </a>
+                      <Link
+                        href="/products?verified=true"
+                        className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                      >
+                        <Shield className="h-4 w-4" />
+                        Verified manufacturers
+                      </Link>
+
+                      <Link
+                        href="/products?orderProtection=true"
+                        className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                      >
+                        <Package className="h-4 w-4" />
+                        Order protections
+                      </Link>
+
+                      <Link
+                        href="/products?taxExemption=true"
+                        className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                      >
+                        <FileText className="h-4 w-4" />
+                        Tax exemption
+                      </Link>
                     </div>
                   </div>
                 </SheetContent>
@@ -166,18 +262,36 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           <SearchBar></SearchBar>
 
           {/* RIGHT DESKTOP */}
-          <div className="hidden lg:flex items-center gap-4 shrink-0 ml-2">
+          <div className="hidden lg:flex items-center gap-4 shrink-0 ml-8">
             {/* Sign in */}
             <div className="hidden lg:flex items-center gap-2 text-sm">
-              <Link href="/login">
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  className="text-gray-700 text-base px-5 py-6 font-semibold"
-                >
-                  Sign in
-                </Button>
-              </Link>
+              {user ? (
+                <div className="flex items-center gap-2">
+                  {user?.avatar ? (
+                    <Image
+                      src={user.avatar}
+                      alt="User avatar"
+                      width={32}
+                      height={32}
+                      className="rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      <User className="h-6 w-6 text-gray-600" />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    className="text-gray-700 text-base px-5 py-6 font-semibold"
+                  >
+                    <User className="h-4 w-4" /> Sign in
+                  </Button>
+                </Link>
+              )}
 
               <span className="text-gray-300 text-lg">|</span>
             </div>

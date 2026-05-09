@@ -166,30 +166,30 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           <SearchBar></SearchBar>
 
           {/* RIGHT DESKTOP */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            {/* Sign in / Create account */}
-            <div className="hidden lg:flex items-center gap-1 text-sm">
+          <div className="hidden lg:flex items-center gap-4 shrink-0 ml-2">
+            {/* Sign in */}
+            <div className="hidden lg:flex items-center gap-2 text-sm">
               <Link href="/login">
-                <Button variant="ghost" size="sm" className="text-gray-700">
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="text-gray-700 text-base px-5 py-6 font-semibold"
+                >
                   Sign in
                 </Button>
               </Link>
-              <span className="text-gray-300">|</span>
-              <Link href="/register">
-                <Button variant="ghost" size="sm" className="text-gray-700">
-                  Create account
-                </Button>
-              </Link>
+
+              <span className="text-gray-300 text-lg">|</span>
             </div>
+
             {/* Cart */}
             <div className="relative">
               <Link href={'/cart'}>
-                <Button variant="ghost" size="icon">
-                  <ShoppingCart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] font-bold text-white">
-                    {count}
-                  </span>
-                </Button>
+                <ShoppingCart className="h-7 w-7" />
+
+                <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white">
+                  {count}
+                </span>
               </Link>
             </div>
           </div>

@@ -17,8 +17,7 @@ const UserDropdown = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const user = getUser(); // must include role
-  console.log(user);
+  const user = getUser();
 
   // close on outside click
   useEffect(() => {

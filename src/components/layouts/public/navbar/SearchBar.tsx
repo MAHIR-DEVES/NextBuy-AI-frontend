@@ -19,10 +19,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const popularSearches = [
-  'iphone',
-  'Smartphone',
-  'Laptop',
+  'Shoes',
+  'Apple',
+  'Nike',
+  'Samsung',
   'Headphones',
+  'Laptop',
   'Smart Watch',
   'Gaming Mouse',
   'Keyboard',

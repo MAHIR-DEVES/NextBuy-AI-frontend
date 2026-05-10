@@ -3,14 +3,15 @@ export interface IAuthUser {
   email: string;
   role: 'ADMIN' | 'CUSTOMER' | 'SELLER';
   name: string;
-  avatar: string;
-  phone: string;
-  address: string;
-  country: string;
-  city: string;
-  provider: string;
-  emailVerified: boolean;
-  lastLogin: string;
+
+  avatar?: string;
+  phone?: string;
+  address?: string;
+  country?: string;
+  city?: string;
+  provider?: string;
+  emailVerified?: boolean;
+  lastLogin?: string;
 }
 
 export interface IUser {

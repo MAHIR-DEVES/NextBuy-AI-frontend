@@ -6,6 +6,8 @@ import { addToCart } from '@/services/cart.service';
 import { useCartStore } from '@/store/cart.store';
 import { IProduct } from '@/types/products.type';
 import BuyNowModal from '../modals/BuyNowModal';
+import { getUser } from '@/utils/auth';
+import { usePathname, useRouter } from 'next/navigation';
 
 type Props = {
   productId: string;
@@ -16,10 +18,23 @@ const ProductActions = ({ productId, product }: Props) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const user = getUser();
+  const router = useRouter();
+  const pathname = usePathname();
   const increase = useCartStore(state => state.increase);
 
+  // LOGIN CHECK
+  const handleRequireLogin = () => {
+    if (!user) {
+      router.push(`/login?redirect=${pathname}`);
+      return false;
+    }
+
+    return true;
+  };
+
   const handleAddToCart = async () => {
+    if (!handleRequireLogin()) return;
     try {
       setLoading(true);
 

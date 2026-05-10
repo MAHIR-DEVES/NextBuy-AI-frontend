@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import { loginUser } from '@/services/auth.service';
 import { setAuthData } from '@/utils/auth';
 
@@ -14,13 +15,16 @@ interface FormData {
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
   });
+
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,6 +38,16 @@ export default function LoginPage() {
 
       setAuthData(res.data.accessToken, res.data.user);
 
+      // redirect url
+      const redirect = searchParams.get('redirect');
+
+      // if have a redirect url
+      if (redirect) {
+        router.push(redirect);
+        return;
+      }
+
+      // otherwise role wise redirect
       const role = res.data.user.role;
 
       if (role === 'ADMIN') {
@@ -44,6 +58,7 @@ export default function LoginPage() {
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : 'Something went wrong';
+
       setError(message);
     } finally {
       setIsLoading(false);
@@ -63,13 +78,17 @@ export default function LoginPage() {
           {/* Email */}
           <div className="relative">
             <Mail className="absolute left-3 top-3 text-gray-400" />
+
             <input
               type="email"
               placeholder="Email"
               required
               value={formData.email}
               onChange={e =>
-                setFormData({ ...formData, email: e.target.value })
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
               }
               className="w-full pl-10 p-3 border rounded"
             />
@@ -78,13 +97,17 @@ export default function LoginPage() {
           {/* Password */}
           <div className="relative">
             <Lock className="absolute left-3 top-3 text-gray-400" />
+
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
               required
               value={formData.password}
               onChange={e =>
-                setFormData({ ...formData, password: e.target.value })
+                setFormData({
+                  ...formData,
+                  password: e.target.value,
+                })
               }
               className="w-full pl-10 pr-10 p-3 border rounded"
             />

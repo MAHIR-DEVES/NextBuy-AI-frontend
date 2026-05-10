@@ -51,6 +51,12 @@ const ProductActions = ({ productId, product }: Props) => {
     }
   };
 
+  const handleOrderBtn = () => {
+    if (!handleRequireLogin()) return;
+
+    setOpen(true);
+  };
+
   return (
     <div className="space-y-4">
       {/* Quantity */}
@@ -79,7 +85,7 @@ const ProductActions = ({ productId, product }: Props) => {
       {/* Buttons */}
       <div className="flex gap-3">
         <button
-          onClick={() => setOpen(true)}
+          onClick={handleOrderBtn}
           disabled={loading}
           className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50"
         >

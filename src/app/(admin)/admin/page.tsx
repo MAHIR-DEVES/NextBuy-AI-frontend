@@ -220,7 +220,7 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <div className="">
-        <div className="space-y-6">
+        <div className="space-y-6 dark:space-y-0">
           {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -300,7 +300,7 @@ export default function AdminDashboard() {
           </motion.div>
 
           {/* Stats Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 dark:gap-0">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               const TrendIcon =
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Charts Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 dark:gap-0">
             {/* Bar Chart */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -483,7 +483,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Top Products & Recent Orders */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 dark:gap-0">
             {/* Top Products */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -634,7 +634,7 @@ export default function AdminDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 dark:gap-0"
           >
             <Link href="/admin/products/add">
               <button className="bg-white dark:bg-gray-900 rounded-xs p-4 shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-all duration-300 w-full text-left">

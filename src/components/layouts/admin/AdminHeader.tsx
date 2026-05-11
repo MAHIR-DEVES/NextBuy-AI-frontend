@@ -1,22 +1,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import {
-  Bell,
-  Menu,
-  Moon,
-  Sun,
-  ChevronDown,
-  Settings,
-  LogOut,
-  HelpCircle,
-  User,
-} from 'lucide-react';
+import { Menu, Moon, Sun, ChevronDown, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
+import { getUser, logout } from '@/utils/auth';
+import Image from 'next/image';
 
 const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const [user, setUser] = useState<ReturnType<typeof getUser> | null>(null);
+
+  useEffect(() => {
+    setUser(getUser());
+  }, []);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
@@ -24,9 +22,14 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
     document.documentElement.classList.toggle('dark');
   };
 
+  const getInitial = () => {
+    if (!user) return 'U';
+    return (user?.name || user?.email || 'U').charAt(0).toUpperCase();
+  };
+
   return (
     <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-20">
-      <div className="px-6 py-3">
+      <div className="pl-3 pr-5 py-3">
         <div className="flex items-center justify-between">
           {/* Left Side - Menu Button & Logo */}
           <div className="flex items-center gap-4">
@@ -42,11 +45,6 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
             {/* Mobile Logo */}
             <div className="md:hidden">
               <Link href="/admin" className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center">
-                  <span className="text-white dark:text-gray-900 font-bold text-xs">
-                    N
-                  </span>
-                </div>
                 <div>
                   <span className="text-lg font-bold text-gray-900 dark:text-white">
                     Next
@@ -74,79 +72,63 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
               )}
             </button>
 
-            {/* Notifications */}
-            <button
-              className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-              aria-label="Notifications"
-            >
-              <Bell size={18} className="text-gray-600 dark:text-gray-400" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full"></span>
-            </button>
-
-            {/* Profile Dropdown */}
+            {/* Profile */}
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-2 pl-2 pr-1 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                aria-label="Profile menu"
+                className="flex items-center gap-2 pl-2 pr-1 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
               >
-                <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    AD
-                  </span>
+                <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                  {user?.avatar ? (
+                    <Image
+                      src={user.avatar}
+                      alt="user"
+                      width={32}
+                      height={32}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                      {getInitial()}
+                    </span>
+                  )}
                 </div>
-                <ChevronDown
-                  size={14}
-                  className="text-gray-500 dark:text-gray-400"
-                />
+
+                <ChevronDown size={14} />
               </button>
 
-              {/* Dropdown Menu */}
               {isProfileOpen && (
                 <>
                   <div
                     className="fixed inset-0 z-10"
                     onClick={() => setIsProfileOpen(false)}
-                  ></div>
-                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 overflow-hidden">
-                    <div className="p-3 border-b border-gray-100 dark:border-gray-700">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        Admin User
+                  />
+
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-20 overflow-hidden">
+                    <div className="p-3 border-b">
+                      <p className="text-sm font-medium">
+                        {user?.name || 'User'}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                        admin@example.com
+                      <p className="text-xs text-gray-500">
+                        {user?.email || ''}
                       </p>
                     </div>
 
                     <div className="py-1">
                       <Link
                         href="/admin/profile"
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2 text-sm"
                       >
                         <User size={15} />
                         Profile
                       </Link>
-                      <Link
-                        href="/admin/settings"
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        <Settings size={15} />
-                        Settings
-                      </Link>
-                      <Link
-                        href="/help"
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        <HelpCircle size={15} />
-                        Help
-                      </Link>
                     </div>
 
-                    <div className="border-t border-gray-100 dark:border-gray-700 py-1">
-                      <button className="flex items-center gap-3 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors w-full">
+                    <div className="border-t py-1">
+                      <button
+                        onClick={() => logout()}
+                        className="flex items-center gap-3 px-3 py-2 text-sm text-red-600 w-full"
+                      >
                         <LogOut size={15} />
                         Logout
                       </button>

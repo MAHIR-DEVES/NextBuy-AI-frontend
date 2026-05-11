@@ -39,7 +39,7 @@ export default function AdminLayout({
         />
       )}
       {/* Sidebar */}
-      <AdminSidebar isOpen={isSidebarOpen} />
+      <AdminSidebar setIsOpen={setIsSidebarOpen} isOpen={isSidebarOpen} />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">

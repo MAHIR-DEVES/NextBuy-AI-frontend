@@ -6,14 +6,18 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Store,
   Users,
-  MessageSquare,
   User,
   LogOut,
 } from 'lucide-react';
 
-const AdminSidebar = ({ isOpen }: { isOpen: boolean }) => {
+const AdminSidebar = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: (v: boolean) => void;
+}) => {
   const pathname = usePathname();
 
   const menuItems = [
@@ -82,6 +86,7 @@ const AdminSidebar = ({ isOpen }: { isOpen: boolean }) => {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setIsOpen(false)}
                 className={`
                   flex items-center gap-3 rounded-lg text-sm font-medium
                   transition-all duration-200

@@ -17,8 +17,6 @@ import {
   Award,
   BarChart3,
   PieChart,
-  Menu,
-  X,
 } from 'lucide-react';
 import {
   BarChart,
@@ -39,7 +37,6 @@ import Link from 'next/link';
 export default function AdminDashboard() {
   const [timeRange, setTimeRange] = useState('month');
   const [statsData, setStatsData] = useState<any>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -206,26 +203,14 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Mobile Sidebar Toggle */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-gray-900 rounded-lg shadow-md border border-gray-200 dark:border-gray-800"
-      >
-        {sidebarOpen ? (
-          <X className="text-gray-600 dark:text-gray-400" size={20} />
-        ) : (
-          <Menu className="text-gray-600 dark:text-gray-400" size={20} />
-        )}
-      </button>
-
       {/* Main Content */}
       <div className="">
-        <div className="space-y-6 dark:space-y-0">
+        <div className="">
           {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative overflow-hidden rounded-xs bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 md:p-8 shadow-sm"
+            className="relative overflow-hidden  bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-6 md:p-8 shadow-sm"
           >
             <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
@@ -250,12 +235,12 @@ export default function AdminDashboard() {
               </div>
 
               <div className="flex gap-3">
-                <button className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xs text-gray-700 dark:text-gray-300 font-medium transition-all duration-300 flex items-center gap-2">
+                <button className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700  text-gray-700 dark:text-gray-300 font-medium transition-all duration-300 flex items-center gap-2">
                   <Download size={18} />
                   Export Report
                 </button>
-                <Link href="/admin/products">
-                  <button className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xs font-medium transition-all duration-300 flex items-center gap-2 shadow-sm">
+                <Link href="/admin/products/add">
+                  <button className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white  font-medium transition-all duration-300 flex items-center gap-2 shadow-sm">
                     <Package size={18} />
                     Add Product
                   </button>
@@ -300,7 +285,7 @@ export default function AdminDashboard() {
           </motion.div>
 
           {/* Stats Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 dark:gap-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               const TrendIcon =
@@ -315,10 +300,10 @@ export default function AdminDashboard() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -2 }}
-                  className="bg-white dark:bg-gray-900 rounded-xs p-6 shadow-sm border border-gray-200 dark:border-gray-800 transition-all duration-300"
+                  className="bg-white dark:bg-gray-900  p-6 shadow-sm border border-gray-200 dark:border-gray-800 transition-all duration-300"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="p-2 bg-orange-100 dark:bg-orange-500/10 rounded-lg">
+                    <div className="p-2 bg-orange-100 dark:bg-orange-500/10 ">
                       <Icon
                         className="text-orange-500 dark:text-orange-400"
                         size={20}
@@ -345,13 +330,14 @@ export default function AdminDashboard() {
             })}
           </div>
 
+          {/* Rest of your content remains the same */}
           {/* Charts Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 dark:gap-0">
+          <div className="grid grid-cols-1 lg:grid-cols-3 ">
             {/* Bar Chart */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-xs p-6 shadow-sm border border-gray-200 dark:border-gray-800"
+              className="lg:col-span-2 bg-white dark:bg-gray-900  p-6 shadow-sm border border-gray-200 dark:border-gray-800"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                 <div>
@@ -366,7 +352,7 @@ export default function AdminDashboard() {
                 <select
                   value={timeRange}
                   onChange={e => setTimeRange(e.target.value)}
-                  className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 mt-3 sm:mt-0"
+                  className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700  text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 mt-3 sm:mt-0"
                 >
                   <option value="week">Last 7 days</option>
                   <option value="month">Last 30 days</option>
@@ -410,7 +396,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-white dark:bg-gray-900 rounded-xs p-6 shadow-sm border border-gray-200 dark:border-gray-800"
+              className="bg-white dark:bg-gray-900  p-6 shadow-sm border border-gray-200 dark:border-gray-800"
             >
               <div className="flex items-center justify-between mb-4">
                 <div>
@@ -457,7 +443,7 @@ export default function AdminDashboard() {
                 {categoryData.map((cat, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    className="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-800  transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <div
@@ -483,13 +469,13 @@ export default function AdminDashboard() {
           </div>
 
           {/* Top Products & Recent Orders */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 dark:gap-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 ">
             {/* Top Products */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-white dark:bg-gray-900 rounded-xs shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden"
+              className="bg-white dark:bg-gray-900  shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden"
             >
               <div className="p-6 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-center justify-between">
@@ -570,7 +556,7 @@ export default function AdminDashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-white dark:bg-gray-900 rounded-xs shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden"
+              className="bg-white dark:bg-gray-900  shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden"
             >
               <div className="p-6 border-b border-gray-100 dark:border-gray-800">
                 <div className="flex items-center justify-between">
@@ -628,82 +614,6 @@ export default function AdminDashboard() {
               </div>
             </motion.div>
           </div>
-
-          {/* Quick Actions */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 dark:gap-0"
-          >
-            <Link href="/admin/products/add">
-              <button className="bg-white dark:bg-gray-900 rounded-xs p-4 shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-all duration-300 w-full text-left">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-orange-100 dark:bg-orange-500/10 rounded-lg">
-                    <Package className="text-orange-500" size={20} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">
-                      Add Product
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      New listing
-                    </p>
-                  </div>
-                </div>
-              </button>
-            </Link>
-
-            <Link href="/admin/orders">
-              <button className="bg-white dark:bg-gray-900 rounded-xs p-4 shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-all duration-300 w-full text-left">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-500/10 rounded-lg">
-                    <ShoppingCart className="text-blue-500" size={20} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">
-                      Manage Orders
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      Track & update
-                    </p>
-                  </div>
-                </div>
-              </button>
-            </Link>
-
-            <Link href="/admin/users">
-              <button className="bg-white dark:bg-gray-900 rounded-xs p-4 shadow-sm border border-gray-200 dark:border-gray-800 hover:shadow-md transition-all duration-300 w-full text-left">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-500/10 rounded-lg">
-                    <Users className="text-purple-500" size={20} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">
-                      Customers
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      View all users
-                    </p>
-                  </div>
-                </div>
-              </button>
-            </Link>
-
-            <Link href="/admin/reports">
-              <button className="bg-orange-500 hover:bg-orange-600 rounded-xs p-4 shadow-sm transition-all duration-300 w-full text-left">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/20 rounded-lg">
-                    <Zap className="text-white" size={20} />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-white">View Reports</p>
-                    <p className="text-xs text-orange-100">Analytics data</p>
-                  </div>
-                </div>
-              </button>
-            </Link>
-          </motion.div>
         </div>
       </div>
     </div>

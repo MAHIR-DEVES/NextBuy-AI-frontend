@@ -19,6 +19,7 @@ export interface IProduct {
 
   slug: string;
   isFeatured: boolean;
+  isPublished: boolean;
 
   createdAt: string;
   updatedAt: string;

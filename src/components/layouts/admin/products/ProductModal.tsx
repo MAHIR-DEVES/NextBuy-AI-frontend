@@ -1,5 +1,3 @@
-// src/components/modules/products/ProductModal.tsx
-
 'use client';
 
 import React from 'react';
@@ -16,7 +14,7 @@ const ProductModal = ({ isOpen, onClose, children, title }: Props) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white w-full max-w-4xl rounded-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-900 w-full max-w-4xl rounded-2xl p-6 relative max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-xl cursor-pointer"

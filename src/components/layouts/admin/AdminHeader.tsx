@@ -5,13 +5,13 @@ import { Menu, Moon, Sun, ChevronDown, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
 import { getUser, logout } from '@/utils/auth';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   const [user, setUser] = useState<ReturnType<typeof getUser> | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     setUser(getUser());
   }, []);
@@ -20,6 +20,11 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
+  };
+
+  const handelLogout = () => {
+    logout();
+    router.push('/login');
   };
 
   const getInitial = () => {
@@ -126,7 +131,7 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
 
                     <div className="border-t py-1">
                       <button
-                        onClick={() => logout()}
+                        onClick={handelLogout}
                         className="flex items-center gap-3 px-3 py-2 text-sm text-red-600 w-full"
                       >
                         <LogOut size={15} />

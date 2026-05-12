@@ -13,6 +13,7 @@ import BuyNowModal from '../modals/BuyNowModal';
 
 import { getUser } from '@/utils/auth';
 import { usePathname, useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type Props = {
   productId: string;
@@ -49,14 +50,12 @@ const ProductActions = ({ productId, product }: Props) => {
     try {
       setLoading(true);
 
-      await addToCart(productId, quantity);
+      // await addToCart(productId, quantity);
 
       increase(quantity);
-
-      alert('Added to cart!');
+      toast.success('Added to cart!');
     } catch (error) {
-      console.log(error);
-      alert('Failed to add to cart');
+      toast.error('Products Add Failed!');
     } finally {
       setLoading(false);
     }
@@ -76,18 +75,18 @@ const ProductActions = ({ productId, product }: Props) => {
     try {
       setWishlistLoading(true);
 
-      const res = await createWishlist({
+      await createWishlist({
         productId,
       });
-      console.log(res);
 
-      alert('Added to wishlist!');
+      toast.success('Added to wishlist!');
+
       setWishlistLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const message = error.response?.data?.error || 'Failed to add wishlist';
+      toast.error(message);
 
-      alert(message);
       setWishlistLoading(false);
     }
   };

@@ -6,6 +6,7 @@ import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { registerUser } from '@/services/auth.service';
+import { toast } from 'sonner';
 
 interface FormData {
   name: string;
@@ -82,7 +83,7 @@ export default function SignUpPage() {
     setIsLoading(true);
 
     try {
-      // ❌ confirmPassword বাদ দিচ্ছি backend এর জন্য
+      //  confirmPassword বাদ দিচ্ছি backend এর জন্য
       const payload = {
         name: formData.name,
         email: formData.email,
@@ -90,13 +91,12 @@ export default function SignUpPage() {
       };
 
       const res = await registerUser(payload);
-
-      console.log('REGISTER SUCCESS:', res);
+      toast.success('REGISTER SUCCESS ! ');
 
       router.push('/login');
     } catch (error: any) {
       console.error(error.message);
-      alert(error.message);
+      toast.error(error.message);
     } finally {
       setIsLoading(false);
     }

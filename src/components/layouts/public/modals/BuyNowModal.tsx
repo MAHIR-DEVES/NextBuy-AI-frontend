@@ -5,6 +5,7 @@ import { IProduct } from '@/types/products.type';
 import { Minus, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { singleOrder } from '@/services/orders.service';
+import { toast } from 'sonner';
 
 type Props = {
   open: boolean;
@@ -63,11 +64,11 @@ const BuyNowModal = ({ open, onClose, product }: Props) => {
 
       console.log('ORDER RESPONSE:', res);
 
-      alert('Order placed successfully!');
+      toast.success('Order placed successfully!');
       onClose();
     } catch (error) {
       console.log(error);
-      alert('Order failed!');
+      toast.error('Order failed!');
     } finally {
       setLoading(false);
     }

@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 
 import { deleteWishlist, getMyWishlist } from '@/services/wishlist.service';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type WishlistItem = {
   id: string;
@@ -114,13 +115,14 @@ const WishlistPage = () => {
       setDeleteLoading(wishlistId);
       await deleteWishlist(wishlistId);
       setWishlist(prev => prev.filter(item => item.id !== wishlistId));
+      toast.success('Successfully Remove Product From Wishlist !');
     } catch (error: any) {
       console.log(error);
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
         'Failed to remove wishlist';
-      alert(message);
+      toast.error(message);
     } finally {
       setDeleteLoading(null);
     }

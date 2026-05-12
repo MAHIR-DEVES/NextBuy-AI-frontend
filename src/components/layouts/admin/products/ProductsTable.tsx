@@ -3,14 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import {
-  Eye,
-  Edit2,
-  Trash2,
-  Package,
-  AlertCircle,
-  CheckCircle,
-} from 'lucide-react';
+import { Eye, Edit2, Trash2, Package, CheckCircle } from 'lucide-react';
 import { IProduct } from '@/types/products.type';
 
 type Props = {

@@ -4,6 +4,7 @@ import { createOrder } from '@/services/orders.service';
 import { useCartStore } from '@/store/cart.store';
 import { CartItem } from '@/types/cart.type';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 const CheckoutForm = ({
   subtotal,
@@ -37,9 +38,7 @@ const CheckoutForm = ({
         isInsideDhaka: insideDhaka,
       });
 
-      console.log('Order Success:', res);
-
-      alert('Order placed successfully!');
+      toast.success('Order placed successfully!');
       // state update
       reset();
       fetchCart();
@@ -49,7 +48,7 @@ const CheckoutForm = ({
       setAddress('');
     } catch (err) {
       console.log(err);
-      alert('Order failed!');
+      toast.error('Order failed!');
     } finally {
       setLoading(false);
     }

@@ -84,29 +84,31 @@ const UserDropdown = () => {
         className="flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-gray-100 transition-all duration-200"
       >
         {/* Avatar */}
-        {user?.avatar ? (
-          <Image
-            src={user.avatar}
-            alt="user"
-            width={48}
-            height={48}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-        ) : (
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shadow-sm">
-            {user?.name ? (
-              <span className="text-sm font-medium text-white">
-                {getInitials(user.name)}
-              </span>
-            ) : (
-              <User className="w-4 h-4 text-white" />
-            )}
-          </div>
-        )}
+        <div className="flex items-center justify-center shrink-0">
+          {user?.avatar ? (
+            <Image
+              src={user.avatar}
+              alt="user"
+              width={48}
+              height={48}
+              className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full object-cover border border-gray-200"
+            />
+          ) : (
+            <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shadow-sm">
+              {user?.name ? (
+                <span className="text-xs sm:text-sm font-medium text-white">
+                  {getInitials(user.name)}
+                </span>
+              ) : (
+                <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Chevron indicator */}
         <ChevronDown
-          className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`hidden md:block w-4 h-4 text-gray-500 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
         />
       </button>
 

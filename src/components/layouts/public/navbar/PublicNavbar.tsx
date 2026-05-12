@@ -41,6 +41,9 @@ const PublicNavbar = ({ className }: { className?: string }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isFullscreenMenuOpen, setIsFullscreenMenuOpen] = useState(false);
   const [isOrderProtectionOpen, setIsOrderProtectionOpen] = useState(false);
+  // ✅ Controlled state for mobile sidebar
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const fetchCart = useCartStore(state => state.fetchCart);
   const count = useCartStore(state => state.count);
 
@@ -62,6 +65,9 @@ const PublicNavbar = ({ className }: { className?: string }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // ✅ Single helper — pass as onClick to every link inside the sidebar
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
   return (
     <section
       className={cn('border-b bg-white sticky top-0 z-50 w-full', className)}
@@ -80,191 +86,210 @@ const PublicNavbar = ({ className }: { className?: string }) => {
         <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">
           {/* LEFT */}
           <div className="flex items-center justify-between w-full md:w-auto">
-            {/* Logo */}
-            <Link className="flex items-center gap-2 shrink-0" href="/">
-              <div className="flex items-center">
-                <span className="text-xl sm:text-2xl font-bold text-orange-500">
-                  NEXT
-                </span>
-                <span className="text-xl sm:text-2xl font-bold text-gray-800">
-                  BUY
-                </span>
-              </div>
-            </Link>
+            <div className="flex items-center gap-2">
+              {/* ✅ open + onOpenChange make this a controlled Sheet */}
+              <div className="md:hidden">
+                <Sheet
+                  open={isMobileMenuOpen}
+                  onOpenChange={setIsMobileMenuOpen}
+                >
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                  </SheetTrigger>
 
-            {/* Mobile Menu Button */}
-            <div className="flex items-center gap-2 md:hidden">
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-orange-500 rounded-full text-[10px] text-white flex items-center justify-center">
-                  0
-                </span>
-              </Button>
-
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-
-                <SheetContent side="left" className="w-80 p-0">
-                  {/* Header */}
-                  <div className="p-4 border-b">
-                    <SheetHeader className="p-0">
-                      <SheetTitle className="flex items-center justify-between">
-                        <Link
-                          className="flex items-center gap-2 shrink-0"
-                          href="/"
-                        >
-                          <div className="flex items-center">
-                            <span className="text-xl font-bold text-orange-500">
-                              NEXT
-                            </span>
-                            <span className="text-xl font-bold text-gray-800">
-                              BUY
-                            </span>
-                          </div>
-                        </Link>
-                      </SheetTitle>
-                    </SheetHeader>
-                  </div>
-
-                  <div className="p-4 space-y-6">
-                    {/* USER SECTION */}
-                    <div className="space-y-3">
-                      {user ? (
-                        <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-                          {user?.avatar ? (
-                            <Image
-                              src={user.avatar}
-                              alt="User avatar"
-                              width={40}
-                              height={40}
-                              className="rounded-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                              <User className="h-5 w-5 text-gray-600" />
+                  <SheetContent
+                    side="left"
+                    className="w-80 p-0 overflow-y-auto"
+                  >
+                    {/* Header */}
+                    <div className="p-4 border-b">
+                      <SheetHeader className="p-0">
+                        <SheetTitle>
+                          <Link
+                            href="/"
+                            className="flex items-center gap-2 shrink-0"
+                            onClick={closeMobileMenu}
+                          >
+                            <div className="flex items-center">
+                              <span className="text-xl font-bold text-orange-500">
+                                NEXT
+                              </span>
+                              <span className="text-xl font-bold text-gray-800">
+                                BUY
+                              </span>
                             </div>
-                          )}
-                          <div className="flex-1">
-                            <p className="font-medium text-gray-900">
-                              {user?.name || 'User'}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              {user?.email || 'user@example.com'}
-                            </p>
+                          </Link>
+                        </SheetTitle>
+                      </SheetHeader>
+                    </div>
+
+                    <div className="p-4 space-y-6">
+                      {/* USER SECTION */}
+                      <div className="space-y-3">
+                        {user ? (
+                          <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
+                            {user?.avatar ? (
+                              <Image
+                                src={user.avatar}
+                                alt="User avatar"
+                                width={40}
+                                height={40}
+                                className="rounded-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                <User className="h-5 w-5 text-gray-600" />
+                              </div>
+                            )}
+                            <div className="flex-1">
+                              <p className="font-medium text-gray-900">
+                                {user?.name || 'User'}
+                              </p>
+                              <p className="text-sm text-gray-500">
+                                {user?.email || 'user@example.com'}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        <>
-                          <Link href="/login">
-                            <Button className="w-full bg-orange-500 hover:bg-orange-600">
-                              Sign in
-                            </Button>
-                          </Link>
-                          <Link href="/register">
-                            <Button variant="outline" className="w-full">
-                              Create account
-                            </Button>
-                          </Link>
-                        </>
-                      )}
-                    </div>
-
-                    {/* CATEGORY SECTION */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                        Categories
-                      </h3>
-                      <div className="space-y-1">
-                        {[
-                          { name: 'Smartphones', icon: Smartphone },
-                          { name: 'Laptop', icon: Laptop },
-                          { name: 'Fashion', icon: Shirt },
-                          { name: 'Gaming', icon: Gamepad2 },
-                          { name: 'Accessories', icon: Watch },
-                          { name: 'Electronics', icon: Monitor },
-                          { name: 'Home & Garden', icon: Home },
-                          { name: 'Sports & Entertainment', icon: Trophy },
-                        ].map(cat => {
-                          const Icon = cat.icon;
-                          return (
-                            <Link
-                              key={cat.name}
-                              href={`/products?category=${cat.name}`}
-                              className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
-                            >
-                              <Icon className="h-5 w-5" />
-                              <span>{cat.name}</span>
+                        ) : (
+                          <>
+                            <Link href="/login" onClick={closeMobileMenu}>
+                              <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                                Sign in
+                              </Button>
                             </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* BRAND SECTION */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                        Brands
-                      </h3>
-                      <div className="space-y-1">
-                        {['Apple', 'Samsung', 'Sony', 'Xiaomi', 'Dell'].map(
-                          brand => (
-                            <Link
-                              key={brand}
-                              href={`/products?brand=${brand}`}
-                              className="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
-                            >
-                              {brand}
+                            <Link href="/register" onClick={closeMobileMenu}>
+                              <Button variant="outline" className="w-full">
+                                Create account
+                              </Button>
                             </Link>
-                          ),
+                          </>
                         )}
                       </div>
+
+                      {/* CATEGORY SECTION */}
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                          Categories
+                        </h3>
+                        <div className="space-y-1">
+                          {[
+                            { name: 'Smartphones', icon: Smartphone },
+                            { name: 'Laptop', icon: Laptop },
+                            { name: 'Fashion', icon: Shirt },
+                            { name: 'Gaming', icon: Gamepad2 },
+                            { name: 'Accessories', icon: Watch },
+                            { name: 'Electronics', icon: Monitor },
+                            { name: 'Home & Garden', icon: Home },
+                            { name: 'Sports & Entertainment', icon: Trophy },
+                          ].map(cat => {
+                            const Icon = cat.icon;
+                            return (
+                              <Link
+                                key={cat.name}
+                                href={`/products?category=${cat.name}`}
+                                onClick={closeMobileMenu}
+                                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
+                              >
+                                <Icon className="h-5 w-5" />
+                                <span>{cat.name}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* BRAND SECTION */}
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                          Brands
+                        </h3>
+                        <div className="space-y-1">
+                          {['Apple', 'Samsung', 'Sony', 'Xiaomi', 'Dell'].map(
+                            brand => (
+                              <Link
+                                key={brand}
+                                href={`/products?brand=${brand}`}
+                                onClick={closeMobileMenu}
+                                className="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
+                              >
+                                {brand}
+                              </Link>
+                            ),
+                          )}
+                        </div>
+                      </div>
+
+                      {/* EXTRA LINKS */}
+                      <div className="pt-4 border-t space-y-3">
+                        <Link
+                          href="/products?verified=true"
+                          onClick={closeMobileMenu}
+                          className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                        >
+                          <Shield className="h-4 w-4" />
+                          Verified manufacturers
+                        </Link>
+
+                        <Link
+                          href="/products?orderProtection=true"
+                          onClick={closeMobileMenu}
+                          className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                        >
+                          <Package className="h-4 w-4" />
+                          Order protections
+                        </Link>
+
+                        <Link
+                          href="/products?taxExemption=true"
+                          onClick={closeMobileMenu}
+                          className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
+                        >
+                          <FileText className="h-4 w-4" />
+                          Tax exemption
+                        </Link>
+                      </div>
                     </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
 
-                    {/* EXTRA LINKS */}
-                    <div className="pt-4 border-t space-y-3">
-                      <Link
-                        href="/products?verified=true"
-                        className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                      >
-                        <Shield className="h-4 w-4" />
-                        Verified manufacturers
-                      </Link>
+              {/* Logo */}
+              <Link className="flex items-center gap-2 shrink-0" href="/">
+                <div className="flex items-center">
+                  <span className="text-xl sm:text-2xl font-bold text-orange-500">
+                    NEXT
+                  </span>
+                  <span className="text-xl sm:text-2xl font-bold text-gray-800">
+                    BUY
+                  </span>
+                </div>
+              </Link>
+            </div>
 
-                      <Link
-                        href="/products?orderProtection=true"
-                        className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                      >
-                        <Package className="h-4 w-4" />
-                        Order protections
-                      </Link>
-
-                      <Link
-                        href="/products?taxExemption=true"
-                        className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                      >
-                        <FileText className="h-4 w-4" />
-                        Tax exemption
-                      </Link>
-                    </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
+            {/* Mobile: profile + cart (right side) */}
+            <div className="flex items-center gap-3 md:hidden">
+              {user && <UserDropdown />}
+              <div className="relative">
+                <Link href="/cart">
+                  <ShoppingCart className="h-5 w-5" />
+                  <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white">
+                    {count}
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
 
           {/* Center: Search bar */}
-          <SearchBar></SearchBar>
+          <SearchBar />
 
           {/* RIGHT DESKTOP */}
           <div className="hidden lg:flex items-center gap-4 shrink-0 ml-8">
-            {/* Sign in */}
             <div className="hidden lg:flex items-center gap-2 text-sm">
               {user ? (
-                <UserDropdown></UserDropdown>
+                <UserDropdown />
               ) : (
                 <Link href="/login">
                   <Button
@@ -276,15 +301,12 @@ const PublicNavbar = ({ className }: { className?: string }) => {
                   </Button>
                 </Link>
               )}
-
               <span className="text-gray-300 text-lg">|</span>
             </div>
 
-            {/* Cart */}
             <div className="relative">
-              <Link href={'/cart'}>
+              <Link href="/cart">
                 <ShoppingCart className="h-7 w-7" />
-
                 <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white">
                   {count}
                 </span>

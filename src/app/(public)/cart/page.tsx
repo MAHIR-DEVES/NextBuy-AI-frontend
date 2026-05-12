@@ -195,11 +195,11 @@ const CartPage = () => {
                           index !== items.length - 1 ? 'border-b' : ''
                         }`}
                       >
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                           {/* LEFT */}
-                          <div className="flex gap-4 flex-1">
+                          <div className="flex gap-3 flex-1 min-w-0">
                             {/* Image */}
-                            <div className="w-28 h-28 border rounded overflow-hidden flex-shrink-0">
+                            <div className="w-24 h-24 sm:w-28 sm:h-28 border rounded-lg overflow-hidden shrink-0">
                               <img
                                 src={item.product.thumbnail}
                                 alt={item.product.name}
@@ -207,77 +207,79 @@ const CartPage = () => {
                               />
                             </div>
 
-                            {/* Info */}
-                            <div className="space-y-2">
-                              <h2 className="text-base md:text-lg font-medium text-gray-800 line-clamp-2">
-                                {item.product.name}
-                              </h2>
+                            {/* Info + All Actions */}
+                            <div className="flex-1 min-w-0 flex flex-col justify-between">
+                              <div>
+                                <h2 className="text-sm sm:text-base md:text-lg font-medium text-gray-800 line-clamp-2">
+                                  {item.product.name}
+                                </h2>
 
-                              <p className="text-sm text-gray-500">
-                                {item.product.brand}
-                              </p>
+                                <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                                  {item.product.brand}
+                                </p>
+                              </div>
+
+                              {/* Bottom Row */}
+                              <div className="flex items-center justify-between flex-wrap gap-3 mt-4">
+                                {/* Price */}
+                                <div className="flex items-center gap-2">
+                                  <span className="text-orange-500 text-lg sm:text-xl font-semibold">
+                                    ${item.product.price}
+                                  </span>
+
+                                  {item.product.discount > 0 && (
+                                    <span className="bg-orange-100 text-orange-500 text-[10px] sm:text-xs px-2 py-1 rounded hidden md:block">
+                                      -{item.product.discount}%
+                                    </span>
+                                  )}
+                                </div>
+
+                                {/* Quantity */}
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    disabled={updatingId === item.id}
+                                    onClick={() =>
+                                      handleDecrease(item.id, item.quantity)
+                                    }
+                                    className="w-8 h-8 border rounded-md flex items-center justify-center hover:bg-gray-100 transition"
+                                  >
+                                    <Minus size={14} />
+                                  </button>
+
+                                  <span className="font-medium min-w-[20px] text-center">
+                                    {updatingId === item.id ? (
+                                      <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                      item.quantity
+                                    )}
+                                  </span>
+
+                                  <button
+                                    disabled={updatingId === item.id}
+                                    onClick={() =>
+                                      handleIncrease(item.id, item.quantity)
+                                    }
+                                    className="w-8 h-8 border rounded-md flex items-center justify-center hover:bg-gray-100 transition"
+                                  >
+                                    <Plus size={14} />
+                                  </button>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="flex items-center gap-3">
+                                  <button className="text-gray-400 hover:text-pink-500 transition">
+                                    <HeartIcon size={18} />
+                                  </button>
+
+                                  <button
+                                    onClick={() => handleDelete(item.id)}
+                                    className="text-gray-400 hover:text-red-500 transition"
+                                  >
+                                    <Trash2 size={18} />
+                                  </button>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-
-                          {/* price and action */}
-                          <div className="flex items-center gap-3 flex-wrap">
-                            <span className="text-orange-500 text-2xl font-semibold">
-                              $ {item.product.price}
-                            </span>
-
-                            {item.product.discount > 0 && (
-                              <span className="bg-orange-100 text-orange-500 text-xs px-2 py-1 rounded">
-                                -{item.product.discount}%
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Actions */}
-                          <div className="flex items-center gap-4 pt-2">
-                            <button className="text-gray-400 hover:text-pink-500 transition">
-                              <HeartIcon size={18} />
-                            </button>
-
-                            <button
-                              onClick={() => handleDelete(item.id)}
-                              className="text-gray-400 hover:text-red-500 transition"
-                            >
-                              <Trash2 size={18} />
-                            </button>
-                          </div>
-
-                          {/* Quantity */}
-                          <div className="flex items-center gap-3">
-                            {/* Minus */}
-                            <button
-                              disabled={updatingId === item.id}
-                              onClick={() =>
-                                handleDecrease(item.id, item.quantity)
-                              }
-                              className="w-9 h-9 border rounded flex items-center justify-center hover:bg-gray-100 transition disabled:opacity-50"
-                            >
-                              <Minus size={16} />
-                            </button>
-
-                            {/* Quantity */}
-                            <span className="font-medium text-lg min-w-[20px] text-center">
-                              {updatingId === item.id ? (
-                                <Loader2 className="w-5 h-5 animate-spin" />
-                              ) : (
-                                item.quantity
-                              )}
-                            </span>
-
-                            {/* Plus */}
-                            <button
-                              disabled={updatingId === item.id}
-                              onClick={() =>
-                                handleIncrease(item.id, item.quantity)
-                              }
-                              className="w-9 h-9 border rounded flex items-center justify-center hover:bg-gray-100 transition disabled:opacity-50"
-                            >
-                              <Plus size={16} />
-                            </button>
                           </div>
                         </div>
                       </div>

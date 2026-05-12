@@ -1,146 +1,143 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
-  Package,
   ShoppingCart,
-  Store,
-  Users,
-  MessageSquare,
   User,
   LogOut,
+  Heart,
 } from 'lucide-react';
 
-const UserSidebar = ({ isOpen }: { isOpen: boolean }) => {
+const UserSidebar = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: (v: boolean) => void;
+}) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const menuItems = [
-    { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-
-    { name: 'Products', href: '/admin/products', icon: Package },
-
-    { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-
-    { name: 'Sellers', href: '/admin/sellers', icon: Store },
-
-    { name: 'Customers', href: '/admin/customers', icon: Users },
-
-    { name: 'Messages', href: '/admin/messages', icon: MessageSquare },
-
-    { name: 'Profile', href: '/admin/profile', icon: User },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Orders', href: '/dashboard/orders', icon: ShoppingCart },
+    { name: 'Wishlist', href: '/dashboard/wishlist', icon: Heart },
+    { name: 'Profile', href: '/dashboard/profile', icon: User },
   ];
 
   const isActive = (href: string) => {
-    if (href === '/admin') {
-      return pathname === href;
-    }
+    if (href === '/dashboard') return pathname === href;
     return pathname?.startsWith(href);
+  };
+
+  // ✅ FIXED NAVIGATION HANDLER
+  const handleNavigate = (href: string) => {
+    router.push(href);
+
+    // small delay prevents navigation interruption bug
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 100);
   };
 
   return (
     <aside
       className={`
         fixed top-0 left-0 z-40 h-screen
-        bg-[#f0ede9] dark:bg-gray-900
+        bg-white dark:bg-gray-900
+        border-r border-gray-200 dark:border-gray-800
         transition-all duration-300
-        flex flex-col 
+        flex flex-col shadow-sm
 
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         w-64
 
-        md:static md:translate-x-0 
+        md:static md:translate-x-0
         ${isOpen ? 'md:w-64' : 'md:w-20'}
       `}
     >
-      {/* Logo Section */}
-      <div className="p-5 border-b border-gray-200 dark:border-gray-800">
-        <Link href="/admin" className="group flex items-center gap-3">
-          <div className="relative">
-            <div className="absolute inset-0 bg-[#FF6B35] rounded-lg blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
-
-            <div className="relative w-8 h-8">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35] to-[#ff8c5a] rotate-45 rounded-md"></div>
-              <div className="absolute inset-[3px] bg-white dark:bg-[#0F0B1A] rounded-full"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-2 h-2 bg-gradient-to-br from-[#FF6B35] to-[#ff8c5a] rounded-full"></div>
-              </div>
-            </div>
+      {/* Logo */}
+      <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-800">
+        <Link href="/admin" className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center">
+            <span className="text-white dark:text-gray-900 font-bold text-sm">
+              N
+            </span>
           </div>
 
-          <div className={`${!isOpen && 'hidden'} transition-all`}>
-            <span className="text-xl sm:text-2xl font-black tracking-tight text-gray-900 dark:text-white">
+          <div className={`${!isOpen && 'hidden'}`}>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
               Next
             </span>
-            <span className="text-xl sm:text-2xl font-light tracking-tight bg-gradient-to-r from-[#FF6B35] to-[#ff8c5a] bg-clip-text text-transparent">
-              Buy
-            </span>
+            <span className="text-xl font-bold text-orange-500">Buy</span>
           </div>
         </Link>
       </div>
 
-      {/* Navigation (Scrollable) */}
-      <nav className="flex-1 overflow-y-auto p-4">
+      {/* NAV */}
+      <nav className="flex-1 overflow-y-auto py-6 px-3">
         <div className="space-y-1">
           {menuItems.map(item => {
             const Icon = item.icon;
             const active = isActive(item.href);
 
             return (
-              <Link
+              <button
                 key={item.href}
-                href={item.href}
+                onClick={() => handleNavigate(item.href)}
                 className={`
-  flex items-center gap-3 rounded-lg text-sm font-medium transition-all duration-200
+                  flex items-center gap-3 rounded-lg text-sm font-medium
+                  transition-all duration-200 w-full
 
-  ${isOpen ? 'px-3 py-2.5' : 'px-0 py-2 justify-center w-10 mx-auto'}
+                  ${isOpen ? 'px-3 py-2.5' : 'px-0 py-2.5 justify-center'}
 
-  ${
-    isOpen && active
-      ? 'bg-[#FF6B35] text-white shadow-sm'
-      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
-  }
-  
-`}
+                  ${
+                    active
+                      ? 'bg-orange-50 text-orange-600'
+                      : 'text-gray-600 hover:bg-gray-50'
+                  }
+                `}
               >
-                {!isOpen && active ? (
-                  <Icon size={22} className="text-[#FF6B35]" />
-                ) : (
-                  <Icon size={22} />
-                )}
-
-                <span className={`${!isOpen && 'hidden'} transition-all`}>
-                  {item.name}
-                </span>
-              </Link>
+                <Icon size={20} className={active ? 'text-orange-500' : ''} />
+                <span className={`${!isOpen && 'hidden'}`}>{item.name}</span>
+              </button>
             );
           })}
         </div>
       </nav>
 
-      {/* Bottom Section (Always Bottom) */}
+      {/* Bottom */}
       <div className="p-4 border-t border-gray-200 dark:border-gray-800 mt-auto">
-        <div className="space-y-2">
-          <div className="flex items-center gap-3 px-3 py-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
-            <div className="w-8 h-8 bg-[#FF6B35] rounded-full flex items-center justify-center">
-              <span className="text-sm font-medium text-white">AD</span>
-            </div>
-            <div className={`${!isOpen && 'hidden'} transition-all`}>
-              <p className="text-sm font-medium text-gray-800 dark:text-white">
-                Admin User
-              </p>
-              <p className="text-xs text-gray-500">admin@devstudio.com</p>
-            </div>
+        {/* User */}
+        <div
+          className={`
+            flex items-center gap-3 rounded-lg p-2
+            ${isOpen ? 'bg-gray-50' : 'justify-center'}
+          `}
+        >
+          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+            <span className="text-xs font-medium">AD</span>
           </div>
 
-          <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 w-full">
-            <LogOut size={18} />
-            <span className={`${!isOpen && 'hidden'} transition-all`}>
-              Logout
-            </span>
-          </button>
+          <div className={`${!isOpen && 'hidden'} flex-1`}>
+            <p className="text-sm font-medium">Admin User</p>
+            <p className="text-xs text-gray-500">admin@example.com</p>
+          </div>
         </div>
+
+        {/* Logout */}
+        <button
+          className={`
+            w-full flex items-center gap-3 rounded-lg px-3 py-2 mt-2
+            text-gray-600 hover:bg-red-50 hover:text-red-600
+            ${!isOpen && 'justify-center'}
+          `}
+        >
+          <LogOut size={18} />
+          <span className={`${!isOpen && 'hidden'}`}>Logout</span>
+        </button>
       </div>
     </aside>
   );

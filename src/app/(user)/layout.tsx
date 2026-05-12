@@ -37,7 +37,7 @@ export default function UserLayout({
         />
       )}
       {/* Sidebar */}
-      <UserSidebar isOpen={isSidebarOpen} />
+      <UserSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col">

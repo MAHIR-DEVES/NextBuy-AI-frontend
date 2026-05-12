@@ -70,3 +70,13 @@ export const getAllOrders = async () => {
 
   return res.data;
 };
+
+export const getOrdersByUser = async () => {
+  const res = await axios.get(`${BASE_URL}/orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

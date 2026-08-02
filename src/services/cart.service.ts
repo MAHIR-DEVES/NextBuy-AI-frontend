@@ -1,9 +1,8 @@
 import { getToken } from '@/utils/auth';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
-const token = getToken();
-
 export const addToCart = async (productId: string, quantity: number = 1) => {
+  const token = getToken();
   const res = await fetch(`${BASE_URL}/cart`, {
     method: 'POST',
     headers: {
@@ -24,6 +23,7 @@ export const addToCart = async (productId: string, quantity: number = 1) => {
 };
 
 export const getCartItems = async () => {
+  const token = getToken();
   const res = await fetch(`${BASE_URL}/cart`, {
     method: 'GET',
     headers: {
@@ -41,6 +41,7 @@ export const getCartItems = async () => {
 
 // update quantity
 export const updateCartItem = async (cartId: string, quantity: number) => {
+  const token = getToken();
   const res = await fetch(`${BASE_URL}/cart/${cartId}`, {
     method: 'PATCH',
     headers: {
@@ -61,6 +62,7 @@ export const updateCartItem = async (cartId: string, quantity: number) => {
 
 // delete item
 export const deleteCartItem = async (cartId: string) => {
+  const token = getToken();
   const res = await fetch(`${BASE_URL}/cart/${cartId}`, {
     method: 'DELETE',
     headers: {

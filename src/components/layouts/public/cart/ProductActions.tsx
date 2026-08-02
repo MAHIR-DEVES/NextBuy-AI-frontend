@@ -50,7 +50,7 @@ const ProductActions = ({ productId, product }: Props) => {
     try {
       setLoading(true);
 
-      // await addToCart(productId, quantity);
+      await addToCart(productId, quantity);
 
       increase(quantity);
       toast.success('Added to cart!');

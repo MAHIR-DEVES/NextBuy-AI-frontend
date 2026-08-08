@@ -45,7 +45,7 @@ const ProductCard1 = ({
 
   return (
     <Link href={`/products/${product.id}`}>
-      <Card className="h-full overflow-hidden p-0">
+      <Card className="h-full overflow-hidden p-0  border border-gray-100 hover:border-primary-light transition-all duration-300">
         <CardHeader className="relative block p-0">
           <AspectRatio ratio={1.268115942} className="overflow-hidden">
             <Image
@@ -57,12 +57,7 @@ const ProductCard1 = ({
           </AspectRatio>
 
           {product.badge && (
-            <Badge
-              style={{
-                background: product.badge.backgroundColor,
-              }}
-              className="absolute start-4 top-4"
-            >
+            <Badge className="absolute start-4 top-4 bg-chart-2">
               {product.badge.text}
             </Badge>
           )}

@@ -78,15 +78,13 @@ const AllCategories = ({
           <X className="h-6 w-6" />
         </button>
 
-        <h2 className="text-2xl font-bold mb-8 text-gray-800">
-          Shop by Category
-        </h2>
+        <h2 className="text-2xl font-bold mb-8 text-title">Shop by Category</h2>
 
         {/* Categories */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {categories.map(category => (
             <div key={category.name} className="space-y-3">
-              <h3 className="text-lg font-semibold text-orange-600 border-b pb-2">
+              <h3 className="text-lg font-semibold text-subtitle border-b pb-2">
                 {category.name}
               </h3>
               <ul className="space-y-2">
@@ -94,7 +92,7 @@ const AllCategories = ({
                   <li key={sub}>
                     <a
                       href="#"
-                      className="text-gray-600 hover:text-orange-500 hover:pl-2 transition-all duration-200 block"
+                      className="text-gray-600 hover:text-hover-text hover:pl-2 transition-all duration-200 block"
                     >
                       {sub}
                     </a>
@@ -107,7 +105,7 @@ const AllCategories = ({
 
         {/* Featured */}
         <div className="mt-12 pt-8 border-t">
-          <h3 className="text-xl font-semibold mb-6 text-gray-800">
+          <h3 className="text-xl font-semibold mb-6 text-subtitle">
             Featured Collections
           </h3>
 

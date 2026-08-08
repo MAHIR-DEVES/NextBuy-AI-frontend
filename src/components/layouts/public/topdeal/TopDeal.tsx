@@ -40,7 +40,7 @@ const TopDeal = async () => {
           </div>
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-semibold mt-3 sm:mt-0 group"
+            className="inline-flex items-center gap-2 text-title hover:text-hover-text font-semibold mt-3 sm:mt-0 group"
           >
             View more
             <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -59,7 +59,7 @@ const TopDeal = async () => {
 
             return (
               <Link key={product.id} href={`/products/${product.id}`}>
-                <div className="group bg-white rounded-xs shadow-md overflow-hidden cursor-pointer border border-gray-100 hover:border-orange-200">
+                <div className="group bg-white rounded-xs shadow-md overflow-hidden cursor-pointer border border-gray-100 hover:border-primary-light transition-all duration-300">
                   {/* Product Image */}
                   <div className="relative h-56 overflow-hidden bg-gray-100">
                     <AspectRatio
@@ -76,7 +76,7 @@ const TopDeal = async () => {
 
                     {/* Discount Badge */}
                     {product.discount && (
-                      <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      <div className="absolute top-2 right-2 bg-chart-2 text-white text-xs font-bold px-2 py-1 rounded-full">
                         -{product.discount}%
                       </div>
                     )}
@@ -107,7 +107,7 @@ const TopDeal = async () => {
                     <div className="mb-3">
                       <div className="flex items-baseline gap-2">
                         {/* Final Price */}
-                        <span className="text-2xl font-bold text-orange-500">
+                        <span className="text-2xl font-bold ">
                           ${finalPrice.toFixed(2)}
                         </span>
 

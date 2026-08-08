@@ -82,7 +82,7 @@ const Category = () => {
             </h2>
           </div>
           <Link
-            className="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-semibold mt-3 sm:mt-0 group"
+            className="inline-flex items-center gap-2 text-title hover:text-hover-text font-semibold mt-3 sm:mt-0 group"
             href="/products"
           >
             View more

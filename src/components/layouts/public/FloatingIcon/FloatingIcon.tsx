@@ -37,7 +37,7 @@ const FloatingIcon = () => {
         {/* AI Chat Bot */}
         <button
           onClick={() => setIsChatOpen(true)}
-          className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 via-orange-500 to-orange-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 group relative"
+          className="w-14 h-14 rounded-full bg-gradient-primary text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 group relative"
           title="Chat with AI Assistant"
         >
           <RiRobot2Fill size={30} />
@@ -45,7 +45,7 @@ const FloatingIcon = () => {
             AI Assistant
           </span>
           {/* Pulse animation for bot icon */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-orange-500 to-orange-600 animate-ping opacity-75"></div>
+          <div className="absolute inset-0 rounded-full bg-primary-light animate-ping opacity-75"></div>
         </button>
       </div>
 

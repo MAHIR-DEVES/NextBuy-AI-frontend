@@ -103,13 +103,13 @@ const LeftOfferSlider = () => {
             `}
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-xs p-3 sm:p-4 shadow-2xl">
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
                 {offer.discount}
               </p>
               <p className="text-gray-600 text-xs sm:text-sm mt-1">
                 Limited time offer
               </p>
-              <button className="mt-2 sm:mt-3 bg-orange-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xs font-semibold hover:bg-orange-600 transition-all w-full">
+              <button className="mt-2 sm:mt-3 bg-gradient-primary text-white px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-xs font-semibold hover:bg-orange-600 transition-all w-full">
                 Grab Deal
               </button>
             </div>
@@ -120,7 +120,7 @@ const LeftOfferSlider = () => {
       {/* Progress */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/30 z-20">
         <div
-          className="h-full bg-orange-500"
+          className="h-full bg-primary-light"
           style={{
             width: `${((currentIndex + 1) / offerImages.length) * 100}%`,
             transition: 'width 3s linear',

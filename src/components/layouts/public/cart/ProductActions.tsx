@@ -124,7 +124,7 @@ const ProductActions = ({ productId, product }: Props) => {
         <button
           onClick={handleOrderBtn}
           disabled={loading || wishlistLoading}
-          className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors disabled:opacity-50"
+          className="flex-1 bg-button text-button-text py-3 rounded-lg font-semibold hover:bg-button-hover transition-colors disabled:opacity-50 cursor-pointer"
         >
           Buy Now
         </button>
@@ -133,7 +133,7 @@ const ProductActions = ({ productId, product }: Props) => {
         <button
           onClick={handleAddToCart}
           disabled={loading || wishlistLoading}
-          className="flex-1 border-2 border-orange-500 text-orange-500 py-3 rounded-lg font-semibold hover:bg-orange-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+          className="flex-1 border-2 border-primary-light text-title py-3 rounded-lg font-semibold hover:bg-button-hover-1 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -148,7 +148,7 @@ const ProductActions = ({ productId, product }: Props) => {
         <button
           onClick={handleAddWishlist}
           disabled={wishlistLoading || loading}
-          className="w-14 border-2 border-pink-500 text-pink-500 rounded-lg flex items-center justify-center hover:bg-pink-50 transition disabled:opacity-50"
+          className="w-14 border-2 border-primary-light text-title rounded-lg flex items-center justify-center hover:bg-button-hover-1 transition disabled:opacity-50"
         >
           {wishlistLoading ? (
             <Loader2 className="h-5 w-5 animate-spin" />

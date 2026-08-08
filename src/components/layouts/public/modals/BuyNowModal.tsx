@@ -80,7 +80,7 @@ const BuyNowModal = ({ open, onClose, product }: Props) => {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
       <div className="bg-white  max-w-lg rounded-2xl shadow-xl overflow-hidden">
         {/* HEADER */}
-        <div className="bg-orange-500 text-white p-4">
+        <div className="bg-primary text-white p-4">
           <h2 className="text-lg font-semibold">Confirm Your Order</h2>
           <p className="text-sm opacity-90">Review before checkout</p>
         </div>
@@ -101,7 +101,7 @@ const BuyNowModal = ({ open, onClose, product }: Props) => {
               <p className="text-sm text-gray-500">Price: ${product.price}</p>
               <div className="flex  font-bold text-lg border-t mt-2 pt-2">
                 <span>Total: </span>
-                <span className="text-orange-600 ml-2">${totalPrice}</span>
+                <span className="text-title ml-2">${totalPrice}</span>
               </div>
             </div>
 
@@ -192,20 +192,23 @@ const BuyNowModal = ({ open, onClose, product }: Props) => {
 
             <div className="flex justify-between font-bold text-lg border-t mt-2 pt-2">
               <span>Total</span>
-              <span className="text-orange-600">${totalPrice}</span>
+              <span className="text-title">${totalPrice}</span>
             </div>
           </div>
 
           {/* ACTIONS */}
           <div className="flex gap-3">
-            <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
+            <button
+              onClick={onClose}
+              className="flex-1 border border-primary-light py-2 rounded-lg hover:bg-button-hover-1 transition duration-300 cursor-pointer"
+            >
               Cancel
             </button>
 
             <button
               onClick={handleOrder}
               disabled={loading}
-              className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold"
+              className="flex-1 bg-button text-button-text py-2 rounded-lg font-semibold"
             >
               {loading ? 'Processing...' : 'Confirm Order'}
             </button>

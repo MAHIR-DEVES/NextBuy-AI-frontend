@@ -15,21 +15,19 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: 'About Us', link: '#' },
-    { name: 'Services', link: '#' },
-    { name: 'Categories', link: '#' },
-    { name: 'Privacy Policy', link: '#' },
-    { name: 'Terms & Conditions', link: '#' },
-    { name: 'FAQs', link: '#' },
+    { name: 'Home', link: '/' },
+    { name: 'Products', link: '/products' },
+    { name: 'About Us', link: '/about' },
+    { name: 'Contact Us', link: '/contact' },
+    { name: 'FAQs', link: '/faq' },
   ];
 
   const customerService = [
-    { name: 'Contact Us', link: '#' },
-    { name: 'Track Order', link: '#' },
-    { name: 'Returns & Refunds', link: '#' },
-    { name: 'Shipping Info', link: '#' },
-    { name: 'Warranty Policy', link: '#' },
-    { name: 'Size Guide', link: '#' },
+    { name: 'Privacy Policy', link: '/privacy-policy' },
+    { name: 'Warranty Policy', link: '/warranty-policy' },
+    { name: 'Terms & Conditions', link: '/terms-conditions' },
+    { name: 'Return & Refund Policy', link: '/return-refund' },
+    { name: 'Pre-Order Conditions', link: '/pre-order-conditions' },
   ];
 
   const SOCIAL_ICONS = [
@@ -58,34 +56,37 @@ const Footer = () => {
           {/* Company Info Section */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl font-bold text-orange-500">NEXT</span>
-              <span className="text-2xl font-bold text-gray-800">BUY</span>
+              <Image
+                src="/images/jonopriologo-logo.png"
+                alt="Logo"
+                width={170}
+                height={170}
+              />
             </div>
             <p className="text-gray-500 text-sm mb-4 leading-relaxed">
-              Your trusted global sourcing partner. We connect buyers with
-              verified manufacturers worldwide, ensuring quality products at
-              competitive prices.
+              Quality products, directly imported from China at affordable
+              prices. Shop with confidence.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
-                <MapPin className="h-4 w-4 text-orange-500 flex-shrink-0" />
+                <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
                 <span className="text-gray-500">
-                  123 Business Avenue, Tech Park, Singapore 123456
+                  Mirpur 2, Kataltola (Online Store)
                 </span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <Phone className="h-4 w-4 text-orange-500 flex-shrink-0" />
-                <span className="text-gray-500">+1 (555) 123-4567</span>
+                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+                <span className="text-gray-500">+8801629810013</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <Mail className="h-4 w-4 text-orange-500 flex-shrink-0" />
-                <span className="text-gray-500">support@nextbuy.com</span>
+                <Mail className="h-4 w-4 text-primary flex-shrink-0" />
+                <span className="text-gray-500">support@jonoprio.com</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
-                <Clock className="h-4 w-4 text-orange-500 flex-shrink-0" />
-                <span className="text-gray-500">Mon-Fri: 9AM - 6PM</span>
+                <Clock className="h-4 w-4 text-primary flex-shrink-0" />
+                <span className="text-gray-500">24/7 : 9AM - 6PM</span>
               </div>
             </div>
           </div>
@@ -100,7 +101,7 @@ const Footer = () => {
                 <li key={idx}>
                   <a
                     href={category.link}
-                    className="text-gray-500 hover:text-orange-500 transition-colors duration-300 flex items-center gap-2 text-sm group"
+                    className="text-gray-500 hover:text-title transition-colors duration-300 flex items-center gap-2 text-sm group"
                   >
                     <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                     {category.name}
@@ -120,7 +121,7 @@ const Footer = () => {
                 <li key={idx}>
                   <a
                     href={link.link}
-                    className="text-gray-500 hover:text-orange-500 transition-colors duration-300 flex items-center gap-2 text-sm group"
+                    className="text-gray-500 hover:text-title transition-colors duration-300 flex items-center gap-2 text-sm group"
                   >
                     <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                     {link.name}
@@ -140,7 +141,7 @@ const Footer = () => {
                 <li key={idx}>
                   <a
                     href={service.link}
-                    className="text-gray-500 hover:text-orange-500 transition-colors duration-300 flex items-center gap-2 text-sm group"
+                    className="text-gray-500 hover:text-title transition-colors duration-300 flex items-center gap-2 text-sm group"
                   >
                     <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                     {service.name}
@@ -156,7 +157,7 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             {/* Copyright */}
             <div className="text-gray-400 text-sm text-center">
-              © {currentYear} NEXTBUY. All rights reserved.
+              © {currentYear} Jonoprio. All rights reserved.
             </div>
             {/* Social Icons */}
             <div className="flex gap-3">

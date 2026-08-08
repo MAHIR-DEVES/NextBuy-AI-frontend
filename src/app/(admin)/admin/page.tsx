@@ -135,7 +135,7 @@ export default function AdminDashboard() {
 
   // Category distribution
   const categoryData = [
-    { name: 'Electronics', value: 45, color: '#f97316', count: 154 },
+    { name: 'Electronics', value: 45, color: '#37a78a', count: 154 },
     { name: 'Fashion', value: 25, color: '#fb923c', count: 86 },
     { name: 'Home & Garden', value: 15, color: '#fdba74', count: 52 },
     { name: 'Sports', value: 10, color: '#fed7aa', count: 34 },
@@ -240,7 +240,7 @@ export default function AdminDashboard() {
                   Export Report
                 </button>
                 <Link href="/admin/products/add">
-                  <button className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white  font-medium transition-all duration-300 flex items-center gap-2 shadow-sm">
+                  <button className="px-4 py-2 bg-primary hover:bg-orange-600 text-white  font-medium transition-all duration-300 flex items-center gap-2 shadow-sm">
                     <Package size={18} />
                     Add Product
                   </button>
@@ -303,9 +303,9 @@ export default function AdminDashboard() {
                   className="bg-white dark:bg-gray-900  p-6 shadow-sm border border-gray-200 dark:border-gray-800 transition-all duration-300"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="p-2 bg-orange-100 dark:bg-orange-500/10 ">
+                    <div className="p-2 bg-orange-100 dark:bg-primary/10 ">
                       <Icon
-                        className="text-orange-500 dark:text-orange-400"
+                        className="text-primary dark:text-orange-400"
                         size={20}
                       />
                     </div>
@@ -342,7 +342,7 @@ export default function AdminDashboard() {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                    <BarChart3 size={20} className="text-orange-500" />
+                    <BarChart3 size={20} className="text-primary" />
                     Revenue Overview
                   </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -352,7 +352,7 @@ export default function AdminDashboard() {
                 <select
                   value={timeRange}
                   onChange={e => setTimeRange(e.target.value)}
-                  className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700  text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 mt-3 sm:mt-0"
+                  className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700  text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary mt-3 sm:mt-0"
                 >
                   <option value="week">Last 7 days</option>
                   <option value="month">Last 30 days</option>
@@ -373,15 +373,15 @@ export default function AdminDashboard() {
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#fff',
-                        border: '1px solid #f97316',
+                        border: '1px solid #37a78a',
                         borderRadius: '8px',
                         padding: '8px 12px',
                       }}
-                      cursor={{ fill: '#f97316', opacity: 0.1 }}
+                      cursor={{ fill: '#37a78a', opacity: 0.1 }}
                     />
                     <Bar
                       dataKey="revenue"
-                      fill="#f97316"
+                      fill="#37a78a"
                       radius={[4, 4, 0, 0]}
                       maxBarSize={50}
                       name="Revenue ($)"
@@ -401,7 +401,7 @@ export default function AdminDashboard() {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                    <PieChart size={20} className="text-orange-500" />
+                    <PieChart size={20} className="text-primary" />
                     Category Sales
                   </h3>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -481,7 +481,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                      <Award size={20} className="text-orange-500" />
+                      <Award size={20} className="text-primary" />
                       Top Products
                     </h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -503,11 +503,11 @@ export default function AdminDashboard() {
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-sm">
+                        <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-primary/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-sm">
                           {idx + 1}
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors">
+                          <p className="font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
                             {product.name}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
@@ -543,7 +543,7 @@ export default function AdminDashboard() {
                         initial={{ width: 0 }}
                         animate={{ width: `${(product.sales / 2500) * 100}%` }}
                         transition={{ duration: 1, delay: idx * 0.1 }}
-                        className="absolute h-full bg-orange-500 rounded-full"
+                        className="absolute h-full bg-primary rounded-full"
                       />
                     </div>
                   </div>
@@ -562,7 +562,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                      <ShoppingCart size={20} className="text-orange-500" />
+                      <ShoppingCart size={20} className="text-primary" />
                       Recent Orders
                     </h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -570,7 +570,7 @@ export default function AdminDashboard() {
                     </p>
                   </div>
                   <Link href="/admin/orders">
-                    <button className="text-sm text-orange-500 hover:text-orange-600 font-medium">
+                    <button className="text-sm text-primary hover:text-orange-600 font-medium">
                       View All
                     </button>
                   </Link>

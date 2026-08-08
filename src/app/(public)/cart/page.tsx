@@ -223,12 +223,12 @@ const CartPage = () => {
                               <div className="flex items-center justify-between flex-wrap gap-3 mt-4">
                                 {/* Price */}
                                 <div className="flex items-center gap-2">
-                                  <span className="text-orange-500 text-lg sm:text-xl font-semibold">
+                                  <span className="text-title text-lg sm:text-xl font-semibold">
                                     ${item.product.price}
                                   </span>
 
                                   {item.product.discount > 0 && (
-                                    <span className="bg-orange-100 text-orange-500 text-[10px] sm:text-xs px-2 py-1 rounded hidden md:block">
+                                    <span className="bg-button-hover-1 text-subtitle text-[10px] sm:text-xs px-2 py-1 rounded hidden md:block">
                                       -{item.product.discount}%
                                     </span>
                                   )}
@@ -324,7 +324,7 @@ const CartPage = () => {
                 className="flex-1 border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-orange-400"
               />
 
-              <button className="bg-sky-500 hover:bg-sky-600 text-white px-5 rounded transition">
+              <button className="bg-chart-2 hover:bg-chart-1 cursor-pointer text-white px-5 rounded transition">
                 APPLY
               </button>
             </div>
@@ -333,7 +333,7 @@ const CartPage = () => {
             <div className="flex justify-between pt-5 border-t text-lg font-semibold">
               <span>Total</span>
 
-              <span className="text-orange-500">$ {subtotal}</span>
+              <span className="text-title">$ {subtotal}</span>
             </div>
             {showCheckout ? (
               ''
@@ -343,7 +343,7 @@ const CartPage = () => {
                 {/* button */}
                 <button
                   onClick={() => setShowCheckout(true)}
-                  className="w-full bg-orange-500 hover:bg-orange-600 transition text-white py-3 rounded-md font-medium"
+                  className="w-full bg-button hover:bg-button-hover transition text-white py-3 rounded-md font-medium cursor-pointer"
                 >
                   PROCEED TO CHECKOUT ({items.length})
                 </button>

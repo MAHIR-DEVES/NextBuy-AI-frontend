@@ -34,7 +34,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm NextBuy AI, your personal shopping assistant. How can I help you today? I can help you find products, answer questions about our services, or assist with your shopping experience.",
+      text: "Hello! I'm Jonoprio AI, your personal shopping assistant. How can I help you today? I can help you Answer questions about our services.",
       sender: 'ai',
       timestamp: new Date(),
     },
@@ -231,18 +231,18 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
           className={`fixed bottom-24 right-6 z-50 ${modalSize} bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col`}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white p-4 flex items-center justify-between">
+          <div className="bg-gradient-primary text-white p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <Bot size={24} />
+                <Bot size={24} className="text-white" />
                 <Sparkles
                   size={12}
                   className="absolute -top-1 -right-1 animate-pulse"
                 />
               </div>
               <div>
-                <h3 className="font-semibold">NextBuy AI</h3>
-                <p className="text-xs text-orange-100">
+                <h3 className="font-semibold">Jonoprio AI</h3>
+                <p className="text-xs">
                   {isTyping ? 'Typing...' : 'Online • Always here to help'}
                 </p>
               </div>
@@ -286,7 +286,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
                     className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     {message.sender === 'ai' && (
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center flex-shrink-0">
                         <Bot size={16} className="text-white" />
                       </div>
                     )}
@@ -341,7 +341,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
                     animate={{ opacity: 1, y: 0 }}
                     className="flex gap-3 justify-start"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center">
                       <Bot size={16} className="text-white" />
                     </div>
                     <div className="bg-white border border-gray-200 px-4 py-2 rounded-2xl">
@@ -375,7 +375,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
                     onChange={e => setInputText(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Type your message..."
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                     disabled={isTyping}
                   />
                   <button
@@ -388,7 +388,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
                   <button
                     onClick={handleSendMessage}
                     disabled={!inputText.trim() || isTyping}
-                    className="p-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-2 bg-gradient-primary text-white rounded-full hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send size={18} />
                   </button>

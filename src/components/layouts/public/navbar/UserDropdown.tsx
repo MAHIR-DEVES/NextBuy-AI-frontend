@@ -9,15 +9,18 @@ import {
   Circle,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { getUser, logout } from '@/utils/auth';
+import { logout } from '@/utils/auth';
 import Image from 'next/image';
+import { IUser } from '@/types/auth';
 
-const UserDropdown = () => {
+interface UserDropdownProps {
+  user: IUser;
+}
+
+const UserDropdown = ({ user }: UserDropdownProps) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
-  const user = getUser();
 
   // close on outside click
   useEffect(() => {
@@ -91,7 +94,7 @@ const UserDropdown = () => {
               alt="user"
               width={48}
               height={48}
-              className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full object-cover border border-gray-200"
+              className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full object-cover border ring-2 ring-primary-light"
             />
           ) : (
             <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shadow-sm">
@@ -125,7 +128,7 @@ const UserDropdown = () => {
                   alt="user"
                   width={48}
                   height={48}
-                  className="rounded-full object-cover ring-2 ring-orange-200"
+                  className="rounded-full object-cover ring-2 ring-primary-light"
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shadow-sm">

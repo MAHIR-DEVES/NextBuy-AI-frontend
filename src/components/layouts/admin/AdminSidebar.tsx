@@ -9,7 +9,13 @@ import {
   Users,
   User,
   LogOut,
+  Store,
+  MessageSquare,
+  ChartNoAxesCombined,
+  UserStar,
+  NotebookPen,
 } from 'lucide-react';
+import Image from 'next/image';
 
 const AdminSidebar = ({
   isOpen,
@@ -24,9 +30,15 @@ const AdminSidebar = ({
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Products', href: '/admin/products', icon: Package },
     { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-    // { name: 'Sellers', href: '/admin/sellers', icon: Store },
     { name: 'Customers', href: '/admin/users', icon: Users },
-    // { name: 'Messages', href: '/admin/messages', icon: MessageSquare },
+    { name: 'Customers Contact', href: '/admin/messages', icon: MessageSquare },
+    { name: 'Analytics', href: '/admin/analytics', icon: ChartNoAxesCombined },
+    { name: 'Accounts', href: '/admin/accounts', icon: UserStar },
+    {
+      name: 'Hero Management',
+      href: '/admin/hero-management',
+      icon: NotebookPen,
+    },
     { name: 'Profile', href: '/admin/profile', icon: User },
   ];
 
@@ -58,19 +70,21 @@ const AdminSidebar = ({
       <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-800">
         <Link href="/admin" className="group flex items-center gap-3">
           {/* Simplified Logo */}
-          <div className="w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+          <div
+            className={`${isOpen ? 'hidden' : ''} w-8 h-8 bg-gray-900 dark:bg-white rounded-lg flex items-center justify-center flex-shrink-0`}
+          >
             <span className="text-white dark:text-gray-900 font-bold text-sm">
-              N
+              J
             </span>
           </div>
 
           <div className={`${!isOpen && 'hidden'} transition-all`}>
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Next
-            </span>
-            <span className="text-xl font-bold text-orange-500 dark:text-orange-400">
-              Buy
-            </span>
+            <Image
+              src="/images/jonopriologo-logo.png"
+              alt="Logo"
+              width={150}
+              height={150}
+            />
           </div>
         </Link>
       </div>
@@ -88,20 +102,20 @@ const AdminSidebar = ({
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  flex items-center gap-3 rounded-lg text-sm font-medium
+                  flex items-center gap-3 rounded-xs text-sm font-medium
                   transition-all duration-200
                   ${isOpen ? 'px-3 py-2.5' : 'px-0 py-2.5 justify-center'}
                   ${
                     active
-                      ? 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                      ? 'bg-chart-1 dark:bg-chart-4  text-button-text '
+                      : 'text-gray-600 dark:text-gray-400 hover:bg-button-hover-1 '
                   }
                 `}
               >
                 <Icon
                   size={20}
                   className={`flex-shrink-0 ${
-                    active ? 'text-orange-500 dark:text-orange-400' : ''
+                    active ? 'text-button-text' : ''
                   }`}
                 />
                 <span className={`${!isOpen && 'hidden'} transition-all`}>

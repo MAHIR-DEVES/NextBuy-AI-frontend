@@ -111,7 +111,7 @@ const SearchBar = () => {
                 setIsOpen(true);
               }}
               onFocus={() => setIsOpen(true)}
-              className="flex-1 h-11 text-sm border-r-0 rounded-l-xl rounded-r-none focus:ring-2 focus:ring-orange-500/20 pr-10"
+              className="flex-1 h-11 text-sm border-r-0 rounded-l-md rounded-r-none focus:ring-2 focus:ring-orange-500/20 pr-10"
             />
 
             {searchQuery && (
@@ -131,7 +131,7 @@ const SearchBar = () => {
                 setIsOpen(false);
               }
             }}
-            className="h-11 rounded-r-xl rounded-l-none px-6 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-md hover:shadow-lg"
+            className="h-11 rounded-r-md rounded-l-none px-6 bg-gradient-primary hover:bg-gradient-primary-hover transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer "
           >
             <Search className="h-4 w-4 mr-2" />
             Search
@@ -146,7 +146,7 @@ const SearchBar = () => {
           {!searchQuery && !loading && products.length === 0 && (
             <div className="p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Clock className="h-4 w-4 text-orange-500" />
+                <Clock className="h-4 w-4 text-title" />
                 <span className="text-sm font-semibold text-gray-700">
                   Popular Searches
                 </span>
@@ -160,7 +160,7 @@ const SearchBar = () => {
                       setSearchQuery(term);
                       setIsOpen(true);
                     }}
-                    className="px-3 py-1.5 bg-gray-100 hover:bg-orange-100 rounded-full text-sm"
+                    className="px-3 py-1.5 bg-gray-100 hover:bg-button-hover-1 rounded-full text-sm"
                   >
                     {term}
                   </button>
@@ -172,7 +172,7 @@ const SearchBar = () => {
           {/* Loading */}
           {loading && (
             <div className="p-8 text-center">
-              <div className="inline-block animate-spin rounded-full h-6 w-6 border-2 border-orange-500 border-t-transparent"></div>
+              <div className="inline-block animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
 
               <p className="text-sm text-gray-500 mt-2">
                 Searching products...
@@ -200,7 +200,7 @@ const SearchBar = () => {
                       setSearchQuery('');
                       setIsOpen(false);
                     }}
-                    className="group p-3 hover:bg-orange-50 transition-all"
+                    className="group p-3 hover:bg-button-hover-1 transition-all"
                   >
                     <div className="flex gap-3">
                       <div className="relative w-14 h-14 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
@@ -218,7 +218,7 @@ const SearchBar = () => {
                             {product.name}
                           </p>
 
-                          <span className="text-orange-500 font-bold text-sm">
+                          <span className="text-title font-bold text-sm">
                             ${product.price?.toFixed(2)}
                           </span>
                         </div>
@@ -260,7 +260,7 @@ const SearchBar = () => {
                   router.push(`/products?search=${searchQuery}`);
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center justify-center gap-2 text-orange-600 font-semibold text-sm"
+                className="w-full flex items-center justify-center gap-2 text-title font-semibold text-sm cursor-pointer"
               >
                 View all results
                 <ChevronRight className="h-4 w-4" />

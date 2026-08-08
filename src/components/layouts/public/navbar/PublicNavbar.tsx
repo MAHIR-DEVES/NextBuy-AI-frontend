@@ -1,34 +1,10 @@
 'use client';
 
-import {
-  ShoppingCart,
-  Menu,
-  User,
-  FileText,
-  Package,
-  Smartphone,
-  Laptop,
-  Shirt,
-  Gamepad2,
-  Watch,
-  Shield,
-  Home,
-  Monitor,
-  Trophy,
-} from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import AllCategories from './AllCategories';
-import OrderProtectionModal from './OrderProtectionModal';
+
 import { PromoBanner1 } from '@/components/promo-banner1';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
@@ -36,21 +12,25 @@ import { useCartStore } from '@/store/cart.store';
 import { getUser } from '@/utils/auth';
 import Image from 'next/image';
 import UserDropdown from './UserDropdown';
+import DesktopNav from './DesktopNav';
+import RightDesktopNev from './RightDesktopNev';
+import MobileSidebar from './MobileSidebar';
+import { IUser } from '@/types/auth';
 
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [isFullscreenMenuOpen, setIsFullscreenMenuOpen] = useState(false);
-  const [isOrderProtectionOpen, setIsOrderProtectionOpen] = useState(false);
-  // ✅ Controlled state for mobile sidebar
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const fetchCart = useCartStore(state => state.fetchCart);
   const count = useCartStore(state => state.count);
 
-  const [user, setUser] = useState<ReturnType<typeof getUser> | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    setUser(getUser());
+    const currentUser = getUser();
+
+    if (currentUser) {
+      queueMicrotask(() => setUser(currentUser));
+    }
   }, []);
 
   useEffect(() => {
@@ -64,9 +44,6 @@ const PublicNavbar = ({ className }: { className?: string }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // ✅ Single helper — pass as onClick to every link inside the sidebar
-  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <section
@@ -87,190 +64,25 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           {/* LEFT */}
           <div className="flex items-center justify-between w-full md:w-auto">
             <div className="flex items-center gap-2">
-              {/* ✅ open + onOpenChange make this a controlled Sheet */}
-              <div className="md:hidden">
-                <Sheet
-                  open={isMobileMenuOpen}
-                  onOpenChange={setIsMobileMenuOpen}
-                >
-                  <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <Menu className="h-5 w-5" />
-                    </Button>
-                  </SheetTrigger>
-
-                  <SheetContent
-                    side="left"
-                    className="w-80 p-0 overflow-y-auto"
-                  >
-                    {/* Header */}
-                    <div className="p-4 border-b">
-                      <SheetHeader className="p-0">
-                        <SheetTitle>
-                          <Link
-                            href="/"
-                            className="flex items-center gap-2 shrink-0"
-                            onClick={closeMobileMenu}
-                          >
-                            <div className="flex items-center">
-                              <span className="text-xl font-bold text-orange-500">
-                                NEXT
-                              </span>
-                              <span className="text-xl font-bold text-gray-800">
-                                BUY
-                              </span>
-                            </div>
-                          </Link>
-                        </SheetTitle>
-                      </SheetHeader>
-                    </div>
-
-                    <div className="p-4 space-y-6">
-                      {/* USER SECTION */}
-                      <div className="space-y-3">
-                        {user ? (
-                          <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-                            {user?.avatar ? (
-                              <Image
-                                src={user.avatar}
-                                alt="User avatar"
-                                width={40}
-                                height={40}
-                                className="rounded-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                                <User className="h-5 w-5 text-gray-600" />
-                              </div>
-                            )}
-                            <div className="flex-1">
-                              <p className="font-medium text-gray-900">
-                                {user?.name || 'User'}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {user?.email || 'user@example.com'}
-                              </p>
-                            </div>
-                          </div>
-                        ) : (
-                          <>
-                            <Link href="/login" onClick={closeMobileMenu}>
-                              <Button className="w-full bg-orange-500 hover:bg-orange-600">
-                                Sign in
-                              </Button>
-                            </Link>
-                            <Link href="/register" onClick={closeMobileMenu}>
-                              <Button variant="outline" className="w-full">
-                                Create account
-                              </Button>
-                            </Link>
-                          </>
-                        )}
-                      </div>
-
-                      {/* CATEGORY SECTION */}
-                      <div>
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                          Categories
-                        </h3>
-                        <div className="space-y-1">
-                          {[
-                            { name: 'Smartphones', icon: Smartphone },
-                            { name: 'Laptop', icon: Laptop },
-                            { name: 'Fashion', icon: Shirt },
-                            { name: 'Gaming', icon: Gamepad2 },
-                            { name: 'Accessories', icon: Watch },
-                            { name: 'Electronics', icon: Monitor },
-                            { name: 'Home & Garden', icon: Home },
-                            { name: 'Sports & Entertainment', icon: Trophy },
-                          ].map(cat => {
-                            const Icon = cat.icon;
-                            return (
-                              <Link
-                                key={cat.name}
-                                href={`/products?category=${cat.name}`}
-                                onClick={closeMobileMenu}
-                                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
-                              >
-                                <Icon className="h-5 w-5" />
-                                <span>{cat.name}</span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </div>
-
-                      {/* BRAND SECTION */}
-                      <div>
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                          Brands
-                        </h3>
-                        <div className="space-y-1">
-                          {['Apple', 'Samsung', 'Sony', 'Xiaomi', 'Dell'].map(
-                            brand => (
-                              <Link
-                                key={brand}
-                                href={`/products?brand=${brand}`}
-                                onClick={closeMobileMenu}
-                                className="block px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-orange-500 transition-colors"
-                              >
-                                {brand}
-                              </Link>
-                            ),
-                          )}
-                        </div>
-                      </div>
-
-                      {/* EXTRA LINKS */}
-                      <div className="pt-4 border-t space-y-3">
-                        <Link
-                          href="/products?verified=true"
-                          onClick={closeMobileMenu}
-                          className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                        >
-                          <Shield className="h-4 w-4" />
-                          Verified manufacturers
-                        </Link>
-
-                        <Link
-                          href="/products?orderProtection=true"
-                          onClick={closeMobileMenu}
-                          className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                        >
-                          <Package className="h-4 w-4" />
-                          Order protections
-                        </Link>
-
-                        <Link
-                          href="/products?taxExemption=true"
-                          onClick={closeMobileMenu}
-                          className="flex items-center gap-3 text-sm text-gray-600 hover:text-orange-500 transition-colors"
-                        >
-                          <FileText className="h-4 w-4" />
-                          Tax exemption
-                        </Link>
-                      </div>
-                    </div>
-                  </SheetContent>
-                </Sheet>
-              </div>
+              {/* mobile navbar  open + onOpenChange make this a controlled Sheet */}
+              <MobileSidebar user={user}></MobileSidebar>
 
               {/* Logo */}
-              <Link className="flex items-center gap-2 shrink-0" href="/">
+              <Link className="flex items-center mr-20 shrink-0" href="/">
                 <div className="flex items-center">
-                  <span className="text-xl sm:text-2xl font-bold text-orange-500">
-                    NEXT
-                  </span>
-                  <span className="text-xl sm:text-2xl font-bold text-gray-800">
-                    BUY
-                  </span>
+                  <Image
+                    src="/images/jonopriologo-logo.png"
+                    alt="Logo"
+                    width={170}
+                    height={170}
+                  />
                 </div>
               </Link>
             </div>
 
             {/* Mobile: profile + cart (right side) */}
             <div className="flex items-center gap-3 md:hidden">
-              {user && <UserDropdown />}
+              {user && <UserDropdown user={user} />}
               <div className="relative">
                 <Link href="/cart">
                   <ShoppingCart className="h-5 w-5" />
@@ -286,82 +98,18 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           <SearchBar />
 
           {/* RIGHT DESKTOP */}
-          <div className="hidden lg:flex items-center gap-4 shrink-0 ml-8">
-            <div className="hidden lg:flex items-center gap-2 text-sm">
-              {user ? (
-                <UserDropdown />
-              ) : (
-                <Link href="/login">
-                  <Button
-                    variant="ghost"
-                    size="lg"
-                    className="text-gray-700 text-base px-5 py-6 font-semibold"
-                  >
-                    <User className="h-4 w-4" /> Sign in
-                  </Button>
-                </Link>
-              )}
-              <span className="text-gray-300 text-lg">|</span>
-            </div>
-
-            <div className="relative">
-              <Link href="/cart">
-                <ShoppingCart className="h-7 w-7" />
-                <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white">
-                  {count}
-                </span>
-              </Link>
-            </div>
-          </div>
+          <RightDesktopNev></RightDesktopNev>
         </div>
 
         {/* DESKTOP NAV */}
-        <div className="hidden lg:flex justify-between py-2 text-sm text-gray-600">
-          <div className="flex gap-6">
-            <div
-              onMouseEnter={() => setIsFullscreenMenuOpen(true)}
-              onMouseLeave={() => setIsFullscreenMenuOpen(false)}
-              className="cursor-pointer hover:text-orange-500"
-            >
-              All categories
-              {isFullscreenMenuOpen && (
-                <AllCategories
-                  isFullscreenMenuOpen={isFullscreenMenuOpen}
-                  setIsFullscreenMenuOpen={setIsFullscreenMenuOpen}
-                />
-              )}
-            </div>
-
-            <div
-              onMouseEnter={() => setIsOrderProtectionOpen(true)}
-              onMouseLeave={() => setIsOrderProtectionOpen(false)}
-              className="cursor-pointer hover:text-orange-500"
-            >
-              Order protections
-              {isOrderProtectionOpen && (
-                <OrderProtectionModal
-                  isOpen={isOrderProtectionOpen}
-                  setIsOpen={setIsOrderProtectionOpen}
-                />
-              )}
-            </div>
-
-            <a className="hover:text-orange-500">Accio Work</a>
-          </div>
-
-          <div className="flex gap-6">
-            <a className="hover:text-orange-500">Order protections</a>
-            <a className="hover:text-orange-500">Tax exemption</a>
-            <a className="hover:text-orange-500">Buyer Central</a>
-          </div>
-        </div>
+        <DesktopNav />
 
         {/* MOBILE SCROLL LINKS */}
-        <div className="flex lg:hidden gap-4 py-2 text-xs text-gray-600 overflow-x-auto whitespace-nowrap border-t scrollbar-hide">
+        {/* <div className="flex lg:hidden gap-4 py-2 text-xs text-gray-600 overflow-x-auto whitespace-nowrap border-t scrollbar-hide">
           <a className="hover:text-orange-500">Order protections</a>
           <a className="hover:text-orange-500">Tax exemption</a>
           <a className="hover:text-orange-500">Buyer Central</a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

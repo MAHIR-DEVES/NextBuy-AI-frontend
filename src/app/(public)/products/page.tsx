@@ -70,12 +70,12 @@ export default async function ProductListing({
                 </h2>
                 {/* <a
                   href="/products"
-                  className="text-sm text-orange-500 hover:underline"
+                  className="text-sm text-title hover:underline"
                 >
                   Reset
                 </a> */}
                 <Link
-                  className="text-sm text-orange-500 hover:underline"
+                  className="text-sm text-title hover:underline"
                   href={'/products'}
                 >
                   Reset
@@ -123,7 +123,7 @@ export default async function ProductListing({
                 <div className="space-y-2 text-sm">
                   <Link
                     href={`?maxPrice=50${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500 flex items-center gap-2"
+                    className="block hover:text-title flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -134,7 +134,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?minPrice=50&maxPrice=100${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500 flex items-center gap-2"
+                    className="block hover:text-title flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -145,7 +145,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?minPrice=100&maxPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500 flex items-center gap-2"
+                    className="block hover:text-title flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -156,7 +156,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?minPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500 flex items-center gap-2"
+                    className="block hover:text-title flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -175,7 +175,7 @@ export default async function ProductListing({
                 <div className="space-y-2 text-sm">
                   <Link
                     href={`?rating=4${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500 flex items-center gap-2"
+                    className="block hover:text-title flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -186,7 +186,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?rating=3${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500 flex items-center gap-2"
+                    className="block hover:text-title flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -205,7 +205,7 @@ export default async function ProductListing({
                 <div className="space-y-2 text-sm">
                   <Link
                     href={`?category=Smartphones${sp?.search ? '&search=' + sp.search : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -216,7 +216,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?category=Laptop${sp?.search ? '&search=' + sp.search : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -227,7 +227,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?category=Fashion${sp?.search ? '&search=' + sp.search : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -245,7 +245,7 @@ export default async function ProductListing({
                 <div className="space-y-2 text-sm">
                   <Link
                     href={`?brand=Apple${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -256,7 +256,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?brand=Samsung${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -267,7 +267,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?brand=Sony${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -286,7 +286,7 @@ export default async function ProductListing({
                 <div className="space-y-2 text-sm">
                   <Link
                     href={`?sortBy=createdAt&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -297,7 +297,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?sortBy=price&sortOrder=asc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -310,7 +310,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?sortBy=price&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -323,7 +323,7 @@ export default async function ProductListing({
                   </Link>
                   <Link
                     href={`?sortBy=rating&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
-                    className="block hover:text-orange-500  flex items-center gap-2"
+                    className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
                       type="checkbox"
@@ -368,7 +368,7 @@ export default async function ProductListing({
                       <SheetClose asChild>
                         <Link
                           href="/products"
-                          className="text-sm text-orange-500 font-medium hover:underline"
+                          className="text-sm text-title font-medium hover:underline"
                         >
                           Reset
                         </Link>

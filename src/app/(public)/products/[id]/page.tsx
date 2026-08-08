@@ -58,7 +58,7 @@ export default async function ProductDetailsPage({
       {/* Breadcrumb */}
 
       <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
-        <Link href="/" className="hover:text-orange-500">
+        <Link href="/" className="hover:text-title">
           Home
         </Link>
         <ChevronRight className="h-3 w-3" />
@@ -99,7 +99,7 @@ export default async function ProductDetailsPage({
           {/* Right - Product Info */}
           <div>
             {/* Brand */}
-            <Link href="#" className="text-orange-500 text-sm hover:underline">
+            <Link href="#" className="text-primary text-sm hover:underline">
               {product.brand}
             </Link>
 
@@ -127,7 +127,7 @@ export default async function ProductDetailsPage({
             {/* Price */}
             <div className="bg-gray-50 rounded-lg p-4 mb-4">
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-orange-500">
+                <span className="text-3xl font-bold text-title">
                   $ {product.price}
                 </span>
                 <span className="text-lg text-gray-400 line-through">
@@ -143,7 +143,7 @@ export default async function ProductDetailsPage({
 
             <ProductActions product={product} productId={product.id} />
             {/* Delivery Options */}
-            <div className="border-t pt-4 mb-4">
+            <div className=" pt-4 mb-4">
               <h3 className="font-semibold text-gray-800 mb-3">
                 Delivery Options
               </h3>
@@ -153,9 +153,7 @@ export default async function ProductDetailsPage({
                   <span className="text-sm text-gray-600">
                     {product.delivery.location}
                   </span>
-                  <button className="text-xs text-orange-500 ml-auto">
-                    CHANGE
-                  </button>
+                  <button className="text-xs text-title ml-auto">CHANGE</button>
                 </div>
                 <div className="flex items-center gap-2">
                   <Truck className="h-4 w-4 text-gray-400" />
@@ -200,7 +198,7 @@ export default async function ProductDetailsPage({
             <div className="border-t pt-4">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-semibold text-gray-800">Sold by</h3>
-                <button className="text-sm text-orange-500">Chat Now</button>
+                <button className="text-sm text-title">Chat Now</button>
               </div>
 
               <div className="flex items-center justify-between">
@@ -228,7 +226,7 @@ export default async function ProductDetailsPage({
                   </p>
                 </div>
 
-                <button className="text-sm text-orange-500 border border-orange-500 px-4 py-2 rounded-lg hover:bg-orange-50 transition-colors">
+                <button className="text-sm text-title border border-primary-light px-4 py-2 rounded-lg hover:bg-button-hover-1 transition-colors">
                   GO TO STORE
                 </button>
               </div>

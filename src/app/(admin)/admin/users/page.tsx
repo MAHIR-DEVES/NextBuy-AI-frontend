@@ -8,20 +8,16 @@ import {
   Search,
   Filter,
   X,
-  Mail,
   Phone,
   Calendar,
-  Shield,
   CheckCircle,
   XCircle,
-  Clock,
   Users,
-  UserCheck,
-  UserX,
 } from 'lucide-react';
 
 import { getAllUsers } from '@/services/auth.service';
 import { IUser } from '@/types/auth';
+import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
 
 const UserPage = () => {
   const [loading, setLoading] = useState(true);
@@ -246,9 +242,7 @@ const UserPage = () => {
         {/* Users List */}
         <div className="space-y-2">
           {loading ? (
-            <div className="flex justify-center py-12">
-              <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
-            </div>
+            <LoadingSpinner message="users" />
           ) : filteredUsers.length === 0 ? (
             <div className="text-center py-12 bg-white dark:bg-gray-900 rounded-sm border border-gray-200 dark:border-gray-800">
               <Users className="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />

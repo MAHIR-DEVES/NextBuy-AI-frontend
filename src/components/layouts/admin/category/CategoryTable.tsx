@@ -16,6 +16,7 @@ import CategoryEdit from './CategoryEdit';
 
 import { Category } from '@/types/category.types';
 import { CategoryService } from '@/services/category.service';
+import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
 
 const CategoryTable = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -152,12 +153,7 @@ const CategoryTable = () => {
       {/* Main Content Area */}
       <div className="w-full rounded-md border bg-card text-card-foreground shadow-sm overflow-hidden">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center text-muted-foreground space-y-3 px-4">
-            <Loader2 className="h-7 w-7 sm:h-8 sm:w-8 animate-spin text-primary" />
-            <p className="text-xs sm:text-sm font-medium">
-              Loading categories...
-            </p>
-          </div>
+          <LoadingSpinner message="categories" />
         ) : categories.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center text-muted-foreground space-y-3 px-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted">

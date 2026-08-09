@@ -8,20 +8,15 @@ import {
   User2Icon,
   Search,
   Filter,
-  ChevronDown,
   X,
-  Eye,
   Package,
-  Calendar,
-  DollarSign,
-  Phone,
-  Mail,
   ArrowUpDown,
   CheckCircle,
   Clock,
   Truck,
   XCircle,
 } from 'lucide-react';
+import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
 
 const Page = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -441,9 +436,7 @@ const Page = () => {
         {/* Desktop Table View - hidden on mobile */}
         <div className="hidden lg:block bg-white dark:bg-gray-900 rounded-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
           {loading ? (
-            <div className="flex justify-center py-12">
-              <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
-            </div>
+            <LoadingSpinner message="orders" />
           ) : filteredOrders.length === 0 ? (
             <div className="text-center py-12">
               <Package className="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />

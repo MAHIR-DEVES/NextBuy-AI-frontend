@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import { Eye, Edit2, Trash2, Package, CheckCircle } from 'lucide-react';
 import { IProduct } from '@/types/products.type';
+import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
 
 type Props = {
   products: IProduct[];
@@ -42,14 +43,7 @@ const ProductsTable = ({
       {/* Mobile Card View - Visible only on mobile */}
       <div className="block md:hidden space-y-3">
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-10 h-10 border-2 border-gray-300 dark:border-gray-700 border-t-gray-900 dark:border-t-gray-400 rounded-full animate-spin"></div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Loading products...
-              </p>
-            </div>
-          </div>
+          <LoadingSpinner message="products" />
         ) : products.length === 0 ? (
           <div className="text-center py-12 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800">
             <Package className="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
@@ -198,12 +192,7 @@ const ProductsTable = ({
             {loading ? (
               <tr>
                 <td colSpan={7} className="px-4 py-12 text-center">
-                  <div className="flex flex-col items-center justify-center gap-3">
-                    <div className="w-10 h-10 border-2 border-gray-300 dark:border-gray-700 border-t-gray-900 dark:border-t-gray-400 rounded-full animate-spin"></div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Loading products...
-                    </p>
-                  </div>
+                  <LoadingSpinner message="products" />
                 </td>
               </tr>
             ) : products.length === 0 ? (

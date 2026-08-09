@@ -9,12 +9,12 @@ import {
   Users,
   User,
   LogOut,
-  Store,
   MessageSquare,
   ChartNoAxesCombined,
   UserStar,
   NotebookPen,
 } from 'lucide-react';
+import { BiSolidCategory } from 'react-icons/bi';
 import Image from 'next/image';
 
 const AdminSidebar = ({
@@ -38,6 +38,11 @@ const AdminSidebar = ({
       name: 'Hero Management',
       href: '/admin/hero-management',
       icon: NotebookPen,
+    },
+    {
+      name: 'Category Management',
+      href: '/admin/category-management',
+      icon: BiSolidCategory,
     },
     { name: 'Profile', href: '/admin/profile', icon: User },
   ];

@@ -1,5 +1,5 @@
 'use client';
-import AdminHeader from '@/components/layouts/admin/AdminHeader';
+import AdminHeader from '@/components/layouts/admin/shared/AdminHeader';
 import UserSidebar from '@/components/layouts/user/UserSidebar';
 import { getUser } from '@/utils/auth';
 import { useRouter } from 'next/navigation';

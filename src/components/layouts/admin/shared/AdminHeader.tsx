@@ -37,27 +37,25 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
       <div className="pl-3 pr-5 py-3">
         <div className="flex items-center justify-between">
           {/* Left Side - Menu Button & Logo */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center ">
             {/* Menu Toggle Button */}
             <button
               onClick={toggleSidebar}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
               aria-label="Toggle sidebar"
             >
-              <Menu size={20} className="text-gray-600 dark:text-gray-400" />
+              <Menu size={24} className="text-gray-600 dark:text-gray-400" />
             </button>
 
             {/* Mobile Logo */}
             <div className="md:hidden">
-              <Link href="/admin" className="flex items-center gap-2">
-                <div>
-                  <span className="text-lg font-bold text-gray-900 dark:text-white">
-                    Next
-                  </span>
-                  <span className="text-lg font-bold text-orange-500 dark:text-orange-400">
-                    Buy
-                  </span>
-                </div>
+              <Link href="/admin" className="flex items-center ">
+                <Image
+                  src="/images/jonopriologo-logo.png"
+                  alt="Logo"
+                  width={120}
+                  height={120}
+                />
               </Link>
             </div>
           </div>

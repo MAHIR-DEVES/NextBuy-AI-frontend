@@ -7,7 +7,7 @@ import {
 import {
   PersonalEntry,
   PersonalEntryPayload,
-} from '@/types/acconts/personal-entry.types';
+} from '@/types/accounts/personal-entry.types';
 import { useState } from 'react';
 
 interface PersonalFormProps {

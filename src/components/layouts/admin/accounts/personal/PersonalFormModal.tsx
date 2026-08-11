@@ -9,7 +9,7 @@ import {
   PersonalEntryPayload,
   PersonalEntryStatus,
   PersonalEntryType,
-} from '@/types/acconts/personal-entry.types';
+} from '@/types/accounts/personal-entry.types';
 
 interface PersonalEntryModalProps {
   open: boolean;

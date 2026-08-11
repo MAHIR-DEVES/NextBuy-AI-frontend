@@ -7,7 +7,7 @@ import {
   PersonalEntryMeta,
   PersonalEntryStatus,
   PersonalEntryType,
-} from '@/types/acconts/personal-entry.types';
+} from '@/types/accounts/personal-entry.types';
 import { ChevronLeft, ChevronRight, Edit, Loader2, Trash2 } from 'lucide-react';
 
 interface PersonalTableProps {

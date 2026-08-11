@@ -5,7 +5,7 @@ import {
   GetPersonalEntriesParams,
   GetPersonalEntriesResponse,
   PersonalEntryPayload,
-} from '@/types/acconts/personal-entry.types';
+} from '@/types/accounts/personal-entry.types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 

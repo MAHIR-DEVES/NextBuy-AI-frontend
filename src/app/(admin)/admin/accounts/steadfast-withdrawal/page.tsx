@@ -1,48 +1,54 @@
 'use client';
 
-import PersonalEntryModal from '@/components/layouts/admin/accounts/personal/PersonalFormModal';
-import PersonalTable from '@/components/layouts/admin/accounts/personal/PersonalTable';
-import AccountPageHeader from '@/components/layouts/admin/accounts/shared/AccountPageHeader';
-import {
-  createPersonalEntry,
-  deletePersonalEntry,
-  getAllPersonalEntries,
-  updatePersonalEntry,
-} from '@/services/accounts/personal.service';
-import {
-  PersonalEntry,
-  PersonalEntryMeta,
-  PersonalEntryPayload,
-  PersonalEntrySummary,
-} from '@/types/accounts/personal-entry.types';
 import { useCallback, useEffect, useState } from 'react';
+
 import { toast } from 'sonner';
-import { CircleDollarSign, CreditCard, Receipt, Wallet } from 'lucide-react';
+
+import SteadfastWithdrawalFormModal from '@/components/layouts/admin/accounts/steadfast-withdrawal/SteadfastWithdrawalFormModal';
+
+import SteadfastWithdrawalTable from '@/components/layouts/admin/accounts/steadfast-withdrawal/SteadfastWithdrawalTable';
+
+import {
+  createSteadfastWithdrawal,
+  deleteSteadfastWithdrawal,
+  getAllSteadfastWithdrawals,
+  updateSteadfastWithdrawal,
+} from '@/services/accounts/steadfast-withdrawal.service';
+
+import {
+  SteadfastWithdrawal,
+  SteadfastWithdrawalMeta,
+  SteadfastWithdrawalPayload,
+  SteadfastWithdrawalSummary,
+} from '@/types/accounts/steadfast-withdrawal.types';
+import AccountPageHeader from '@/components/layouts/admin/accounts/shared/AccountPageHeader';
 
 const ITEMS_PER_PAGE = 10;
 
-const initialMeta: PersonalEntryMeta = {
+const initialMeta: SteadfastWithdrawalMeta = {
+  total: 0,
   page: 1,
   limit: ITEMS_PER_PAGE,
-  total: 0,
   totalPages: 0,
   hasNextPage: false,
   hasPreviousPage: false,
 };
 
-const initialSummary: PersonalEntrySummary = {
-  totalEntries: 0,
+import { CircleDollarSign, CreditCard, Receipt, Wallet } from 'lucide-react';
+const initialSummary: SteadfastWithdrawalSummary = {
+  totalWithdrawals: 0,
   paid: 0,
   unpaid: 0,
-  received: 0,
+  totalAmount: 0,
 };
 
-const PersonalPage = () => {
-  const [entries, setEntries] = useState<PersonalEntry[]>([]);
+const Page = () => {
+  const [withdrawals, setWithdrawals] = useState<SteadfastWithdrawal[]>([]);
 
-  const [meta, setMeta] = useState<PersonalEntryMeta>(initialMeta);
+  const [meta, setMeta] = useState<SteadfastWithdrawalMeta>(initialMeta);
 
-  const [summary, setSummary] = useState<PersonalEntrySummary>(initialSummary);
+  const [summary, setSummary] =
+    useState<SteadfastWithdrawalSummary>(initialSummary);
 
   const [page, setPage] = useState(1);
 
@@ -50,9 +56,8 @@ const PersonalPage = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [selectedEntry, setSelectedEntry] = useState<PersonalEntry | null>(
-    null,
-  );
+  const [selectedWithdrawal, setSelectedWithdrawal] =
+    useState<SteadfastWithdrawal | null>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -62,19 +67,18 @@ const PersonalPage = () => {
   // FETCH
   // ==============================
 
-  const fetchEntries = useCallback(async () => {
+  const fetchWithdrawals = useCallback(async () => {
     try {
       setLoading(true);
 
-      const response = await getAllPersonalEntries({
+      const response = await getAllSteadfastWithdrawals({
         page,
         limit: ITEMS_PER_PAGE,
       });
 
-      // service already returns response.data.data
-      const result = response;
+      const result = response?.data;
 
-      setEntries(Array.isArray(result?.data) ? result.data : []);
+      setWithdrawals(Array.isArray(result?.data) ? result.data : []);
 
       if (result?.meta) {
         setMeta(result.meta);
@@ -84,21 +88,25 @@ const PersonalPage = () => {
         setSummary(result.summary);
       }
     } catch (error) {
-      console.error('Failed to fetch personal entries:', error);
+      console.error('Failed to fetch Steadfast withdrawals:', error);
 
-      toast.error('Failed to load personal entries');
+      toast.error('Failed to load Steadfast withdrawals');
 
-      setEntries([]);
+      setWithdrawals([]);
     } finally {
       setLoading(false);
     }
   }, [page]);
 
-  //  summary data
+  useEffect(() => {
+    fetchWithdrawals();
+  }, [fetchWithdrawals]);
+
+  // summary data
   const summaryCards = [
     {
-      label: 'Total Entries',
-      value: summary.totalEntries,
+      label: 'Total Withdrawals',
+      value: summary.totalWithdrawals,
       icon: Receipt,
       iconClassName: 'text-primary',
     },
@@ -117,24 +125,20 @@ const PersonalPage = () => {
       iconClassName: 'text-yellow-600',
     },
     {
-      label: 'Received',
-      value: summary.received,
+      label: 'Total Amount',
+      value: `৳${Number(summary.totalAmount).toLocaleString()}`,
       icon: Wallet,
       className: '',
       iconClassName: 'text-blue-600',
     },
   ];
 
-  useEffect(() => {
-    fetchEntries();
-  }, [fetchEntries]);
-
   // ==============================
   // CREATE
   // ==============================
 
   const handleCreate = () => {
-    setSelectedEntry(null);
+    setSelectedWithdrawal(null);
     setModalOpen(true);
   };
 
@@ -142,8 +146,8 @@ const PersonalPage = () => {
   // EDIT
   // ==============================
 
-  const handleEdit = (entry: PersonalEntry) => {
-    setSelectedEntry(entry);
+  const handleEdit = (withdrawal: SteadfastWithdrawal) => {
+    setSelectedWithdrawal(withdrawal);
     setModalOpen(true);
   };
 
@@ -155,42 +159,45 @@ const PersonalPage = () => {
     if (submitLoading) return;
 
     setModalOpen(false);
-    setSelectedEntry(null);
+    setSelectedWithdrawal(null);
   };
 
   // ==============================
   // CREATE / UPDATE
   // ==============================
 
-  const handleSubmit = async (payload: PersonalEntryPayload) => {
+  const handleSubmit = async (payload: SteadfastWithdrawalPayload) => {
     try {
       setSubmitLoading(true);
 
-      if (selectedEntry) {
-        const response = await updatePersonalEntry(selectedEntry.id, payload);
+      if (selectedWithdrawal) {
+        const response = await updateSteadfastWithdrawal(
+          selectedWithdrawal.id,
+          payload,
+        );
 
         toast.success(
-          response?.message || 'Personal entry updated successfully',
+          response?.message || 'Steadfast withdrawal updated successfully',
         );
       } else {
-        const response = await createPersonalEntry(payload);
+        const response = await createSteadfastWithdrawal(payload);
 
         toast.success(
-          response?.message || 'Personal entry created successfully',
+          response?.message || 'Steadfast withdrawal created successfully',
         );
       }
 
       setModalOpen(false);
-      setSelectedEntry(null);
+      setSelectedWithdrawal(null);
 
-      await fetchEntries();
+      await fetchWithdrawals();
     } catch (error) {
-      console.error('Failed to save personal entry:', error);
+      console.error('Failed to save Steadfast withdrawal:', error);
 
       toast.error(
-        selectedEntry
-          ? 'Failed to update personal entry'
-          : 'Failed to create personal entry',
+        selectedWithdrawal
+          ? 'Failed to update Steadfast withdrawal'
+          : 'Failed to create Steadfast withdrawal',
       );
     } finally {
       setSubmitLoading(false);
@@ -203,7 +210,7 @@ const PersonalPage = () => {
 
   const handleDelete = async (id: string) => {
     const confirmed = window.confirm(
-      'Are you sure you want to delete this entry?',
+      'Are you sure you want to delete this withdrawal?',
     );
 
     if (!confirmed) return;
@@ -211,21 +218,21 @@ const PersonalPage = () => {
     try {
       setDeletingId(id);
 
-      const response = await deletePersonalEntry(id);
+      const response = await deleteSteadfastWithdrawal(id);
 
-      toast.success(response?.message || 'Personal entry deleted successfully');
+      toast.success(
+        response?.message || 'Steadfast withdrawal deleted successfully',
+      );
 
-      // যদি current page-এ শেষ item delete হয়
-      // তাহলে previous page-এ যাবে
-      if (entries.length === 1 && page > 1) {
+      if (withdrawals.length === 1 && page > 1) {
         setPage(prev => prev - 1);
       } else {
-        await fetchEntries();
+        await fetchWithdrawals();
       }
     } catch (error) {
-      console.error('Failed to delete personal entry:', error);
+      console.error('Failed to delete Steadfast withdrawal:', error);
 
-      toast.error('Failed to delete personal entry');
+      toast.error('Failed to delete Steadfast withdrawal');
     } finally {
       setDeletingId(null);
     }
@@ -248,36 +255,37 @@ const PersonalPage = () => {
       {/* HEADER */}
 
       <AccountPageHeader
-        title="Personal Entries"
-        description="Manage personal account entries."
-        buttonText="New Entry"
+        title="Steadfast Withdrawals"
+        description="Manage Steadfast withdrawal records."
+        buttonText="New Withdrawal"
         onCreate={handleCreate}
         summaryCards={summaryCards}
       />
 
       {/* TABLE */}
 
-      <PersonalTable
-        entries={entries}
+      <SteadfastWithdrawalTable
+        withdrawals={withdrawals}
         meta={meta}
         loading={loading}
+        deletingId={deletingId}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onPageChange={handlePageChange}
-        deletingId={deletingId}
       />
 
       {/* MODAL */}
 
-      <PersonalEntryModal
+      <SteadfastWithdrawalFormModal
         open={modalOpen}
-        entry={selectedEntry}
+        withdrawal={selectedWithdrawal}
         loading={submitLoading}
         onClose={handleCloseModal}
         onSubmit={handleSubmit}
       />
 
       {/* DELETE LOADING */}
+
       {deletingId && (
         <div className="pointer-events-none fixed bottom-5 right-5 z-[60]">
           <div className="flex items-center gap-2 rounded-lg border bg-background px-4 py-3 text-sm shadow-lg">
@@ -290,4 +298,4 @@ const PersonalPage = () => {
   );
 };
 
-export default PersonalPage;
+export default Page;

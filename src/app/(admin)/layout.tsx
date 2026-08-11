@@ -47,7 +47,9 @@ export default function AdminLayout({
         <AdminHeader toggleSidebar={toggleSidebar} />
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto overflow-x-auto">{children}</div>
+        <div className="flex-1 overflow-y-auto overflow-x-auto p-2 md:p-4">
+          {children}
+        </div>
       </div>
     </div>
   );

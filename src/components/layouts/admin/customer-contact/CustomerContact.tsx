@@ -286,7 +286,7 @@ const CustomerContact = () => {
   // ==============================
 
   return (
-    <div className="space-y-5 p-5">
+    <div className="space-y-5 ">
       <CustomerContactHeader
         search={search}
         status={status}

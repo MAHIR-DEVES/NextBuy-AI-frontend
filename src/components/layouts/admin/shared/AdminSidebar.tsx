@@ -145,13 +145,16 @@ const AdminSidebar = ({
           <div
             className={`
               ${isOpen ? 'hidden' : ''}
-              w-8 h-8 bg-gray-900 dark:bg-white rounded-lg
-              flex items-center justify-center flex-shrink-0
+              
+              flex items-center justify-center flex-shrink-0 -ml-2
             `}
           >
-            <span className="text-white dark:text-gray-900 font-bold text-sm">
-              J
-            </span>
+            <Image
+              src="/images/favicon.png"
+              alt="Logo"
+              width={50}
+              height={50}
+            />
           </div>
 
           <div className={`${!isOpen && 'hidden'} transition-all`}>

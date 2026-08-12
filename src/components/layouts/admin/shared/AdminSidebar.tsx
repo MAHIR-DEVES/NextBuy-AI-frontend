@@ -103,7 +103,7 @@ const AdminSidebar = ({
     },
     {
       name: 'Fixed Monthly Cost',
-      href: '/admin/accounts/fixed-monthly-cost',
+      href: '/admin/accounts/monthly-cost',
       icon: CalendarClock,
     },
   ];

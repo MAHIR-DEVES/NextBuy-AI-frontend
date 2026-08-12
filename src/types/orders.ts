@@ -1,5 +1,3 @@
-import { CartItem } from './cart.type';
-
 export type GetAllOrdersParams = {
   page?: number;
   limit?: number;
@@ -8,10 +6,12 @@ export type GetAllOrdersParams = {
 };
 
 export type CheckoutPayload = {
-  items: CartItem[];
   name: string;
   phone: string;
   address: string;
+  note?: string;
+  thana: string;
+  district: string;
   isInsideDhaka: boolean;
 };
 
@@ -25,11 +25,11 @@ export interface ISingleOrder {
 }
 
 export interface OrderItem {
-  id?: string;
+  id: string;
   productId: string;
   quantity: number;
-  name?: string;
-  price?: number;
+  name: string;
+  price: number;
 }
 
 export type OrderStatus =
@@ -39,41 +39,50 @@ export type OrderStatus =
   | 'CANCELLED'
   | 'PARTIAL';
 
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface OrderUser {
   id: string;
   name: string;
   email: string;
   phone: string;
-  avatar?: string;
+  avatar: string | null;
 }
 
 export interface Order {
   id: string;
-  userId?: string;
-
+  userId: string;
+  total: number;
+  status: OrderStatus;
+  quantity: number;
+  totalAmount: number;
   name: string;
   phone: string;
+  district: string;
+  thana: string;
   address: string;
-  quantity: number;
+  note: string | null;
 
   isInsideDhaka: boolean;
+  shippingFee: number;
 
-  total?: number;
-  totalAmount?: number;
+  createdAt: string;
+  updatedAt: string;
 
-  shippingFee?: number;
-
-  status: OrderStatus;
-
-  createdAt?: string;
-  updatedAt?: string;
-
-  items?: OrderItem[];
-
-  user?: OrderUser;
+  items: OrderItem[];
+  user: OrderUser;
 }
 
-export interface OrderMeta {
+export interface OrdersMeta {
   page: number;
   limit: number;
   total: number;
@@ -82,7 +91,7 @@ export interface OrderMeta {
   hasPreviousPage: boolean;
 }
 
-export interface OrderSummary {
+export interface OrdersSummary {
   totalOrders: number;
   totalPending: number;
   totalShipped: number;
@@ -95,9 +104,9 @@ export interface GetAllOrdersResponse {
   success: boolean;
   message: string;
 
-  data: Order[];
-
-  meta: OrderMeta;
-
-  summary: OrderSummary;
+  data: {
+    orders: Order[];
+    meta: OrdersMeta;
+    summary: OrdersSummary;
+  };
 }

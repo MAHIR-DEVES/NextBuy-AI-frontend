@@ -11,6 +11,7 @@ import {
 import { useCartStore } from '@/store/cart.store';
 import CheckoutForm from '@/components/layouts/public/cart/CheckoutForm';
 import { CartItem } from '@/types/cart.type';
+import Image from 'next/image';
 
 const CartPage = () => {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -199,10 +200,13 @@ const CartPage = () => {
                           {/* LEFT */}
                           <div className="flex gap-3 flex-1 min-w-0">
                             {/* Image */}
+                            {/* Image */}
                             <div className="w-24 h-24 sm:w-28 sm:h-28 border rounded-lg overflow-hidden shrink-0">
-                              <img
+                              <Image
                                 src={item.product.thumbnail}
                                 alt={item.product.name}
+                                width={112}
+                                height={112}
                                 className="w-full h-full object-cover"
                               />
                             </div>
@@ -294,7 +298,7 @@ const CartPage = () => {
         {/* CHECKOUT FORM */}
         {showCheckout && (
           <div className="lg:col-span-2">
-            <CheckoutForm subtotal={subtotal} items={items} />
+            <CheckoutForm subtotal={subtotal} />
           </div>
         )}
         {/* RIGHT SIDE */}

@@ -8,7 +8,7 @@ import {
   updateOrderStatus,
 } from '@/services/orders.service';
 
-import { GetAllOrdersResponse, Order, OrderStatus } from '@/types/orders';
+import { Order, OrderStatus } from '@/types/orders';
 
 import CustomerContactHeader from '../shared/orders/CustomerContactHeader';
 import CustomerContactTable from './CustomerContactTable';
@@ -53,29 +53,29 @@ const OrdersMain = () => {
     totalPartial: 0,
   });
 
-  // ==============================
   // FETCH ORDERS
-  // ==============================
 
   const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
 
-      const response = (await getAllOrders({
+      const response = await getAllOrders({
         page: currentPage,
         limit: ITEMS_PER_PAGE,
         search: search.trim(),
         status: status === 'ALL' ? undefined : status,
-      })) as GetAllOrdersResponse;
+      });
 
-      setOrders(Array.isArray(response?.data) ? response.data : []);
+      const data = response?.data;
 
-      if (response?.meta) {
-        setMeta(response.meta);
+      setOrders(Array.isArray(data?.orders) ? data.orders : []);
+
+      if (data?.meta) {
+        setMeta(data.meta);
       }
 
-      if (response?.summary) {
-        setSummary(response.summary);
+      if (data?.summary) {
+        setSummary(data.summary);
       }
     } catch (error) {
       console.error('Failed to fetch orders:', error);
@@ -90,9 +90,7 @@ const OrdersMain = () => {
     fetchOrders();
   }, [fetchOrders]);
 
-  // ==============================
   // SEARCH
-  // ==============================
 
   const handleSearch = (value: string) => {
     setSearch(value);
@@ -100,9 +98,7 @@ const OrdersMain = () => {
     setSelectedIds([]);
   };
 
-  // ==============================
   // FILTER STATUS
-  // ==============================
 
   const handleStatusChange = (value: OrderStatus | 'ALL') => {
     setStatus(value);
@@ -110,9 +106,7 @@ const OrdersMain = () => {
     setSelectedIds([]);
   };
 
-  // ==============================
   // PAGINATION
-  // ==============================
 
   const changePage = (page: number) => {
     if (page < 1 || page > meta.totalPages) {
@@ -148,9 +142,7 @@ const OrdersMain = () => {
     return [current - 2, current - 1, current, current + 1, current + 2];
   }, [meta.totalPages, meta.page]);
 
-  // ==============================
   // SELECT
-  // ==============================
 
   const allSelected =
     orders.length > 0 && orders.every(order => selectedIds.includes(order.id));
@@ -186,9 +178,7 @@ const OrdersMain = () => {
     [orders, selectedIds],
   );
 
-  // ==============================
   // UPDATE ORDER STATUS
-  // ==============================
 
   const handleUpdateStatus = async (
     orderId: string,
@@ -235,9 +225,7 @@ const OrdersMain = () => {
     }
   };
 
-  // ==============================
   // DELETE ORDER
-  // ==============================
 
   const handleDeleteOrder = async (orderId: string) => {
     if (!orderId) {
@@ -281,9 +269,7 @@ const OrdersMain = () => {
     }
   };
 
-  // ==============================
   // COPY PHONES
-  // ==============================
 
   const handleCopyPhones = async () => {
     const phones = selectedOrders
@@ -306,9 +292,7 @@ const OrdersMain = () => {
     }
   };
 
-  // ==============================
   // EXPORT CSV
-  // ==============================
 
   const handleExportCSV = () => {
     const exportOrders = selectedIds.length > 0 ? selectedOrders : orders;
@@ -373,9 +357,7 @@ const OrdersMain = () => {
     URL.revokeObjectURL(url);
   };
 
-  // ==============================
   // UI
-  // ==============================
 
   return (
     <div className="space-y-6 p-2 md:p-4">

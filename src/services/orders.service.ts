@@ -21,22 +21,22 @@ const getAuthHeaders = () => ({
 // ==============================
 
 export const createOrder = async ({
-  items,
   name,
   phone,
+  district,
+  thana,
   address,
+  note,
   isInsideDhaka,
 }: CheckoutPayload) => {
   const payload = {
     name,
     phone,
+    district,
+    thana,
     address,
+    note,
     isInsideDhaka,
-
-    items: items.map(item => ({
-      productId: item.productId,
-      quantity: item.quantity,
-    })),
   };
 
   const res = await axios.post(`${BASE_URL}/orders/checkout`, payload, {
@@ -68,6 +68,7 @@ export const getAllOrders = async (params?: GetAllOrdersParams) => {
     headers: getAuthHeaders(),
   });
 
+  console.log(res);
   return res.data;
 };
 

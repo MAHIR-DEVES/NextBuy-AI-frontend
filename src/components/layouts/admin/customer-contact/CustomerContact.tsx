@@ -55,23 +55,23 @@ const CustomerContact = () => {
       try {
         setLoading(true);
 
-        const response = (await getAllOrders({
+        const response = await getAllOrders({
           page: currentPage,
           limit: ITEMS_PER_PAGE,
           search: search.trim(),
           status: status === 'ALL' ? undefined : status,
-        })) as GetAllOrdersResponse;
+        });
 
-        if (cancelled) return;
+        const data = response?.data;
 
-        setOrders(Array.isArray(response?.data) ? response.data : []);
+        setOrders(Array.isArray(data?.orders) ? data.orders : []);
 
-        if (response?.meta) {
-          setMeta(response.meta);
+        if (data?.meta) {
+          setMeta(data.meta);
         }
 
-        if (response?.summary) {
-          setSummary(response.summary);
+        if (data?.summary) {
+          setSummary(data.summary);
         }
       } catch (error) {
         if (cancelled) return;

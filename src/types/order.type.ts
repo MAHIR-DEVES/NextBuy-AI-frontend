@@ -21,6 +21,7 @@ export interface Order {
   name: string;
   phone: string;
   address: string;
+
   isInsideDhaka: boolean;
   status: 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
   total: number;

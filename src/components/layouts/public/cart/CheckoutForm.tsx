@@ -2,154 +2,325 @@
 
 import { createOrder } from '@/services/orders.service';
 import { useCartStore } from '@/store/cart.store';
-import { CartItem } from '@/types/cart.type';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
-const CheckoutForm = ({
-  subtotal,
-  items,
-}: {
+type CheckoutFormProps = {
   subtotal: number;
-  items: CartItem[];
-}) => {
+};
+
+const CheckoutForm = ({ subtotal }: CheckoutFormProps) => {
   const [insideDhaka, setInsideDhaka] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [district, setDistrict] = useState('');
+  const [thana, setThana] = useState('');
   const [address, setAddress] = useState('');
+  const [note, setNote] = useState('');
+
   const { reset, fetchCart } = useCartStore.getState();
 
-  const shippingFee = insideDhaka ? 60 : 120;
+  // shipping fee match in Backend
+  const shippingFee = insideDhaka ? 90 : 130;
 
+  const total = subtotal + shippingFee;
+
+  // ==============================
   // PLACE ORDER
+  // ==============================
+
   const handleOrder = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      const res = await createOrder({
-        items,
+      await createOrder({
         name,
         phone,
+        district,
+        thana,
         address,
+        note: note || undefined,
         isInsideDhaka: insideDhaka,
       });
 
       toast.success('Order placed successfully!');
-      // state update
+
+      // Clear cart state
       reset();
-      fetchCart();
-      // reset form
+
+      // Refresh cart
+      await fetchCart();
+
+      // Reset form
       setName('');
       setPhone('');
+      setDistrict('');
+      setThana('');
       setAddress('');
-    } catch (err) {
-      console.log(err);
-      toast.error('Order failed!');
+      setNote('');
+      setInsideDhaka(true);
+    } catch (error) {
+      console.error('Order failed:', error);
+
+      toast.error('Order failed! Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="bg-white border rounded-xs p-6">
-      <h2 className="text-2xl font-semibold mb-6">Checkout Information</h2>
+    <div className="rounded-lg border border-border bg-background p-6">
+      <h2 className="mb-6 text-2xl font-semibold text-title">
+        Checkout Information
+      </h2>
 
       <form onSubmit={handleOrder} className="space-y-5">
-        {/* Name */}
+        {/* ==============================
+            NAME
+        ============================== */}
+
         <div>
-          <label className="block mb-2 text-sm font-medium">Full Name</label>
+          <label
+            htmlFor="name"
+            className="mb-2 block text-sm font-medium text-title"
+          >
+            Full Name
+          </label>
 
           <input
+            id="name"
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
-            className="w-full border rounded-md px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400"
-            placeholder="Enter your name"
+            placeholder="Enter your full name"
             required
+            disabled={loading}
+            className="w-full rounded-md border border-border bg-background px-4 py-3 text-title outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
           />
         </div>
 
-        {/* Phone */}
+        {/* ==============================
+            PHONE
+        ============================== */}
+
         <div>
-          <label className="block mb-2 text-sm font-medium">Phone Number</label>
+          <label
+            htmlFor="phone"
+            className="mb-2 block text-sm font-medium text-title"
+          >
+            Phone Number
+          </label>
 
           <input
-            type="text"
+            id="phone"
+            type="tel"
             value={phone}
             onChange={e => setPhone(e.target.value)}
-            className="w-full border rounded-md px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="01XXXXXXXXX"
             required
+            disabled={loading}
+            className="w-full rounded-md border border-border bg-background px-4 py-3 text-title outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
           />
         </div>
 
-        {/* Address */}
+        {/* ==============================
+            DISTRICT
+        ============================== */}
+
         <div>
-          <label className="block mb-2 text-sm font-medium">Address</label>
+          <label
+            htmlFor="district"
+            className="mb-2 block text-sm font-medium text-title"
+          >
+            District
+          </label>
+
+          <input
+            id="district"
+            type="text"
+            value={district}
+            onChange={e => setDistrict(e.target.value)}
+            placeholder="Enter your district"
+            required
+            disabled={loading}
+            className="w-full rounded-md border border-border bg-background px-4 py-3 text-title outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
+          />
+        </div>
+
+        {/* ==============================
+            THANA
+        ============================== */}
+
+        <div>
+          <label
+            htmlFor="thana"
+            className="mb-2 block text-sm font-medium text-title"
+          >
+            Thana
+          </label>
+
+          <input
+            id="thana"
+            type="text"
+            value={thana}
+            onChange={e => setThana(e.target.value)}
+            placeholder="Enter your thana"
+            required
+            disabled={loading}
+            className="w-full rounded-md border border-border bg-background px-4 py-3 text-title outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
+          />
+        </div>
+
+        {/* ==============================
+            ADDRESS
+        ============================== */}
+
+        <div>
+          <label
+            htmlFor="address"
+            className="mb-2 block text-sm font-medium text-title"
+          >
+            Full Address
+          </label>
 
           <textarea
+            id="address"
             rows={4}
             value={address}
             onChange={e => setAddress(e.target.value)}
-            className="w-full border rounded-md px-4 py-3 outline-none focus:ring-2 focus:ring-orange-400"
-            placeholder="Enter your address"
+            placeholder="Enter your full delivery address"
             required
+            disabled={loading}
+            className="w-full resize-none rounded-md border border-border bg-background px-4 py-3 text-title outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
           />
         </div>
 
-        {/* Shipping */}
+        {/* ==============================
+            NOTE
+        ============================== */}
+
         <div>
-          <label className="block mb-3 text-sm font-medium">
+          <label
+            htmlFor="note"
+            className="mb-2 block text-sm font-medium text-title"
+          >
+            Order Note{' '}
+            <span className="font-normal text-muted-foreground">
+              (Optional)
+            </span>
+          </label>
+
+          <textarea
+            id="note"
+            rows={3}
+            value={note}
+            onChange={e => setNote(e.target.value)}
+            placeholder="Any special instruction?"
+            disabled={loading}
+            className="w-full resize-none rounded-md border border-border bg-background px-4 py-3 text-title outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
+          />
+        </div>
+
+        {/* ==============================
+            SHIPPING AREA
+        ============================== */}
+
+        <div>
+          <label className="mb-3 block text-sm font-medium text-title">
             Shipping Area
           </label>
 
-          <div className="flex gap-6">
-            <label className="flex items-center gap-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {/* Inside Dhaka */}
+
+            <label
+              className={`flex cursor-pointer items-center gap-3 rounded-md border p-4 transition ${
+                insideDhaka
+                  ? 'border-primary bg-primary/5'
+                  : 'border-border hover:border-primary/50'
+              }`}
+            >
               <input
                 type="radio"
+                name="shippingArea"
                 checked={insideDhaka}
                 onChange={() => setInsideDhaka(true)}
+                disabled={loading}
+                className="h-4 w-4 accent-[var(--primary)]"
               />
-              Inside Dhaka
+
+              <div>
+                <p className="font-medium text-title">Inside Dhaka</p>
+                <p className="text-sm text-muted-foreground">৳90</p>
+              </div>
             </label>
 
-            <label className="flex items-center gap-2">
+            {/* Outside Dhaka */}
+
+            <label
+              className={`flex cursor-pointer items-center gap-3 rounded-md border p-4 transition ${
+                !insideDhaka
+                  ? 'border-primary bg-primary/5'
+                  : 'border-border hover:border-primary/50'
+              }`}
+            >
               <input
                 type="radio"
+                name="shippingArea"
                 checked={!insideDhaka}
                 onChange={() => setInsideDhaka(false)}
+                disabled={loading}
+                className="h-4 w-4 accent-[var(--primary)]"
               />
-              Outside Dhaka
+
+              <div>
+                <p className="font-medium text-title">Outside Dhaka</p>
+                <p className="text-sm text-muted-foreground">৳130</p>
+              </div>
             </label>
           </div>
         </div>
 
-        {/* Summary */}
-        <div className="border-t pt-5 space-y-2">
-          <div className="flex justify-between">
-            <span>Items</span>
-            <span>${subtotal}</span>
+        {/* ==============================
+            ORDER SUMMARY
+        ============================== */}
+
+        <div className="space-y-3 border-t border-border pt-5">
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Subtotal</span>
+
+            <span className="font-medium text-title">
+              ৳{subtotal.toFixed(2)}
+            </span>
           </div>
 
-          <div className="flex justify-between">
-            <span>Shipping</span>
-            <span>${shippingFee}</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Shipping</span>
+
+            <span className="font-medium text-title">
+              ৳{shippingFee.toFixed(2)}
+            </span>
           </div>
 
-          <div className="flex justify-between font-semibold text-lg">
-            <span>Total</span>
-            <span className="text-orange-500">${subtotal + shippingFee}</span>
+          <div className="flex justify-between border-t border-border pt-3 text-lg font-semibold">
+            <span className="text-title">Total</span>
+
+            <span className="text-primary">৳{total.toFixed(2)}</span>
           </div>
         </div>
 
-        {/* BUTTON */}
+        {/* ==============================
+            PLACE ORDER BUTTON
+        ============================== */}
+
         <button
+          type="submit"
           disabled={loading}
-          className="w-full bg-orange-500 text-white py-3 rounded-md disabled:opacity-50"
+          className="w-full rounded-md bg-button py-3 font-semibold text-button-text transition-colors hover:bg-button-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? 'PLACING ORDER...' : 'PLACE ORDER'}
         </button>

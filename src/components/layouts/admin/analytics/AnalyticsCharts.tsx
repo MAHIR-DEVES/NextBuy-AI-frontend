@@ -31,9 +31,7 @@ type AnalyticsChartsProps = {
   analytics: AnalyticsData;
 };
 
-/* =====================================================
-   CONSTANTS
-===================================================== */
+//  CONSTANTS
 
 const STATUS_COLORS: Record<OrderStatus, string> = {
   PENDING: '#f59e0b',
@@ -43,9 +41,7 @@ const STATUS_COLORS: Record<OrderStatus, string> = {
   PARTIAL: '#8b5cf6',
 };
 
-/* =====================================================
-   HELPERS
-===================================================== */
+//  HELPERS
 
 const formatCurrency = (value: number) => {
   return `৳${value.toLocaleString('en-BD')}`;
@@ -58,14 +54,10 @@ const formatDate = (date: string) => {
   });
 };
 
-/* =====================================================
-   MAIN COMPONENT
-===================================================== */
+//  MAIN COMPONENT
 
 const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
-  /* =====================================================
-     REVENUE DATA
-  ===================================================== */
+  //  REVENUE DATA
 
   const revenueData = useMemo(() => {
     return analytics.revenueTrend.map(item => ({
@@ -74,9 +66,7 @@ const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
     }));
   }, [analytics.revenueTrend]);
 
-  /* =====================================================
-     STATUS DATA
-  ===================================================== */
+  //  STATUS DATA
 
   const statusData = useMemo(() => {
     return analytics.ordersByStatus.map(item => ({
@@ -85,9 +75,7 @@ const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
     }));
   }, [analytics.ordersByStatus]);
 
-  /* =====================================================
-     PRODUCT DATA
-  ===================================================== */
+  //  PRODUCT DATA
 
   const productData = useMemo(() => {
     return [...analytics.bestSellingProducts]
@@ -95,9 +83,7 @@ const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
       .slice(0, 5);
   }, [analytics.bestSellingProducts]);
 
-  /* =====================================================
-     DISTRICT DATA
-  ===================================================== */
+  //  DISTRICT DATA
 
   const districtData = useMemo(() => {
     return [...analytics.topDistricts]
@@ -107,9 +93,7 @@ const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
 
   return (
     <div className="space-y-6">
-      {/* =====================================================
-          REVENUE + STATUS ROW
-      ===================================================== */}
+      {/* REVENUE + STATUS ROW */}
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         {/* REVENUE TREND */}
         <ChartCard
@@ -250,9 +234,7 @@ const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
         </ChartCard>
       </div>
 
-      {/* =====================================================
-          BEST SELLING PRODUCTS + TOP DISTRICTS ROW
-      ===================================================== */}
+      {/* BEST SELLING PRODUCTS + TOP DISTRICTS ROW */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* BEST SELLING PRODUCTS */}
         <ChartCard
@@ -384,9 +366,7 @@ const AnalyticsCharts = ({ analytics }: AnalyticsChartsProps) => {
   );
 };
 
-/* =====================================================
-   CHART CARD WRAPPER
-===================================================== */
+//  CHART CARD WRAPPER
 
 const ChartCard = ({
   icon: Icon,
@@ -422,9 +402,7 @@ const ChartCard = ({
   );
 };
 
-/* =====================================================
-   CUSTOM TOOLTIPS
-===================================================== */
+//  CUSTOM TOOLTIPS
 
 const RevenueTooltip = ({
   active,
@@ -516,9 +494,7 @@ const DistrictTooltip = ({
   );
 };
 
-/* =====================================================
-   EMPTY CHART STATE
-===================================================== */
+//  EMPTY CHART STATE
 
 const EmptyChart = () => {
   return (

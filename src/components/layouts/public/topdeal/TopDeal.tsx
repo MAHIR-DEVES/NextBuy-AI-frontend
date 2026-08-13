@@ -108,13 +108,13 @@ const TopDeal = async () => {
                       <div className="flex items-baseline gap-2">
                         {/* Final Price */}
                         <span className="text-2xl font-bold ">
-                          ${finalPrice.toFixed(2)}
+                          ৳{finalPrice.toFixed(2)}
                         </span>
 
                         {/* Original Price (cut) */}
                         {discount > 0 && (
                           <span className="text-sm text-gray-400 line-through">
-                            ${originalPrice.toFixed(2)}
+                            ৳{originalPrice.toFixed(2)}
                           </span>
                         )}
                       </div>

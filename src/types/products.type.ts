@@ -31,6 +31,16 @@ export interface IProductCategory {
   updatedAt: string;
 }
 
+export interface IProductReview {
+  id: string;
+  productId: string;
+  userId: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IProduct {
   id: string;
   name: string;
@@ -80,6 +90,7 @@ export interface IProduct {
   isPublished: boolean;
 
   colorVariants: IProductColorVariant[];
+  reviews: IProductReview[];
 
   createdAt: string;
   updatedAt: string;

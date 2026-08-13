@@ -1,6 +1,6 @@
 import Banner from '@/components/layouts/public/banner/Banner';
 import Category from '@/components/layouts/public/category/Category';
-import Products from '@/components/layouts/public/projucts/Products.';
+import Products from '@/components/layouts/public/product/Products.';
 import TopDeal from '@/components/layouts/public/topdeal/TopDeal';
 
 export default function Home() {

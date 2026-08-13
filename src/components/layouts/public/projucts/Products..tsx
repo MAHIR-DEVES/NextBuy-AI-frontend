@@ -1,53 +1,12 @@
 import { ProductCard1 } from '@/components/product-card1';
 import { getProducts } from '@/services/product.service';
+import { IProduct } from '@/types/products.type';
 import React from 'react';
 
-export interface IProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  discount?: number;
-  images: string[];
-  thumbnail: string;
-  brand: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  stock: number;
-  slug: string;
-}
-
 const Products = async () => {
-  const data = await getProducts();
-  const products: IProduct[] = data?.data?.data || [];
+  const response = await getProducts();
 
-  //  mapping layer
-  const formattedProducts = products.map(p => ({
-    id: p.id,
-    name: p.name,
-    description: p.description,
-
-    link: `/products/${p.slug}`,
-
-    image: {
-      src: p.thumbnail,
-      alt: p.name,
-    },
-
-    price: {
-      regular: p.price,
-      sale: p.discount ? p.price - (p.price * p.discount) / 100 : undefined,
-      currency: 'USD',
-    },
-
-    badge: p.discount
-      ? {
-          text: `${p.discount}% OFF`,
-          backgroundColor: 'oklch(58% 0.22 30)',
-        }
-      : undefined,
-  }));
+  const products = response?.data?.data || [];
 
   return (
     <div className="w-full pb-10 bg-white">
@@ -61,7 +20,7 @@ const Products = async () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-          {formattedProducts.map(product => (
+          {products.map((product: IProduct) => (
             <ProductCard1 key={product.id} product={product} />
           ))}
         </div>

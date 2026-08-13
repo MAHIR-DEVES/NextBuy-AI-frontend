@@ -51,7 +51,7 @@ const DashboardHeader = ({ summary }: DashboardHeaderProps) => {
           </button>
 
           <Link
-            href="/admin/products/add"
+            href="/admin/create-product"
             className="px-4 py-2 bg-primary hover:opacity-90 text-white font-medium transition-all flex items-center gap-2 shadow-sm"
           >
             <Package size={18} />

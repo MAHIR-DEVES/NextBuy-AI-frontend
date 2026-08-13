@@ -1,37 +1,86 @@
-export interface IProduct {
+export interface IProductSizeVariant {
   id: string;
-  name: string;
-  description: string;
-
+  colorVariantId: string;
+  size: string;
   price: number;
-  discount?: number;
-
-  thumbnail: string;
-  images: string[];
-
-  brand: string;
-  category: string;
-
-  rating: number;
-  reviewCount: number;
-
+  specialPrice: number | null;
   stock: number;
-
-  slug: string;
-  isFeatured: boolean;
-  isPublished: boolean;
-
+  sku: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface IProductsResponse {
-  success: boolean;
-  message: string;
-  data: IProduct[];
-  meta?: {
-    page: number;
-    limit: number;
-    total: number;
-  };
+export interface IProductColorVariant {
+  id: string;
+  productId: string;
+  color: string;
+  image: string | null;
+  sizes: IProductSizeVariant[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IProductCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IProduct {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+
+  brand: string | null;
+  categoryId: string;
+  category: IProductCategory;
+
+  tags: string[];
+
+  thumbnail: string;
+  images: string[];
+  videoUrl: string | null;
+
+  model: string | null;
+  material: string | null;
+
+  price: number;
+  specialPrice: number | null;
+  discount: number | null;
+  stock: number;
+
+  weight: number | null;
+
+  dimensions: {
+    length: number;
+    width: number;
+    height: number;
+  } | null;
+
+  dangerousGoods: boolean;
+
+  warrantyType: string | null;
+  warrantyPeriod: string | null;
+
+  highlights: string[];
+
+  rating: number;
+  reviewCount: number;
+
+  viewCount: number;
+  likeCount: number;
+
+  isFeatured: boolean;
+  isPublished: boolean;
+
+  colorVariants: IProductColorVariant[];
+
+  createdAt: string;
+  updatedAt: string;
 }

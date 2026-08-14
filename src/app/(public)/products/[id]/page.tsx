@@ -58,7 +58,7 @@ export default async function ProductDetailsPage({
         : null;
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-10">
+    <div className="container mx-auto px-3 md:px-4 py-8 md:py-10">
       {/* =====================================================
           BREADCRUMB
       ====================================================== */}
@@ -89,7 +89,7 @@ export default async function ProductDetailsPage({
       ====================================================== */}
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-5 md:p-7">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-3 md:p-7">
           {/* =================================================
               LEFT SIDE - IMAGE GALLERY
           ================================================== */}
@@ -238,7 +238,7 @@ export default async function ProductDetailsPage({
                 RETURN & WARRANTY
             ================================================== */}
 
-            <div className="border-t mt-5 pt-5">
+            {/* <div className="border-t mt-5 pt-5">
               <h3 className="font-semibold text-gray-800 mb-3">
                 Return & Warranty
               </h3>
@@ -263,13 +263,13 @@ export default async function ProductDetailsPage({
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* =================================================
                 SELLER
             ================================================== */}
 
-            <div className="border-t mt-5 pt-5">
+            {/* <div className="border-t mt-5 pt-5">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-semibold text-gray-800">Sold by</h3>
 
@@ -298,7 +298,7 @@ export default async function ProductDetailsPage({
                   GO TO STORE
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

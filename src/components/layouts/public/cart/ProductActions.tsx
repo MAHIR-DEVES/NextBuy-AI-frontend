@@ -2,18 +2,14 @@
 
 import { useState } from 'react';
 import { Heart, Loader2, Minus, Plus, ShoppingCart } from 'lucide-react';
-
 import { addToCart } from '@/services/cart.service';
 import { createWishlist } from '@/services/wishlist.service';
-
 import { useCartStore } from '@/store/cart.store';
 import { IProduct } from '@/types/products.type';
-
-import BuyNowModal from '../modals/BuyNowModal';
-
 import { getUser } from '@/utils/auth';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useOrderStore } from '@/store/order.store';
 
 type Props = {
   productId: string;
@@ -24,7 +20,6 @@ const ProductActions = ({ productId, product }: Props) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const user = getUser();
 
@@ -43,6 +38,14 @@ const ProductActions = ({ productId, product }: Props) => {
     return true;
   };
 
+  const setSelectedProduct = useOrderStore(state => state.setSelectedProduct);
+
+  const handleBuyNow = () => {
+    setSelectedProduct(product);
+
+    router.push('/order-now');
+  };
+
   // ADD TO CART
   const handleAddToCart = async () => {
     if (!handleRequireLogin()) return;
@@ -59,13 +62,6 @@ const ProductActions = ({ productId, product }: Props) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // BUY NOW
-  const handleOrderBtn = () => {
-    if (!handleRequireLogin()) return;
-
-    setOpen(true);
   };
 
   // ADD TO WISHLIST
@@ -121,8 +117,9 @@ const ProductActions = ({ productId, product }: Props) => {
       {/* Buttons */}
       <div className="flex gap-3">
         {/* Buy Now */}
+
         <button
-          onClick={handleOrderBtn}
+          onClick={handleBuyNow}
           disabled={loading || wishlistLoading}
           className="flex-1 bg-button text-button-text py-3 rounded-lg font-semibold hover:bg-button-hover transition-colors disabled:opacity-50 cursor-pointer"
         >
@@ -157,13 +154,6 @@ const ProductActions = ({ productId, product }: Props) => {
           )}
         </button>
       </div>
-
-      {/* MODAL */}
-      <BuyNowModal
-        open={open}
-        onClose={() => setOpen(false)}
-        product={product}
-      />
     </div>
   );
 };

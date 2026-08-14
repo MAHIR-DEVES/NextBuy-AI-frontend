@@ -46,7 +46,7 @@ const ProductGallery = ({
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-contain p-5"
+            className="object-contain "
           />
         ) : (
           <div className="flex h-full items-center justify-center text-gray-400">
@@ -77,7 +77,7 @@ const ProductGallery = ({
                   alt={`${productName} ${index + 1}`}
                   fill
                   sizes="96px"
-                  className="object-contain p-1.5"
+                  className="object-contain "
                 />
               </button>
             );

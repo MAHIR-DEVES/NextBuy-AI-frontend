@@ -4,22 +4,7 @@ import Link from 'next/link';
 import { getProducts } from '@/services/product.service';
 import Image from 'next/image';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-
-export interface IProduct {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  discount?: number;
-  images: string[];
-  thumbnail: string;
-  brand: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-  stock: number;
-  slug: string;
-}
+import { IProduct } from '@/types/products.type';
 
 const TopDeal = async () => {
   const data = await getProducts({

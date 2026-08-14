@@ -9,13 +9,13 @@ import {
   Trash2,
 } from 'lucide-react';
 
-import { Order, OrderMeta, OrderStatus } from '@/types/orders';
+import { Order, OrdersMeta, OrderStatus } from '@/types/orders';
 
 import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
 
 interface CustomerContactTableProps {
   orders: Order[];
-  meta: OrderMeta;
+  meta: OrdersMeta;
   selectedIds: string[];
   paginationPages: number[];
 

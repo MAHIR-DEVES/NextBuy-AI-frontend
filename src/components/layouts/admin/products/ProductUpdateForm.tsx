@@ -287,9 +287,13 @@ const ProductUpdateForm = ({ product, refetch, closeModal }: Props) => {
             </label>
             <input
               name="category"
-              value={formData.category}
+              value={
+                typeof formData.category === 'string'
+                  ? formData.category
+                  : formData.category?.name || ''
+              }
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md"
               placeholder="Category"
             />
           </div>

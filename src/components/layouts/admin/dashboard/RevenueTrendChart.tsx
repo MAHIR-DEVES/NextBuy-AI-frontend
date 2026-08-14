@@ -78,14 +78,13 @@ const RevenueTrendChart = ({ data }: RevenueTrendChartProps) => {
             />
 
             <Tooltip
-              formatter={(value: number, name: string) => {
+              formatter={(value, name) => {
                 if (name === 'revenue') {
-                  return [`৳${value.toLocaleString()}`, 'Revenue'];
+                  return [`৳${Number(value).toLocaleString()}`, 'Revenue'];
                 }
 
-                return [value, 'Orders'];
+                return [Number(value).toLocaleString(), name];
               }}
-              labelFormatter={label => `Date: ${label}`}
             />
 
             <Bar

@@ -64,7 +64,7 @@ const ProductView = ({ product }: { product: IProduct | null }) => {
   const StockIcon = stockStatus.icon;
   const discountedPrice = calculateDiscountedPrice(
     product.price,
-    product.discount,
+    product.discount ?? undefined,
   );
   const hasDiscount = product.discount && product.discount > 0;
 
@@ -146,7 +146,7 @@ const ProductView = ({ product }: { product: IProduct | null }) => {
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400">Category</p>
             <p className="text-sm font-medium text-gray-900 dark:text-white">
-              {product.category || 'Uncategorized'}
+              {product.category?.name || 'Uncategorized'}
             </p>
           </div>
         </div>

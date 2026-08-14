@@ -12,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { IProduct } from '@/types/products.type';
 
 type SearchParams = Promise<{
   page?: string;
@@ -635,27 +636,8 @@ export default async function ProductListing({
             {/* PRODUCTS */}
             {products.length > 0 ? (
               <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-                {products.map((product: any) => (
-                  <ProductCard1
-                    key={product.id}
-                    product={{
-                      id: product.id,
-                      name: product.name,
-                      image: {
-                        src: product.thumbnail,
-                        alt: product.name,
-                      },
-                      link: `/products/${product.id}`,
-                      description: product.description,
-                      price: {
-                        regular: product.price,
-                        sale: product.price,
-                        currency: 'USD',
-                      },
-                      rating: product.rating || 0,
-                      moq: product.stock || 1,
-                    }}
-                  />
+                {products.map((product: IProduct) => (
+                  <ProductCard1 key={product.id} product={product} />
                 ))}
               </div>
             ) : (

@@ -1,10 +1,10 @@
 'use client';
 
-import { OrderByStatus } from '@/types/dashboard.type';
+import { OrdersByStatus } from '@/types/analytics.type';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 interface OrdersByStatusChartProps {
-  data: OrderByStatus[];
+  data: OrdersByStatus[];
 }
 
 const STATUS_COLORS: Record<string, string> = {

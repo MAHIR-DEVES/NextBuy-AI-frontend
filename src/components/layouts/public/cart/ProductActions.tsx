@@ -39,8 +39,14 @@ const ProductActions = ({ productId, product }: Props) => {
   };
 
   const setSelectedProduct = useOrderStore(state => state.setSelectedProduct);
+  const selectedSize = useOrderStore(state => state.selectedSize);
 
   const handleBuyNow = () => {
+    if (product.colorVariants?.length > 0 && !selectedSize) {
+      toast.error('দয়া করে একটি সাইজ নির্বাচন করুন।');
+      return;
+    }
+
     setSelectedProduct(product);
 
     router.push('/order-now');

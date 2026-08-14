@@ -12,6 +12,7 @@ export type CheckoutPayload = {
   note?: string;
   thana: string;
   district: string;
+  size?: string;
   isInsideDhaka: boolean;
 };
 

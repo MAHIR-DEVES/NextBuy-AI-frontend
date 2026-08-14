@@ -7,7 +7,6 @@ import {
   Plus,
   ShoppingBag,
   Truck,
-  MapPin,
   CheckCircle2,
   ShieldCheck,
   Phone,
@@ -20,6 +19,7 @@ import { toast } from 'sonner';
 import { IProduct } from '@/types/products.type';
 import { singleOrder } from '@/services/orders.service';
 import { useRouter } from 'next/navigation';
+import { useOrderStore } from '@/store/order.store';
 
 interface BuyNowProps {
   product: IProduct;
@@ -28,6 +28,7 @@ interface BuyNowProps {
 const BuyNow = ({ product }: BuyNowProps) => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const selectedSize = useOrderStore(state => state.selectedSize);
   const router = useRouter();
 
   const [form, setForm] = useState({
@@ -143,6 +144,7 @@ const BuyNow = ({ product }: BuyNowProps) => {
 
       const payload = {
         productId: product.id,
+        size: selectedSize,
         quantity,
         name: form.name.trim(),
         phone: form.phone.trim(),
@@ -243,6 +245,14 @@ const BuyNow = ({ product }: BuyNowProps) => {
                       {product.brand && (
                         <p className="mt-0.5 text-[11px] text-slate-500">
                           ব্র্যান্ড: {product.brand}
+                        </p>
+                      )}
+                      {selectedSize && (
+                        <p className="mt-1 text-sm text-slate-600">
+                          সাইজ:{' '}
+                          <span className="font-semibold text-slate-900">
+                            {selectedSize}
+                          </span>
                         </p>
                       )}
                     </div>

@@ -4,14 +4,19 @@ import ProductActions from '@/components/layouts/public/cart/ProductActions';
 import { IProduct } from '@/types/products.type';
 import { useProductStore } from '@/store/product.store';
 import { Check, ShieldCheck, Truck } from 'lucide-react';
+import { useState } from 'react';
+import { useOrderStore } from '@/store/order.store';
 
 interface Props {
   product: IProduct;
 }
 
 const ProductPurchaseOptions = ({ product }: Props) => {
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+
   const { setSelectedImage, setSelectedColor, selectedColor } =
     useProductStore();
+  const setOrderSelectedSize = useOrderStore(state => state.setSelectedSize);
 
   const handleColorClick = (image: string | null, color: string) => {
     setSelectedImage(image);
@@ -96,24 +101,32 @@ const ProductPurchaseOptions = ({ product }: Props) => {
             <span className="text-xs text-gray-500">Size নির্বাচন করুন</span>
           </div>
 
-          <div className="grid grid-cols-6 gap-3 md:flex md:flex-wrap md:gap-3">
-            {product.colorVariants.flatMap(variant =>
-              variant.sizes?.map(size => (
+          {product.colorVariants.flatMap(variant =>
+            variant.sizes?.map(size => {
+              const isSelected = selectedSize === size.size;
+
+              return (
                 <button
                   key={size.id}
                   type="button"
                   disabled={size.stock <= 0}
+                  onClick={() => {
+                    setSelectedSize(size.size);
+                    setOrderSelectedSize(size.size);
+                  }}
                   className={`min-w-0 rounded-md border px-3 py-2.5 transition-all md:min-w-[64px] ${
                     size.stock <= 0
                       ? 'cursor-not-allowed border-gray-100 bg-gray-100 text-gray-400'
-                      : 'border-gray-200 bg-white hover:border-primary hover:bg-primary/5'
+                      : isSelected
+                        ? 'border-primary bg-primary/5 text-primary ring-1 ring-primary'
+                        : 'border-gray-200 bg-white hover:border-primary hover:bg-primary/5'
                   }`}
                 >
                   <div className="text-sm font-semibold">{size.size}</div>
                 </button>
-              )),
-            )}
-          </div>
+              );
+            }),
+          )}
         </div>
       )}
 

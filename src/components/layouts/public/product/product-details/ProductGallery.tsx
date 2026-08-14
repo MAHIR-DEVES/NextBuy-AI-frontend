@@ -23,22 +23,43 @@ const ProductGallery = ({
   }, [thumbnail, images]);
 
   const [activeImage, setActiveImage] = useState(thumbnail);
+  const [zoomStyle, setZoomStyle] = useState<React.CSSProperties>({});
 
-  // Zustand থেকে color variant image এলে main image change হবে
   const currentImage = selectedImage || activeImage;
 
-  // Gallery thumbnail click
   const handleGalleryClick = (image: string) => {
     setActiveImage(image);
-
-    // Color variant image clear
     setSelectedImage(null);
+    setZoomStyle({});
+  };
+
+  // Cursor position  zoom
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+
+    const rect = container.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    setZoomStyle({
+      transformOrigin: `${x}% ${y}%`,
+      transform: 'scale(2)',
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setZoomStyle({});
   };
 
   return (
     <div className="space-y-4">
       {/* MAIN IMAGE */}
-      <div className="relative h-[360px] overflow-hidden rounded-md border border-gray-200 bg-gray-50 md:h-[500px]">
+      <div
+        className="group relative h-[360px] overflow-hidden rounded-md border border-gray-200 bg-gray-50 md:h-[500px]"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         {currentImage ? (
           <Image
             src={currentImage}
@@ -46,7 +67,8 @@ const ProductGallery = ({
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-contain "
+            className="object-cover transition-transform duration-150 ease-out"
+            style={zoomStyle}
           />
         ) : (
           <div className="flex h-full items-center justify-center text-gray-400">
@@ -77,7 +99,7 @@ const ProductGallery = ({
                   alt={`${productName} ${index + 1}`}
                   fill
                   sizes="96px"
-                  className="object-contain "
+                  className="object-contain"
                 />
               </button>
             );

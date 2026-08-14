@@ -1,21 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getToken } from '@/utils/auth';
 import { uploadImageToCloudinary } from '@/utils/uploadImageToCloudinary';
 
-import { BasicInformationSection } from './BasicInformationSection';
 import { MediaSection } from './MediaSection';
 import { SpecificationAndPricingSection } from './SpecificationAndPricingSection';
-import {
-  ColorVariantsSection,
-  type ColorVariant,
-  type SizeVariant,
-} from './ColorVariantsSection';
-import { HighlightsSection } from './HighlightsSection';
+
 import { ShippingAndWarrantySection } from './ShippingAndWarrantySection';
 import { ProductStatusSection } from './ProductStatusSection';
+import {
+  ColorVariant,
+  ColorVariantsSection,
+  SizeVariant,
+} from './ColorVariantsSection';
+import { BasicInformationSection } from './BasicInformationSection';
+import { HighlightsSection } from './HighlightsSection';
 import { FormActions } from './FormActions';
+import { Category } from '@/types/category.types';
+import { CategoryService } from '@/services/category.service';
 
 const ProductCreateForm = () => {
   const [loading, setLoading] = useState(false);
@@ -23,6 +26,27 @@ const ProductCreateForm = () => {
 
   const [thumbnail, setThumbnail] = useState('');
   const [images, setImages] = useState<string[]>([]);
+
+  const [categories, setCategories] = useState<Category[]>([]);
+  // const [loadingCategories, setLoadingCategories] = useState(false);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        // setLoadingCategories(true);
+
+        const response = await CategoryService.getAllCategories();
+
+        setCategories(response.data || []);
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      } finally {
+        // setLoadingCategories(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -60,6 +84,9 @@ const ProductCreateForm = () => {
     isPublished: true,
   });
 
+  const selectedCategory = categories.find(
+    category => category.id === formData.category,
+  );
   const [colorVariants, setColorVariants] = useState<ColorVariant[]>([]);
 
   // =========================================================
@@ -201,20 +228,23 @@ const ProductCreateForm = () => {
   // =========================================================
 
   const addColorVariant = () => {
+    const defaultSizes =
+      selectedCategory?.name.trim().toLowerCase() === 'shoes'
+        ? ['39', '40', '41', '42', '43', '44']
+        : [''];
+
     setColorVariants(prev => [
       ...prev,
       {
         color: '',
         image: '',
-        sizes: [
-          {
-            size: '',
-            price: formData.price || 0,
-            specialPrice: formData.specialPrice,
-            stock: 0,
-            sku: '',
-          },
-        ],
+        sizes: defaultSizes.map(size => ({
+          size,
+          price: formData.price || 0,
+          specialPrice: formData.specialPrice,
+          stock: 0,
+          sku: '',
+        })),
       },
     ]);
   };

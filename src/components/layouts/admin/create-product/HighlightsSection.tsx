@@ -31,8 +31,8 @@ export const HighlightsSection = ({
           className="w-full px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none transition-all text-sm"
         />
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-          💡 Tip: Write each highlight on a new line. They'll be used in product
-          descriptions.
+          💡 Tip: Write each highlight on a new line. They&apos;ll be used in
+          product descriptions.
         </p>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { Palette, Plus, Trash2, Upload, X } from 'lucide-react';
-import { SectionTitle } from './BasicInformationSection';
 
 export type SizeVariant = {
   size: string;
@@ -146,8 +145,6 @@ interface ColorVariantCardProps {
 const ColorVariantCard = ({
   color,
   colorIndex,
-  basePrice,
-  baseSpecialPrice,
   uploading,
   onRemove,
   onUpdateColor,

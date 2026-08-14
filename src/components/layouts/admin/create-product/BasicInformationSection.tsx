@@ -1,4 +1,7 @@
+import { CategoryService } from '@/services/category.service';
+import { Category } from '@/types/category.types';
 import { Package } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface BasicInformationSectionProps {
   formData: {
@@ -20,6 +23,27 @@ export const BasicInformationSection = ({
   formData,
   onChange,
 }: BasicInformationSectionProps) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoadingCategories(true);
+
+        const response = await CategoryService.getAllCategories();
+
+        setCategories(response.data || []);
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="space-y-4">
       <SectionTitle
@@ -70,14 +94,35 @@ export const BasicInformationSection = ({
           onChange={onChange}
         />
 
-        <FormInput
-          label="Category ID *"
-          name="category"
-          placeholder="Enter existing category ID"
-          value={formData.category}
-          onChange={onChange}
-          required
-        />
+        {/* CATEGORY */}
+        <div>
+          <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Category *
+          </label>
+
+          <select
+            name="category"
+            value={formData.category}
+            onChange={onChange}
+            required
+            disabled={loadingCategories}
+            className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <option value="">
+              {loadingCategories
+                ? 'Loading categories...'
+                : 'Select a category'}
+            </option>
+
+            {categories
+              .filter(category => category.isActive)
+              .map(category => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+          </select>
+        </div>
       </div>
 
       <FormInput

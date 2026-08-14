@@ -96,14 +96,14 @@ const ProductPurchaseOptions = ({ product }: Props) => {
             <span className="text-xs text-gray-500">Size নির্বাচন করুন</span>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-6 gap-3 md:flex md:flex-wrap md:gap-3">
             {product.colorVariants.flatMap(variant =>
               variant.sizes?.map(size => (
                 <button
                   key={size.id}
                   type="button"
                   disabled={size.stock <= 0}
-                  className={`min-w-[64px] rounded-md border px-3 py-2.5 transition-all ${
+                  className={`min-w-0 rounded-md border px-3 py-2.5 transition-all md:min-w-[64px] ${
                     size.stock <= 0
                       ? 'cursor-not-allowed border-gray-100 bg-gray-100 text-gray-400'
                       : 'border-gray-200 bg-white hover:border-primary hover:bg-primary/5'

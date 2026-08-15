@@ -7,38 +7,52 @@
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
+
   --color-button-hover-1-foreground: var(--button-hover-1-foreground);
   --color-button-hover-1: var(--button-hover-1);
+
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+
   --color-destructive: var(--destructive);
+
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
+
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
+
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
+
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
+
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,6 +60,7 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
   --color-title: var(--title);
   --color-subtitle: var(--subtitle);
   --color-body: var(--body);
@@ -59,15 +74,19 @@
   --color-link-hover: var(--link-hover);
 }
 
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
 :root {
   /* ==========================
      Brand Colors
   ========================== */
 
-  --primary: #37a78a;
-  --primary-hover: #2e947a;
-  --primary-active: #257a64;
-  --primary-light: #9ff8dc;
+  --primary: #ad1a60;
+  --primary-hover: #d8255d;
+  --primary-active: #ed315d;
+  --primary-light: #fff0f5;
 
   --primary-foreground: #ffffff;
 
@@ -76,154 +95,261 @@
   ========================== */
 
   --background: #ffffff;
-  --foreground: #0f172a;
+  --foreground: #17121a;
 
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #17121a;
 
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
+  --popover-foreground: #17121a;
 
   /* ==========================
      Secondary
   ========================== */
 
-  --secondary: #f8fafc;
-  --secondary-foreground: #1e293b;
+  --secondary: #fff7f9;
+  --secondary-foreground: #3f1728;
 
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  --muted: #fdf1f5;
+  --muted-foreground: #76616a;
 
-  --accent: #e8f8f3;
-  --accent-foreground: #37a78a;
+  /* ==========================
+     Accent
+  ========================== */
+
+  --accent: #fff0f4;
+  --accent-foreground: #ad1a60;
 
   /* ==========================
      Border & Input
   ========================== */
 
-  --border: #e2e8f0;
-  --input: #e2e8f0;
+  --border: #f1dce4;
+  --input: #f1dce4;
 
-  /* Focus Ring */
+  /* ==========================
+     Focus Ring
+  ========================== */
 
-  --ring: #37a78a;
+  --ring: #ad1a60;
 
-  /* Status */
+  /* ==========================
+     Status
+  ========================== */
 
   --success: #22c55e;
   --warning: #f59e0b;
   --destructive: #ef4444;
   --info: #3b82f6;
 
-  /* Radius */
+  /* ==========================
+     Radius
+  ========================== */
 
   --radius: 0.75rem;
 
-  /* Charts */
+  /* ==========================
+     Charts
+  ========================== */
 
-  --chart-1: #37a78a;
-  --chart-2: #4fd1b3;
-  --chart-3: #2e947a;
-  --chart-4: #0f766e;
-  --chart-5: #14532d;
+  --chart-1: #ad1a60;
+  --chart-2: #d8255d;
+  --chart-3: #f25774;
+  --chart-4: #f14669;
+  --chart-5: #ed315d;
 
-  /* Sidebar */
+  /* ==========================
+     Sidebar
+  ========================== */
 
   --sidebar: #ffffff;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #37a78a;
+  --sidebar-foreground: #17121a;
+
+  --sidebar-primary: #ad1a60;
   --sidebar-primary-foreground: #ffffff;
-  --button-hover-1: #e8f8f3;
-  --hover: #e8f8f3;
-  --button-hover-1-foreground: #37a78a;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #37a78a;
 
-  /* text */
-  --title: #37a78a;
-  --subtitle: #2e947a;
-  --hover-text: #2e947a;
-  --body: #64748b;
+  --button-hover-1: #fff0f4;
+  --button-hover-1-foreground: #ad1a60;
 
-  --button: #37a78a;
-  --button-hover: #2e947a;
+  --hover: #fff0f4;
+
+  --sidebar-border: #f1dce4;
+  --sidebar-ring: #ad1a60;
+
+  /* ==========================
+     Typography
+  ========================== */
+
+  --title: #ad1a60;
+  --subtitle: #d8255d;
+  --hover-text: #d8255d;
+  --body: #76616a;
+
+  /* ==========================
+     Buttons
+  ========================== */
+
+  --button: #ad1a60;
+  --button-hover: #d8255d;
   --button-text: #ffffff;
 
-  --link: #37a78a;
-  --link-hover: #2e947a;
+  /* ==========================
+     Links
+  ========================== */
 
-  /* Gradient */
-  --gradient-primary: linear-gradient(135deg, #37a78a 0%, #2cc295 100%);
+  --link: #ad1a60;
+  --link-hover: #d8255d;
 
-  --gradient-secondary: linear-gradient(135deg, #37a78a 0%, #4fd1b3 100%);
+  /* ==========================
+     Gradients
+  ========================== */
 
-  --gradient-dark: linear-gradient(135deg, #2e947a 0%, #257a64 100%);
+  --gradient-primary: linear-gradient(135deg, #ad1a60 0%, #d8255d 100%);
+
+  --gradient-secondary: linear-gradient(135deg, #d8255d 0%, #f25774 100%);
+
+  --gradient-dark: linear-gradient(135deg, #ad1a60 0%, #ed315d 100%);
 }
+
+/* =========================================================
+   GRADIENT UTILITIES
+========================================================= */
+
 @layer utilities {
   .bg-gradient-primary {
-    background-image: linear-gradient(135deg, #37a78a 0%, #2cc295 100%);
+    background-image: linear-gradient(135deg, #ad1a60 0%, #d8255d 100%);
+  }
+
+  .bg-gradient-secondary {
+    background-image: linear-gradient(135deg, #d8255d 0%, #f25774 100%);
   }
 
   .bg-gradient-dark {
-    background-image: linear-gradient(135deg, #2e947a 0%, #257a64 100%);
+    background-image: linear-gradient(135deg, #ad1a60 0%, #ed315d 100%);
   }
 }
 
+/* =========================================================
+   DARK THEME
+========================================================= */
+
 .dark {
-  --background: #0b1120;
-  --foreground: #f8fafc;
+  --background: #120b10;
+  --foreground: #fff7fa;
 
-  --card: #111827;
-  --card-foreground: #f8fafc;
+  --card: #1b1017;
+  --card-foreground: #fff7fa;
 
-  --popover: #111827;
-  --popover-foreground: #f8fafc;
+  --popover: #1b1017;
+  --popover-foreground: #fff7fa;
 
-  --primary: #37a78a;
-  --primary-hover: #49c5a3;
-  --primary-active: #2e947a;
-  --primary-light: rgba(55, 167, 138, 0.12);
+  /* ==========================
+     Brand
+  ========================== */
+
+  --primary: #d8255d;
+  --primary-hover: #f25774;
+  --primary-active: #ed315d;
+
+  --primary-light: rgba(216, 37, 93, 0.14);
 
   --primary-foreground: #ffffff;
 
-  --secondary: #1f2937;
-  --secondary-foreground: #f8fafc;
+  /* ==========================
+     Secondary
+  ========================== */
 
-  --muted: #1f2937;
-  --muted-foreground: #94a3b8;
+  --secondary: #27151e;
+  --secondary-foreground: #fff7fa;
 
-  --accent: #183a33;
-  --accent-foreground: #37a78a;
+  --muted: #27151e;
+  --muted-foreground: #c8aab6;
 
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
+  /* ==========================
+     Accent
+  ========================== */
 
-  --ring: #37a78a;
+  --accent: #351622;
+  --accent-foreground: #f25774;
 
-  --sidebar: #111827;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #37a78a;
+  /* ==========================
+     Border & Input
+  ========================== */
+
+  --border: rgba(255, 255, 255, 0.09);
+  --input: rgba(255, 255, 255, 0.09);
+
+  /* ==========================
+     Ring
+  ========================== */
+
+  --ring: #d8255d;
+
+  /* ==========================
+     Sidebar
+  ========================== */
+
+  --sidebar: #1b1017;
+  --sidebar-foreground: #fff7fa;
+
+  --sidebar-primary: #d8255d;
   --sidebar-primary-foreground: #ffffff;
-  --button-hover-1: #183a33;
-  --button-hover-1-foreground: #37a78a;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #37a78a;
+
+  --button-hover-1: #351622;
+  --button-hover-1-foreground: #f25774;
+
+  --sidebar-border: rgba(255, 255, 255, 0.09);
+  --sidebar-ring: #d8255d;
+
+  /* ==========================
+     Typography
+  ========================== */
+
+  --title: #f25774;
+  --subtitle: #d8255d;
+  --hover-text: #f25774;
+  --body: #c8aab6;
+
+  /* ==========================
+     Buttons
+  ========================== */
+
+  --button: #d8255d;
+  --button-hover: #f25774;
+  --button-text: #ffffff;
+
+  /* ==========================
+     Links
+  ========================== */
+
+  --link: #f25774;
+  --link-hover: #ff7890;
 }
+
+/* =========================================================
+   BASE
+========================================================= */
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
 }
 
+/* =========================================================
+   SWIPER PAGINATION
+========================================================= */
+
 .swiper-pagination-bullet {
-  background: #d8f1ea; /* light primary */
+  background: #f8c9d6;
   opacity: 1;
   width: 8px;
   height: 8px;
@@ -231,26 +357,31 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: #37a78a !important; /* primary */
+  background: #ad1a60 !important;
   width: 20px;
   border-radius: 10px;
 }
 
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
 /* Chrome, Edge, Safari */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #eefaf6; /* very light primary */
+  background: #fff1f5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #37a78a; /* primary */
+  background: #ad1a60;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2e947a; /* primary hover */
+  background: #d8255d;
 }

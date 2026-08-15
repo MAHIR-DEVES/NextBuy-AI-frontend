@@ -7,8 +7,9 @@ import { Toaster } from 'sonner';
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'NextBuy AI',
-  description: 'E-commerce built with Next.js',
+  title: 'Sera Place ',
+  description:
+    'Sera Place is a growing online shopping platform offering quality products at competitive prices, from fashion and footwear to electronics and more.',
 };
 
 export default function RootLayout({

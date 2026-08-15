@@ -1,5 +1,3 @@
-// src/app/dashboard/products/page.tsx
-
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -43,7 +41,7 @@ const ProductsPage = () => {
   // =========================
 
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
@@ -75,7 +73,7 @@ const ProductsPage = () => {
         page,
         limit,
         search: search.trim() || undefined,
-        category: category.trim() || undefined,
+        categoryId: categoryId.trim() || undefined,
         minPrice: minPrice ? Number(minPrice) : undefined,
         maxPrice: maxPrice ? Number(maxPrice) : undefined,
         sortBy: 'createdAt',
@@ -100,7 +98,7 @@ const ProductsPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, limit, search, category, minPrice, maxPrice]);
+  }, [page, limit, search, categoryId, minPrice, maxPrice]);
 
   // =========================
   // FETCH ON FILTER / PAGE
@@ -142,7 +140,7 @@ const ProductsPage = () => {
 
   const clearFilters = () => {
     setSearch('');
-    setCategory('');
+    setCategoryId('');
     setMinPrice('');
     setMaxPrice('');
     setPage(1);
@@ -158,7 +156,7 @@ const ProductsPage = () => {
   };
 
   const handleCategoryChange = (value: string) => {
-    setCategory(value);
+    setCategoryId(value);
     setPage(1);
   };
 
@@ -194,7 +192,7 @@ const ProductsPage = () => {
 
   const hasActiveFilters =
     Boolean(search) ||
-    Boolean(category) ||
+    Boolean(categoryId) ||
     Boolean(minPrice) ||
     Boolean(maxPrice);
 
@@ -306,7 +304,7 @@ const ProductsPage = () => {
                       type="text"
                       placeholder="Filter by category ID"
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-500 text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
-                      value={category}
+                      value={categoryId}
                       onChange={e => handleCategoryChange(e.target.value)}
                     />
                   </div>

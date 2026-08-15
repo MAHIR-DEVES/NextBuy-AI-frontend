@@ -55,7 +55,6 @@ export default async function ProductListing({
 
   const products = res?.data?.data || [];
   const categories = categoryResponse?.data || [];
-  console.log(categories);
 
   return (
     <div className="bg-gray-50 min-h-screen">

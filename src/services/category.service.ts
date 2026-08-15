@@ -16,9 +16,18 @@ const getConfig = () => {
 };
 
 const getAllCategories = async () => {
-  const response = await axios.get(`${BASE_URL}/categories`, getConfig());
+  const response = await fetch(`${BASE_URL}/categories`, {
+    next: {
+      revalidate: 60,
+      tags: ['categories'],
+    },
+  });
 
-  return response.data;
+  if (!response.ok) {
+    throw new Error('Failed to fetch categories');
+  }
+
+  return response.json();
 };
 
 const createCategory = async (data: CategoryPayload) => {

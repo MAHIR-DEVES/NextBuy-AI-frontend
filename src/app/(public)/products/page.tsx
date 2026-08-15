@@ -13,11 +13,13 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { IProduct } from '@/types/products.type';
+import { CategoryService } from '@/services/category.service';
+import { Category } from '@/types/category.types';
 
 type SearchParams = Promise<{
   page?: string;
   search?: string;
-  category?: string;
+  categoryId?: string;
   sortBy?: string;
   sortOrder?: string;
   minPrice?: string;
@@ -35,19 +37,25 @@ export default async function ProductListing({
   const sp = await searchParams;
 
   // API CALL WITH FILTERS
-  const res = await getProducts({
-    page: Number(sp?.page || 1),
-    search: sp?.search,
-    category: sp?.category,
-    sortBy: sp?.sortBy,
-    sortOrder: sp?.sortOrder as any,
-    minPrice: sp?.minPrice ? Number(sp.minPrice) : undefined,
-    maxPrice: sp?.maxPrice ? Number(sp.maxPrice) : undefined,
-    brand: sp?.brand,
-    rating: sp?.rating ? Number(sp.rating) : undefined,
-  });
+  const [res, categoryResponse] = await Promise.all([
+    getProducts({
+      page: Number(sp?.page || 1),
+      search: sp?.search,
+      categoryId: sp?.categoryId,
+      sortBy: sp?.sortBy,
+      sortOrder: sp?.sortOrder as any,
+      minPrice: sp?.minPrice ? Number(sp.minPrice) : undefined,
+      maxPrice: sp?.maxPrice ? Number(sp.maxPrice) : undefined,
+      brand: sp?.brand,
+      rating: sp?.rating ? Number(sp.rating) : undefined,
+    }),
+
+    CategoryService.getAllCategories(),
+  ]);
 
   const products = res?.data?.data || [];
+  const categories = categoryResponse?.data || [];
+  console.log(categories);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -88,7 +96,7 @@ export default async function ProductListing({
                 <input
                   type="hidden"
                   name="category"
-                  value={sp?.category || ''}
+                  value={sp?.categoryId || ''}
                 />
                 <input type="hidden" name="brand" value={sp?.brand || ''} />
                 <input type="hidden" name="rating" value={sp?.rating || ''} />
@@ -123,7 +131,7 @@ export default async function ProductListing({
 
                 <div className="space-y-2 text-sm">
                   <Link
-                    href={`?maxPrice=50${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?maxPrice=50${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title flex items-center gap-2"
                   >
                     <input
@@ -134,7 +142,7 @@ export default async function ProductListing({
                     Under $50
                   </Link>
                   <Link
-                    href={`?minPrice=50&maxPrice=100${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?minPrice=50&maxPrice=100${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title flex items-center gap-2"
                   >
                     <input
@@ -145,7 +153,7 @@ export default async function ProductListing({
                     $50 - $100
                   </Link>
                   <Link
-                    href={`?minPrice=100&maxPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?minPrice=100&maxPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title flex items-center gap-2"
                   >
                     <input
@@ -156,7 +164,7 @@ export default async function ProductListing({
                     $100 - $200
                   </Link>
                   <Link
-                    href={`?minPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?minPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title flex items-center gap-2"
                   >
                     <input
@@ -175,7 +183,7 @@ export default async function ProductListing({
 
                 <div className="space-y-2 text-sm">
                   <Link
-                    href={`?rating=4${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?rating=4${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title flex items-center gap-2"
                   >
                     <input
@@ -186,7 +194,7 @@ export default async function ProductListing({
                     ⭐ 4 & above
                   </Link>
                   <Link
-                    href={`?rating=3${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?rating=3${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title flex items-center gap-2"
                   >
                     <input
@@ -204,39 +212,21 @@ export default async function ProductListing({
                 <h3 className="font-semibold mb-2">Category</h3>
 
                 <div className="space-y-2 text-sm">
-                  <Link
-                    href={`?category=Smartphones${sp?.search ? '&search=' + sp.search : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-title  flex items-center gap-2"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={sp?.category === 'Smartphones'}
-                      readOnly
-                    />
-                    Smartphones
-                  </Link>
-                  <Link
-                    href={`?category=Laptop${sp?.search ? '&search=' + sp.search : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-title  flex items-center gap-2"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={sp?.category === 'Laptop'}
-                      readOnly
-                    />
-                    Laptop
-                  </Link>
-                  <Link
-                    href={`?category=Fashion${sp?.search ? '&search=' + sp.search : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
-                    className="block hover:text-title  flex items-center gap-2"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={sp?.category === 'Fashion'}
-                      readOnly
-                    />
-                    Fashion
-                  </Link>
+                  {categories.map((category: Category) => (
+                    <Link
+                      key={category.id}
+                      href={`?categoryId=${category.id}`}
+                      className="block hover:text-title flex items-center gap-2"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={sp?.categoryId === category.id}
+                        readOnly
+                      />
+
+                      {category.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
               {/* ================= BRAND ================= */}
@@ -245,7 +235,7 @@ export default async function ProductListing({
 
                 <div className="space-y-2 text-sm">
                   <Link
-                    href={`?brand=Apple${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?brand=Apple${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -256,7 +246,7 @@ export default async function ProductListing({
                     Apple
                   </Link>
                   <Link
-                    href={`?brand=Samsung${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?brand=Samsung${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -267,7 +257,7 @@ export default async function ProductListing({
                     Samsung
                   </Link>
                   <Link
-                    href={`?brand=Sony${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                    href={`?brand=Sony${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -286,7 +276,7 @@ export default async function ProductListing({
 
                 <div className="space-y-2 text-sm">
                   <Link
-                    href={`?sortBy=createdAt&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                    href={`?sortBy=createdAt&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -297,7 +287,7 @@ export default async function ProductListing({
                     Latest
                   </Link>
                   <Link
-                    href={`?sortBy=price&sortOrder=asc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                    href={`?sortBy=price&sortOrder=asc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -310,7 +300,7 @@ export default async function ProductListing({
                     Price Low to High
                   </Link>
                   <Link
-                    href={`?sortBy=price&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                    href={`?sortBy=price&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -323,7 +313,7 @@ export default async function ProductListing({
                     Price High to Low
                   </Link>
                   <Link
-                    href={`?sortBy=rating&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                    href={`?sortBy=rating&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                     className="block hover:text-title  flex items-center gap-2"
                   >
                     <input
@@ -382,7 +372,7 @@ export default async function ProductListing({
                         <input
                           type="hidden"
                           name="category"
-                          value={sp?.category || ''}
+                          value={sp?.categoryId || ''}
                         />
                         <input
                           type="hidden"
@@ -439,7 +429,7 @@ export default async function ProductListing({
                         <div className="space-y-2">
                           <SheetClose asChild>
                             <Link
-                              href={`?maxPrice=50${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?maxPrice=50${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Under $50</span>
@@ -448,7 +438,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?minPrice=50&maxPrice=100${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?minPrice=50&maxPrice=100${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>$50 - $100</span>
@@ -457,7 +447,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?minPrice=100&maxPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?minPrice=100&maxPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>$100 - $200</span>
@@ -466,7 +456,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?minPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?minPrice=200${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>$200+</span>
@@ -485,7 +475,7 @@ export default async function ProductListing({
                         <div className="space-y-2">
                           <SheetClose asChild>
                             <Link
-                              href={`?rating=4${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?rating=4${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>⭐ 4 & above</span>
@@ -494,7 +484,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?rating=3${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?rating=3${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>⭐ 3 & above</span>
@@ -550,7 +540,7 @@ export default async function ProductListing({
                         <div className="space-y-2">
                           <SheetClose asChild>
                             <Link
-                              href={`?brand=Apple${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?brand=Apple${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Apple</span>
@@ -559,7 +549,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?brand=Samsung${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?brand=Samsung${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Samsung</span>
@@ -568,7 +558,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?brand=Sony${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
+                              href={`?brand=Sony${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}${sp?.sortBy ? '&sortBy=' + sp.sortBy : ''}${sp?.sortOrder ? '&sortOrder=' + sp.sortOrder : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Sony</span>
@@ -587,7 +577,7 @@ export default async function ProductListing({
                         <div className="space-y-2">
                           <SheetClose asChild>
                             <Link
-                              href={`?sortBy=createdAt&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                              href={`?sortBy=createdAt&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Latest</span>
@@ -596,7 +586,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?sortBy=price&sortOrder=asc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                              href={`?sortBy=price&sortOrder=asc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Price Low to High</span>
@@ -605,7 +595,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?sortBy=price&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                              href={`?sortBy=price&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Price High to Low</span>
@@ -614,7 +604,7 @@ export default async function ProductListing({
                           </SheetClose>
                           <SheetClose asChild>
                             <Link
-                              href={`?sortBy=rating&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.category ? '&category=' + sp.category : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
+                              href={`?sortBy=rating&sortOrder=desc${sp?.search ? '&search=' + sp.search : ''}${sp?.categoryId ? '&category=' + sp.categoryId : ''}${sp?.brand ? '&brand=' + sp.brand : ''}${sp?.rating ? '&rating=' + sp.rating : ''}${sp?.minPrice ? '&minPrice=' + sp.minPrice : ''}${sp?.maxPrice ? '&maxPrice=' + sp.maxPrice : ''}`}
                               className="flex items-center justify-between rounded-xs border px-4 py-3 text-sm hover:border-orange-400 hover:bg-orange-50 transition"
                             >
                               <span>Top Rated</span>

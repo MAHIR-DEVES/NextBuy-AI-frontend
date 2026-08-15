@@ -1,19 +1,9 @@
-import ProductGallery from '@/components/layouts/public/product/product-details/ProductGallery';
-import ProductPurchaseOptions from '@/components/layouts/public/product/product-details/ProductPurchaseOptions';
-import ProductReviews from '@/components/layouts/public/product/product-details/ProductReviews';
+import ProductGallery from '@/components/layouts/public/product-details/ProductGallery';
+import ProductPurchaseOptions from '@/components/layouts/public/product-details/ProductPurchaseOptions';
+import ProductReviews from '@/components/layouts/public/product-details/ProductReviews';
+import RelatedProduct from '@/components/layouts/public/product-details/RelatedProduct';
 import { getSingleProduct } from '@/services/product.service';
-import { IProductColorVariant } from '@/types/products.type';
-import {
-  Star,
-  Truck,
-  Shield,
-  RotateCcw,
-  Store,
-  MapPin,
-  CheckCircle,
-  Award,
-  ChevronRight,
-} from 'lucide-react';
+import { Star, Truck, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface ProductDetailsPageProps {
@@ -384,6 +374,9 @@ export default async function ProductDetailsPage({
         rating={product.rating}
         reviewCount={product.reviewCount}
       />
+
+      {/* related product */}
+      <RelatedProduct categoryId={product.categoryId}></RelatedProduct>
     </div>
   );
 }

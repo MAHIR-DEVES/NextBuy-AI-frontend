@@ -4,7 +4,7 @@ type ProductQuery = {
   page?: number;
   limit?: number;
   search?: string;
-  category?: string;
+  categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
   sortBy?: string;
@@ -22,7 +22,7 @@ export const getProducts = async (params?: ProductQuery) => {
   if (params?.page) query.append('page', String(params.page));
   if (params?.limit) query.append('limit', String(params.limit));
   if (params?.search) query.append('search', params.search);
-  if (params?.category) query.append('category', params.category);
+  if (params?.categoryId) query.append('categoryId', params.categoryId);
   if (params?.minPrice) query.append('minPrice', String(params.minPrice));
   if (params?.maxPrice) query.append('maxPrice', String(params.maxPrice));
   if (params?.sortBy) query.append('sortBy', params.sortBy);

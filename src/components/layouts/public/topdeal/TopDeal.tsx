@@ -43,7 +43,7 @@ const TopDeal = async () => {
               : originalPrice;
 
             return (
-              <Link key={product.id} href={`/products/${product.id}`}>
+              <Link key={product.id} href={`/products/${product.slug}`}>
                 <div className="group bg-white rounded-xs shadow-md overflow-hidden cursor-pointer border border-gray-100 hover:border-primary-light transition-all duration-300">
                   {/* Product Image */}
                   <div className="relative h-56 overflow-hidden bg-gray-100">

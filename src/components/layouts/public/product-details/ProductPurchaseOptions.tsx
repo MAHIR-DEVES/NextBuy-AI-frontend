@@ -101,8 +101,14 @@ const ProductPurchaseOptions = ({ product }: Props) => {
             <span className="text-xs text-gray-500">Size নির্বাচন করুন</span>
           </div>
 
-          {product.colorVariants.flatMap(variant =>
-            variant.sizes?.map(size => {
+          <div className="flex flex-wrap gap-2">
+            {Array.from(
+              new Map(
+                product.colorVariants
+                  .flatMap(variant => variant.sizes ?? [])
+                  .map(size => [size.size, size]),
+              ).values(),
+            ).map(size => {
               const isSelected = selectedSize === size.size;
 
               return (
@@ -114,7 +120,7 @@ const ProductPurchaseOptions = ({ product }: Props) => {
                     setSelectedSize(size.size);
                     setOrderSelectedSize(size.size);
                   }}
-                  className={`min-w-0 rounded-md border px-3 py-2.5 transition-all md:min-w-[64px] ${
+                  className={`min-w-[64px] rounded-md border px-3 py-2.5 transition-all ${
                     size.stock <= 0
                       ? 'cursor-not-allowed border-gray-100 bg-gray-100 text-gray-400'
                       : isSelected
@@ -125,8 +131,8 @@ const ProductPurchaseOptions = ({ product }: Props) => {
                   <div className="text-sm font-semibold">{size.size}</div>
                 </button>
               );
-            }),
-          )}
+            })}
+          </div>
         </div>
       )}
 

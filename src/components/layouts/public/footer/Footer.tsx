@@ -57,7 +57,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Image
-                src="/images/jonopriologo-logo.png"
+                src="/images/sera-place-logo.png"
                 alt="Logo"
                 width={170}
                 height={170}
@@ -82,7 +82,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-gray-500">support@jonoprio.com</span>
+                <span className="text-gray-500">support@Sera Place.com</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Clock className="h-4 w-4 text-primary flex-shrink-0" />
@@ -157,7 +157,7 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             {/* Copyright */}
             <div className="text-gray-400 text-sm text-center">
-              © {currentYear} Jonoprio. All rights reserved.
+              © {currentYear} Sera Place. All rights reserved.
             </div>
             {/* Social Icons */}
             <div className="flex gap-3">

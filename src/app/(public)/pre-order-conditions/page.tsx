@@ -121,15 +121,15 @@ export default function OrderAndDeliveryTermsPage() {
 
           <div className="space-y-2 pt-1">
             <p className="font-semibold text-foreground text-sm">
-              Jonoprio.com কাস্টমার সাপোর্ট
+              Sera Place.com কাস্টমার সাপোর্ট
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 pt-1 text-sm">
               <a
-                href="mailto:support@jonoprio.com"
+                href="mailto:support@Sera Place.com"
                 className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium"
               >
                 <Mail className="w-4 h-4 text-primary" />
-                support@jonoprio.com
+                support@Sera Place.com
               </a>
               <a
                 href="tel:01629810013"
@@ -142,7 +142,7 @@ export default function OrderAndDeliveryTermsPage() {
           </div>
 
           <p className="text-xs text-muted-foreground pt-6">
-            Jonoprio.com-এ আপনার আস্থার জন্য ধন্যবাদ। আমরা আপনার সন্তুষ্টি এবং
+            Sera Place.com-এ আপনার আস্থার জন্য ধন্যবাদ। আমরা আপনার সন্তুষ্টি এবং
             বিশ্বাসের মূল্য দিই।
           </p>
         </footer>

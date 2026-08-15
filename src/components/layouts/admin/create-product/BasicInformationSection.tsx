@@ -89,7 +89,7 @@ export const BasicInformationSection = ({
         <FormInput
           label="Brand"
           name="brand"
-          placeholder="e.g. Jonoprio"
+          placeholder="e.g. Sera Place"
           value={formData.brand}
           onChange={onChange}
         />

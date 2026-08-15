@@ -20,6 +20,7 @@ import { IProduct } from '@/types/products.type';
 import { singleOrder } from '@/services/orders.service';
 import { useRouter } from 'next/navigation';
 import { useOrderStore } from '@/store/order.store';
+import { useProductStore } from '@/store/product.store';
 
 interface BuyNowProps {
   product: IProduct;
@@ -29,6 +30,7 @@ const BuyNow = ({ product }: BuyNowProps) => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const selectedSize = useOrderStore(state => state.selectedSize);
+  const selectedColor = useProductStore(state => state.selectedColor);
   const router = useRouter();
 
   const [form, setForm] = useState({
@@ -145,6 +147,7 @@ const BuyNow = ({ product }: BuyNowProps) => {
       const payload = {
         productId: product.id,
         size: selectedSize,
+        color: selectedColor,
         quantity,
         name: form.name.trim(),
         phone: form.phone.trim(),

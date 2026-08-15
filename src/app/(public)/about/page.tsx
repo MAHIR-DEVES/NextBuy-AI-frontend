@@ -60,7 +60,7 @@ export default function AboutPage() {
             Direct Direct Imports • Trusted Quality
           </span>
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-title mb-6">
-            About Jonoprio.com
+            About Sera Place.com
           </h1>
           <p className="mx-auto max-w-3xl text-lg text-muted-foreground leading-relaxed">
             Your premier online destination in Bangladesh for the latest in
@@ -74,10 +74,10 @@ export default function AboutPage() {
       <section className="py-16 container mx-auto px-4 max-w-5xl">
         <div className="rounded-md border border-border bg-card p-8 md:p-12 shadow-sm">
           <h2 className="text-2xl font-bold text-subtitle mb-4">
-            Welcome to Jonoprio.com
+            Welcome to Sera Place.com
           </h2>
           <p className="text-body leading-relaxed text-base md:text-lg">
-            At Jonoprio.com, we are committed to bringing you top-quality
+            At Sera Place.com, we are committed to bringing you top-quality
             products directly from trusted manufacturers in China, ensuring you
             receive the best value for your money. Our mission is to provide our
             customers in Bangladesh with an unparalleled shopping experience by
@@ -131,7 +131,7 @@ export default function AboutPage() {
               </h2>
               <p className="text-primary-foreground/90 leading-relaxed">
                 Reach out to our team and we’ll be happy to help! Thank you for
-                choosing Jonoprio.com. We value your trust and satisfaction.
+                choosing Sera Place.com. We value your trust and satisfaction.
               </p>
             </div>
 
@@ -162,10 +162,10 @@ export default function AboutPage() {
                     Email Us
                   </div>
                   <a
-                    href="mailto:support@jonoprio.com"
+                    href="mailto:support@Sera Place.com"
                     className="text-lg font-bold hover:underline"
                   >
-                    support@jonoprio.com
+                    support@Sera Place.com
                   </a>
                 </div>
               </div>

@@ -71,7 +71,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
               <Link className="flex items-center mr-20 shrink-0" href="/">
                 <div className="flex items-center">
                   <Image
-                    src="/images/jonopriologo-logo.png"
+                    src="/images/sera-place-logo.png"
                     alt="Logo"
                     width={170}
                     height={170}

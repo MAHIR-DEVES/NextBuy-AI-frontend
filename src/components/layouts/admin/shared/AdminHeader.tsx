@@ -51,7 +51,7 @@ const AdminHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
             <div className="md:hidden">
               <Link href="/admin" className="flex items-center ">
                 <Image
-                  src="/images/jonopriologo-logo.png"
+                  src="/images/sera-place-logo.png"
                   alt="Logo"
                   width={120}
                   height={120}

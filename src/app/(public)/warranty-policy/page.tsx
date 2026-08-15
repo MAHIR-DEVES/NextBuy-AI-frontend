@@ -39,7 +39,7 @@ export default function WarrantyPolicyPage() {
     {
       num: '৭',
       title: 'সফটওয়্যার বা ডেটা ক্ষতি',
-      desc: 'যদি প্রোডাক্টের ব্যবহার বা Jonoprio.com এর পরিষেবা চলাকালীন কোনো সফটওয়্যার বা ডেটা ক্ষতিগ্রস্ত বা হারিয়ে যায় তবে Jonoprio.com এর কোনো দায় থাকবে না। মনে রাখবেন, এই ক্ষেত্রে, Jonoprio.com ডেটা পুনরুদ্ধার বা সফটওয়্যার পুনরুদ্ধারের জন্যও দায়ী নয়।',
+      desc: 'যদি প্রোডাক্টের ব্যবহার বা Sera Place.com এর পরিষেবা চলাকালীন কোনো সফটওয়্যার বা ডেটা ক্ষতিগ্রস্ত বা হারিয়ে যায় তবে Sera Place.com এর কোনো দায় থাকবে না। মনে রাখবেন, এই ক্ষেত্রে, Sera Place.com ডেটা পুনরুদ্ধার বা সফটওয়্যার পুনরুদ্ধারের জন্যও দায়ী নয়।',
     },
     {
       num: '৮',
@@ -49,7 +49,7 @@ export default function WarrantyPolicyPage() {
     {
       num: '৯',
       title: 'ফ্লাইট / রাজনৈতিক অস্থিরতা',
-      desc: 'যেমন: গ্লোবাল মহামারী বা যেকোনো রাজনৈতিক অস্থিরতা ইত্যাদি পরিস্থিতির জন্য যেখানে সমস্ত ফ্লাইট অনুমোদিত বা বন্ধ নেই এবং ওয়ারেন্টি শেষ হয়ে গেছে, Jonoprio.com কোনোভাবেই নিজ খরচে মেরামত করার দায়িত্ব নেবে, তবে প্রয়োজন হলে ২-৩ মাস সময় লাগবে।',
+      desc: 'যেমন: গ্লোবাল মহামারী বা যেকোনো রাজনৈতিক অস্থিরতা ইত্যাদি পরিস্থিতির জন্য যেখানে সমস্ত ফ্লাইট অনুমোদিত বা বন্ধ নেই এবং ওয়ারেন্টি শেষ হয়ে গেছে, Sera Place.com কোনোভাবেই নিজ খরচে মেরামত করার দায়িত্ব নেবে, তবে প্রয়োজন হলে ২-৩ মাস সময় লাগবে।',
     },
     {
       num: '১০',
@@ -64,17 +64,17 @@ export default function WarrantyPolicyPage() {
     {
       num: '১২',
       title: 'পাসওয়ার্ড নিরাপত্তা',
-      desc: 'Jonoprio.com ডিভাইস বা অন্যান্য প্রোডাক্ট ডেলিভারির সময় কোনো ধরনের পাসওয়ার্ড বা সিকিউরিটি কোড প্রয়োগ করে না। কাস্টমারকে সমস্ত ধরনের পাসওয়ার্ডের সম্পূর্ণ দায়িত্ব নিতে হবে। এটি ওয়ারেন্টির আওতায় থাকবে না।',
+      desc: 'Sera Place.com ডিভাইস বা অন্যান্য প্রোডাক্ট ডেলিভারির সময় কোনো ধরনের পাসওয়ার্ড বা সিকিউরিটি কোড প্রয়োগ করে না। কাস্টমারকে সমস্ত ধরনের পাসওয়ার্ডের সম্পূর্ণ দায়িত্ব নিতে হবে। এটি ওয়ারেন্টির আওতায় থাকবে না।',
     },
     {
       num: '১৩',
       title: 'ওয়ারেন্টি মেয়াদ',
-      desc: 'Jonoprio.com ওয়ারেন্টি মেয়াদ শেষ হওয়ার সময় বা পরে Jonoprio.com দ্বারা প্রদত্ত যেকোনো ফ্রি সফটওয়্যার বা হার্ডওয়্যার টিউনিংয়ের জন্য দায়ী থাকবে না।',
+      desc: 'Sera Place.com ওয়ারেন্টি মেয়াদ শেষ হওয়ার সময় বা পরে Sera Place.com দ্বারা প্রদত্ত যেকোনো ফ্রি সফটওয়্যার বা হার্ডওয়্যার টিউনিংয়ের জন্য দায়ী থাকবে না।',
     },
     {
       num: '১৪',
       title: 'পরিষেবা চার্জ',
-      desc: 'Jonoprio.com ওয়ারেন্টির আওতায় না থাকা যেকোনো পরিষেবার জন্য কাস্টমারের সম্মতিতে চার্জ নির্ধারণ করবে।',
+      desc: 'Sera Place.com ওয়ারেন্টির আওতায় না থাকা যেকোনো পরিষেবার জন্য কাস্টমারের সম্মতিতে চার্জ নির্ধারণ করবে।',
     },
     {
       num: '১৫',
@@ -152,15 +152,15 @@ export default function WarrantyPolicyPage() {
 
           <div className="space-y-2 pt-1">
             <p className="font-semibold text-foreground text-sm">
-              Jonoprio.com কাস্টমার সাপোর্ট
+              Sera Place.com কাস্টমার সাপোর্ট
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 pt-1 text-sm">
               <a
-                href="mailto:support@jonoprio.com"
+                href="mailto:support@Sera Place.com"
                 className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium"
               >
                 <Mail className="w-4 h-4 text-primary" />
-                support@jonoprio.com
+                support@Sera Place.com
               </a>
               <a
                 href="tel:01629810013"
@@ -173,7 +173,7 @@ export default function WarrantyPolicyPage() {
           </div>
 
           <p className="text-xs text-muted-foreground pt-6">
-            Jonoprio.com-এ আপনার আস্থার জন্য ধন্যবাদ। আমরা আপনার সন্তুষ্টি এবং
+            Sera Place.com-এ আপনার আস্থার জন্য ধন্যবাদ। আমরা আপনার সন্তুষ্টি এবং
             বিশ্বাসের মূল্য দিই।
           </p>
         </footer>

@@ -54,7 +54,7 @@ const MobileNavbar = ({ user }: UserDropdownProps) => {
                 >
                   <div className="flex items-center">
                     <Image
-                      src="/images/jonopriologo-logo.png"
+                      src="/images/sera-place-logo.png"
                       alt="Logo"
                       width={110}
                       height={110}

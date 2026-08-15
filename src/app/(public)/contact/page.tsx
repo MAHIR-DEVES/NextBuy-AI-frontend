@@ -47,10 +47,10 @@ export default function ContactPage() {
               <span>Email Support</span>
             </div>
             <a
-              href="mailto:support@jonoprio.com"
+              href="mailto:support@Sera Place.com"
               className="text-2xl md:text-3xl font-extrabold text-foreground hover:text-primary transition-colors block break-all"
             >
-              support@jonoprio.com
+              support@Sera Place.com
             </a>
             <p className="text-sm text-muted-foreground">
               Send us your inquiries anytime. We reply promptly.
@@ -95,7 +95,7 @@ export default function ContactPage() {
         {/* Outro Note */}
         <footer className="pt-4 space-y-2">
           <h2 className="text-xl font-bold text-subtitle">
-            Thank you for choosing Jonoprio.com
+            Thank you for choosing Sera Place.com
           </h2>
           <p className="text-body max-w-xl text-base leading-relaxed">
             Your trust and satisfaction mean everything to us. We strive to

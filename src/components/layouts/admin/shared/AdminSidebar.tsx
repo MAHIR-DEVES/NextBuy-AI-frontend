@@ -159,7 +159,7 @@ const AdminSidebar = ({
 
           <div className={`${!isOpen && 'hidden'} transition-all`}>
             <Image
-              src="/images/jonopriologo-logo.png"
+              src="/images/sera-place-logo.png"
               alt="Logo"
               width={150}
               height={150}

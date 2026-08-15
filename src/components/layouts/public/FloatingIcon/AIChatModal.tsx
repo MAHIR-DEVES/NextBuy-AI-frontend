@@ -34,7 +34,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm Jonoprio AI, your personal shopping assistant. How can I help you today? I can help you Answer questions about our services.",
+      text: "Hello! I'm Sera Place AI, your personal shopping assistant. How can I help you today? I can help you Answer questions about our services.",
       sender: 'ai',
       timestamp: new Date(),
     },
@@ -241,7 +241,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
                 />
               </div>
               <div>
-                <h3 className="font-semibold">Jonoprio AI</h3>
+                <h3 className="font-semibold">Sera Place AI</h3>
                 <p className="text-xs">
                   {isTyping ? 'Typing...' : 'Online • Always here to help'}
                 </p>

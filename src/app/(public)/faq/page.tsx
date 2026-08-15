@@ -14,9 +14,9 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     id: 1,
-    question: 'How do I place an order on Jonoprio.com?',
+    question: 'How do I place an order on Sera Place.com?',
     answer:
-      'To place an order on Jonoprio.com, simply browse through our product catalog, add your desired products to the cart, and proceed to checkout. You’ll be asked to provide shipping details and select a payment method before confirming your order.',
+      'To place an order on Sera Place.com, simply browse through our product catalog, add your desired products to the cart, and proceed to checkout. You’ll be asked to provide shipping details and select a payment method before confirming your order.',
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const faqs: FAQItem[] = [
     id: 6,
     question: 'How can I contact customer support?',
     answer:
-      'You can contact our customer support team by emailing us at support@jonoprio.com or by calling us at 01629810013. We are available from 9:00 AM to 10:00 PM every day.',
+      'You can contact our customer support team by emailing us at support@Sera Place.com or by calling us at 01629810013. We are available from 9:00 AM to 10:00 PM every day.',
   },
   {
     id: 7,
@@ -167,11 +167,11 @@ export default function FAQPage() {
               01629810013
             </a>
             <a
-              href="mailto:support@jonoprio.com"
+              href="mailto:support@Sera Place.com"
               className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors"
             >
               <Mail className="w-4 h-4 text-primary" />
-              support@jonoprio.com
+              support@Sera Place.com
             </a>
           </div>
         </footer>

@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
       content: 'We only share your information in specific cases:',
       bullets: [
         'With Service Providers: Trusted third-party providers for payment processing, order fulfillment, and delivery.',
-        'For Legal Reasons: Disclosure if required by law or to protect Jonoprio.com’s rights, property, or safety.',
+        'For Legal Reasons: Disclosure if required by law or to protect Sera Place.com’s rights, property, or safety.',
       ],
     },
     {
@@ -87,11 +87,11 @@ export default function PrivacyPolicyPage() {
         <section className="space-y-3">
           <h2 className="text-xl font-bold text-subtitle">Introduction</h2>
           <p className="text-body leading-relaxed text-base md:text-lg">
-            Welcome to Jonoprio.com, an e-commerce platform based in Bangladesh.
-            We are committed to safeguarding your privacy and protecting the
-            personal information you share with us. This Privacy Policy explains
-            how we collect, use, share, and protect your data when you visit our
-            website or use our services.
+            Welcome to Sera Place.com, an e-commerce platform based in
+            Bangladesh. We are committed to safeguarding your privacy and
+            protecting the personal information you share with us. This Privacy
+            Policy explains how we collect, use, share, and protect your data
+            when you visit our website or use our services.
           </p>
         </section>
 
@@ -130,15 +130,15 @@ export default function PrivacyPolicyPage() {
 
           <div className="space-y-2 pt-1">
             <p className="font-semibold text-foreground text-sm">
-              Jonoprio.com Customer Support
+              Sera Place.com Customer Support
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 pt-1 text-sm">
               <a
-                href="mailto:support@jonoprio.com"
+                href="mailto:support@Sera Place.com"
                 className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium"
               >
                 <Mail className="w-4 h-4 text-primary" />
-                support@jonoprio.com
+                support@Sera Place.com
               </a>
               <a
                 href="tel:01629810013"
@@ -151,7 +151,7 @@ export default function PrivacyPolicyPage() {
           </div>
 
           <p className="text-xs text-muted-foreground pt-6">
-            Thank you for choosing Jonoprio.com. We value your trust and are
+            Thank you for choosing Sera Place.com. We value your trust and are
             dedicated to protecting your privacy.
           </p>
         </footer>

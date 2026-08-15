@@ -122,7 +122,7 @@ export default function WholesalePage() {
 
               {/* Email Card */}
               <a
-                href="mailto:support@jonoprio.com"
+                href="mailto:support@Sera Place.com"
                 className="flex items-center gap-4 p-4 rounded-md bg-background/10 backdrop-blur-md border border-primary-foreground/20 hover:bg-background/20 transition-all duration-200"
               >
                 <div className="p-3 rounded-full bg-primary-foreground/10">
@@ -133,7 +133,7 @@ export default function WholesalePage() {
                     ইমেইল পাঠান
                   </span>
                   <span className="text-base font-bold break-all">
-                    support@jonoprio.com
+                    support@Sera Place.com
                   </span>
                 </div>
               </a>

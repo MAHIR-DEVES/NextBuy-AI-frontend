@@ -1,15 +1,11 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const MetaPageView = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-
   const isFirstRender = useRef(true);
-
-  const searchParamsString = searchParams.toString();
 
   useEffect(() => {
     // Initial PageView is already tracked by MetaPixel
@@ -23,7 +19,7 @@ const MetaPageView = () => {
     }
 
     window.fbq('track', 'PageView');
-  }, [pathname, searchParamsString]);
+  }, [pathname]);
 
   return null;
 };

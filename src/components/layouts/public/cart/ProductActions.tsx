@@ -10,6 +10,7 @@ import { getUser } from '@/utils/auth';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useOrderStore } from '@/store/order.store';
+import { trackMetaEvent } from '@/lib/meta-pixel';
 
 type Props = {
   productId: string;
@@ -60,6 +61,17 @@ const ProductActions = ({ productId, product }: Props) => {
       setLoading(true);
 
       await addToCart(productId, quantity);
+
+      const currentPrice = product.specialPrice ?? product.price;
+
+      trackMetaEvent('AddToCart', {
+        content_ids: [product.id],
+        content_name: product.name,
+        content_type: 'product',
+        value: Number(currentPrice) * quantity,
+        currency: 'BDT',
+        num_items: quantity,
+      });
 
       increase(quantity);
       toast.success('Added to cart!');

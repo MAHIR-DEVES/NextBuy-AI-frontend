@@ -13,6 +13,7 @@ import {
   User,
 } from 'lucide-react';
 import DownloadOrderButton from '@/components/layouts/public/Thankyou/DownloadOrderButton';
+import PurchaseTracker from '@/components/layouts/shared/analytics/PurchaseTracker';
 
 interface PageProps {
   searchParams: Promise<{
@@ -130,6 +131,15 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
 
   return (
     <main className="min-h-screen bg-slate-50/70 py-10 md:py-16">
+      {/* send data to pixel */}
+      <PurchaseTracker
+        orderId={order.id}
+        totalAmount={Number(order.total)}
+        items={order.items.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity,
+        }))}
+      />
       {/* PAGE WIDTH INCREASED TO 5XL */}
       <div className="mx-auto max-w-2xl px-4 sm:px-6">
         {/* SUCCESS HEADER (INCREASED TEXT SIZES) */}

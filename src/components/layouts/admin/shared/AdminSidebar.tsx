@@ -140,20 +140,20 @@ const AdminSidebar = ({
       `}
     >
       {/* Logo */}
-      <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-800">
+      <div className="px-5 py-4 md:py-3 border-b border-gray-200 dark:border-gray-800">
         <Link href="/admin" className="group flex items-center gap-3">
           <div
             className={`
               ${isOpen ? 'hidden' : ''}
               
-              flex items-center justify-center flex-shrink-0 -ml-2
+              flex items-center justify-center flex-shrink-0 -ml-3
             `}
           >
             <Image
               src="/images/favicon.png"
               alt="Logo"
-              width={50}
-              height={50}
+              width={60}
+              height={60}
             />
           </div>
 
@@ -161,8 +161,8 @@ const AdminSidebar = ({
             <Image
               src="/images/sera-place-logo.png"
               alt="Logo"
-              width={150}
-              height={150}
+              width={130}
+              height={130}
             />
           </div>
         </Link>

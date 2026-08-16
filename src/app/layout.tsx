@@ -3,6 +3,8 @@ import { Geist } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'sonner';
+import MetaPixel from '@/components/layouts/shared/analytics/MetaPixel';
+import MetaPageView from '@/components/layouts/shared/analytics/MetaPageView';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -24,6 +26,8 @@ export default function RootLayout({
       className={cn('h-full', 'antialiased', 'font-sans', geist.variable)}
     >
       <body className="min-h-full flex flex-col">
+        <MetaPixel />
+        <MetaPageView />
         {children} {/*  Toast Provider */}
         <Toaster richColors position="top-right" />
       </body>

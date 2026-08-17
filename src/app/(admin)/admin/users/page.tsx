@@ -17,7 +17,7 @@ import {
 
 import { getAllUsers } from '@/services/auth.service';
 import { IUser } from '@/types/auth';
-import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 
 const UserPage = () => {
   const [loading, setLoading] = useState(true);

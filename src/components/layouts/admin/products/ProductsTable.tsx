@@ -1,12 +1,10 @@
-// src/components/layouts/admin/products/ProductsTable.tsx
-
 'use client';
 
 import Image from 'next/image';
 import { Eye, Edit2, Trash2, Package, CheckCircle } from 'lucide-react';
 
 import { IProduct } from '@/types/products.type';
-import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
 import Link from 'next/link';
 
 type Props = {

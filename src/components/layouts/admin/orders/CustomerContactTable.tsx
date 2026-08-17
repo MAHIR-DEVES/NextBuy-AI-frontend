@@ -11,7 +11,7 @@ import {
 
 import { Order, OrdersMeta, OrderStatus } from '@/types/orders';
 
-import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
 
 interface CustomerContactTableProps {
   orders: Order[];

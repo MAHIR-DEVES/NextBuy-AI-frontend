@@ -3,7 +3,7 @@
 import { Edit, Trash2 } from 'lucide-react';
 
 import { Wholesale, WholesaleMeta } from '@/types/accounts/wholesale.types';
-import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 
 interface WholesaleTableProps {
   wholesales: Wholesale[];

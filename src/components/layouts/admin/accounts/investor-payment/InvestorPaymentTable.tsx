@@ -6,7 +6,7 @@ import {
   InvestorPayment,
   InvestorPaymentMeta,
 } from '@/types/accounts/investor-payment.types';
-import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 
 interface InvestorPaymentTableProps {
   payments: InvestorPayment[];

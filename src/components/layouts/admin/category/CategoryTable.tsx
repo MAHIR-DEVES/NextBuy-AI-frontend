@@ -16,7 +16,7 @@ import CategoryEdit from './CategoryEdit';
 
 import { Category } from '@/types/category.types';
 import { CategoryService } from '@/services/category.service';
-import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
 
 const CategoryTable = () => {
   const [categories, setCategories] = useState<Category[]>([]);

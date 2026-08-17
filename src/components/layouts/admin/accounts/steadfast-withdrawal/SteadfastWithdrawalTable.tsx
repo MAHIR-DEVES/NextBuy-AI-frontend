@@ -6,7 +6,7 @@ import {
   SteadfastWithdrawal,
   SteadfastWithdrawalMeta,
 } from '@/types/accounts/steadfast-withdrawal.types';
-import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 
 interface SteadfastWithdrawalTableProps {
   withdrawals: SteadfastWithdrawal[];

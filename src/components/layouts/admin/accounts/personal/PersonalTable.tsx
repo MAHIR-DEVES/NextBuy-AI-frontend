@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 import {
   ClearanceStatus,
   PersonalEntry,

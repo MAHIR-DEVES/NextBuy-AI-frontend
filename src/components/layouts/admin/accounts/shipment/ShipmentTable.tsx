@@ -3,7 +3,7 @@
 import { Edit, Loader2, Trash2 } from 'lucide-react';
 
 import { Shipment, ShipmentMeta } from '@/types/accounts/shipment.types';
-import LoadingSpinner from '@/components/layouts/shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 
 interface ShipmentTableProps {
   shipments: Shipment[];

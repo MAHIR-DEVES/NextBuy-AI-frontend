@@ -8,7 +8,7 @@ import { HeroService } from '@/services/hero-management.service';
 
 import HeroModal from './HeroModal';
 import HeroCard from './HeroCard';
-import LoadingSpinner from '../../shared/dashboard/LoadingSpinner';
+import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
 
 const HeroManagement = () => {
   const [heroes, setHeroes] = useState<Hero[]>([]);

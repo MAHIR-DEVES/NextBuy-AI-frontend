@@ -1,15 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import {
-  CreditCard,
-  ArrowLeft,
-  Mail,
-  Phone,
-  Calendar,
-  AlertCircle,
-} from 'lucide-react';
+import { CreditCard, Mail, Phone, Calendar, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function OrderAndDeliveryTermsPage() {

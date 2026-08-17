@@ -6,6 +6,7 @@ import { Hero, CreateHeroPayload } from '@/types/heroManagement';
 import { uploadImageToCloudinary } from '@/utils/uploadImageToCloudinary';
 import { HeroService } from '@/services/hero-management.service';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 interface HeroFormProps {
   hero: Hero | null;
@@ -103,7 +104,7 @@ const HeroForm = ({ hero, onClose, onSuccess }: HeroFormProps) => {
     } catch (error) {
       console.error('Offer image upload failed:', error);
 
-      alert('Offer image upload failed');
+      toast.error('Offer image upload failed');
     } finally {
       setOfferUploading(false);
     }
@@ -137,7 +138,7 @@ const HeroForm = ({ hero, onClose, onSuccess }: HeroFormProps) => {
     } catch (error) {
       console.error('Banner image upload failed:', error);
 
-      alert('Banner image upload failed');
+      toast.error('Banner image upload failed');
     } finally {
       setBannerUploading(false);
     }
@@ -151,12 +152,12 @@ const HeroForm = ({ hero, onClose, onSuccess }: HeroFormProps) => {
     e.preventDefault();
 
     if (!form.offer.image) {
-      alert('Please upload offer image');
+      toast.warning('Please upload offer image');
       return;
     }
 
     if (!form.banner.image) {
-      alert('Please upload banner image');
+      toast.warning('Please upload banner image');
       return;
     }
 
@@ -173,7 +174,7 @@ const HeroForm = ({ hero, onClose, onSuccess }: HeroFormProps) => {
     } catch (error) {
       console.error('Failed to save hero:', error);
 
-      alert('Failed to save hero');
+      toast.error('Failed to save hero');
     } finally {
       setSaving(false);
     }

@@ -13,6 +13,48 @@ type ProductQuery = {
   brand?: string;
   rating?: number;
 };
+
+export type ProductPayload = {
+  name: string;
+  slug?: string;
+  description?: string;
+  brand?: string;
+  category?: string;
+  tags?: string[];
+  thumbnail?: string;
+  images?: string[];
+  videoUrl?: string;
+  model?: string;
+  material?: string;
+  price?: number;
+  specialPrice?: number | null;
+  discount?: number | null;
+  stock?: number;
+  weight?: number | null;
+  dimensions?: {
+    length: number | null;
+    width: number | null;
+    height: number | null;
+  };
+  dangerousGoods?: boolean;
+  warrantyType?: string;
+  warrantyPeriod?: string;
+  highlights?: string[];
+  isFeatured?: boolean;
+  isPublished?: boolean;
+  colorVariants?: Array<{
+    color: string;
+    image?: string;
+    sizes: Array<{
+      size: string;
+      price: number;
+      specialPrice?: number | null;
+      stock: number;
+      sku: string;
+    }>;
+  }>;
+};
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
 
 export const getProducts = async (params?: ProductQuery) => {
@@ -50,8 +92,8 @@ export const getProducts = async (params?: ProductQuery) => {
   return res.json();
 };
 
-export const getSingleProduct = async (id: string) => {
-  const res = await fetch(`${BASE_URL}/products/${id}`, {
+export const getSingleProduct = async (slugOrId: string) => {
+  const res = await fetch(`${BASE_URL}/products/${slugOrId}`, {
     method: 'GET',
     cache: 'no-store',
   });
@@ -59,7 +101,65 @@ export const getSingleProduct = async (id: string) => {
   const result = await res.json();
 
   if (!res.ok) {
-    throw new Error(result.message || 'Failed to fetch product');
+    throw new Error(result?.message || 'Failed to fetch product');
+  }
+
+  return result;
+};
+
+export const createProduct = async (payload: ProductPayload) => {
+  const token = getToken();
+
+  const res = await fetch(`${BASE_URL}/products`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      result?.message || result?.error || 'Failed to create product',
+    );
+  }
+
+  return result;
+};
+
+export const updateProduct = async (id: string, payload: ProductPayload) => {
+  const token = getToken();
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+
+  let res = await fetch(`${BASE_URL}/products/${id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(payload),
+  });
+
+  if (
+    !res.ok &&
+    (res.status === 404 || res.status === 405 || res.status === 400)
+  ) {
+    res = await fetch(`${BASE_URL}/products/${id}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(payload),
+    });
+  }
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      result?.message || result?.error || 'Failed to update product',
+    );
   }
 
   return result;

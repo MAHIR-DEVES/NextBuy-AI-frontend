@@ -9,6 +9,7 @@ import { HeroService } from '@/services/hero-management.service';
 import HeroModal from './HeroModal';
 import HeroCard from './HeroCard';
 import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
+import { toast } from 'sonner';
 
 const HeroManagement = () => {
   const [heroes, setHeroes] = useState<Hero[]>([]);
@@ -128,7 +129,7 @@ const HeroManagement = () => {
     } catch (error) {
       console.error('Failed to delete hero:', error);
 
-      alert('Failed to delete hero');
+      toast.error('Failed to delete hero');
     }
   };
 

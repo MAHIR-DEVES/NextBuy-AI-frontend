@@ -10,6 +10,7 @@ import CustomerContactHeader from '../shared/orders/CustomerContactHeader';
 import CustomerContactTable from './CustomerContactTable';
 import OrderSummary from '../shared/orders/OrderSummary';
 import OrderDetailsModal from '../shared/orders/OrderDetailsModal';
+import { toast } from 'sonner';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -199,14 +200,14 @@ const CustomerContact = () => {
       .filter(Boolean);
 
     if (!phones.length) {
-      alert('Please select at least one order');
+      toast.warning('Please select at least one order');
       return;
     }
 
     try {
       await navigator.clipboard.writeText(phones.join('\n'));
 
-      alert(
+      toast.warning(
         `${phones.length} phone number${phones.length > 1 ? 's' : ''} copied`,
       );
     } catch (error) {
@@ -222,7 +223,7 @@ const CustomerContact = () => {
     const exportOrders = selectedIds.length > 0 ? selectedOrders : orders;
 
     if (!exportOrders.length) {
-      alert('No orders to export');
+      toast.warning('No orders to export');
       return;
     }
 

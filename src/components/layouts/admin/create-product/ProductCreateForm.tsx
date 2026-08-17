@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getToken } from '@/utils/auth';
+import { useRouter } from 'next/navigation';
+import { createProduct, updateProduct } from '@/services/product.service';
+import { Category } from '@/types/category.types';
+import { IProduct } from '@/types/products.type';
 import { uploadImageToCloudinary } from '@/utils/uploadImageToCloudinary';
 
 import { MediaSection } from './MediaSection';
@@ -17,77 +20,97 @@ import {
 import { BasicInformationSection } from './BasicInformationSection';
 import { HighlightsSection } from './HighlightsSection';
 import { FormActions } from './FormActions';
-import { Category } from '@/types/category.types';
 import { CategoryService } from '@/services/category.service';
+import { toast } from 'sonner';
 
-const ProductCreateForm = () => {
+interface ProductCreateFormProps {
+  mode?: 'create' | 'edit';
+  initialProduct?: IProduct | null;
+}
+
+const buildDefaultFormData = (product?: IProduct | null) => ({
+  name: product?.name ?? '',
+  slug: product?.slug ?? '',
+  description: product?.description ?? '',
+  brand: product?.brand ?? '',
+  category: product?.categoryId ?? '',
+  tags: product?.tags?.join(', ') ?? '',
+  videoUrl: product?.videoUrl ?? '',
+  model: product?.model ?? '',
+  material: product?.material ?? '',
+  price: product?.price ?? 0,
+  specialPrice: product?.specialPrice ?? null,
+  discount: product?.discount ?? null,
+  stock: product?.stock ?? 0,
+  weight: product?.weight ?? null,
+  length: product?.dimensions?.length ?? null,
+  width: product?.dimensions?.width ?? null,
+  height: product?.dimensions?.height ?? null,
+  dangerousGoods: product?.dangerousGoods ?? false,
+  warrantyType: product?.warrantyType ?? '',
+  warrantyPeriod: product?.warrantyPeriod ?? '',
+  highlights: product?.highlights?.join('\n') ?? '',
+  isFeatured: product?.isFeatured ?? false,
+  isPublished: product?.isPublished ?? true,
+});
+
+const buildColorVariants = (product?: IProduct | null): ColorVariant[] =>
+  (product?.colorVariants ?? []).map(colorVariant => ({
+    color: colorVariant.color ?? '',
+    image: colorVariant.image ?? '',
+    sizes: (colorVariant.sizes ?? []).map(size => ({
+      size: String(size.size ?? ''),
+      price: Number(size.price ?? 0),
+      specialPrice:
+        size.specialPrice !== null ? Number(size.specialPrice) : null,
+      stock: Number(size.stock ?? 0),
+      sku: size.sku ?? '',
+    })),
+  }));
+
+const ProductCreateForm = ({
+  mode = 'create',
+  initialProduct = null,
+}: ProductCreateFormProps) => {
+  const router = useRouter();
+  const isEditMode = mode === 'edit';
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const [thumbnail, setThumbnail] = useState('');
-  const [images, setImages] = useState<string[]>([]);
+  const [thumbnail, setThumbnail] = useState(initialProduct?.thumbnail ?? '');
+  const [images, setImages] = useState<string[]>(initialProduct?.images ?? []);
 
   const [categories, setCategories] = useState<Category[]>([]);
-  // const [loadingCategories, setLoadingCategories] = useState(false);
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // setLoadingCategories(true);
-
         const response = await CategoryService.getAllCategories();
-
         setCategories(response.data || []);
       } catch (error) {
         console.error('Failed to fetch categories:', error);
-      } finally {
-        // setLoadingCategories(false);
       }
     };
 
     fetchCategories();
   }, []);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    slug: '',
-    description: '',
+  const [formData, setFormData] = useState(() =>
+    buildDefaultFormData(initialProduct),
+  );
 
-    brand: '',
-    category: '',
-    tags: '',
-
-    videoUrl: '',
-
-    model: '',
-    material: '',
-
-    price: 0,
-    specialPrice: null as number | null,
-    discount: null as number | null,
-    stock: 0,
-
-    weight: null as number | null,
-
-    length: null as number | null,
-    width: null as number | null,
-    height: null as number | null,
-
-    dangerousGoods: false,
-
-    warrantyType: '',
-    warrantyPeriod: '',
-
-    highlights: '',
-
-    isFeatured: false,
-    isPublished: true,
-  });
+  useEffect(() => {
+    setFormData(buildDefaultFormData(initialProduct));
+    setThumbnail(initialProduct?.thumbnail ?? '');
+    setImages(initialProduct?.images ?? []);
+    setColorVariants(buildColorVariants(initialProduct));
+  }, [initialProduct]);
 
   const selectedCategory = categories.find(
     category => category.id === formData.category,
   );
-  const [colorVariants, setColorVariants] = useState<ColorVariant[]>([]);
+  const [colorVariants, setColorVariants] = useState<ColorVariant[]>(() =>
+    buildColorVariants(initialProduct),
+  );
 
   // =========================================================
   // HELPERS
@@ -142,7 +165,7 @@ const ProductCreateForm = () => {
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
-      alert('Thumbnail image must be less than 2MB.');
+      toast.warning('Thumbnail image must be less than 2MB.');
       e.target.value = '';
       return;
     }
@@ -157,7 +180,7 @@ const ProductCreateForm = () => {
       }
     } catch (error) {
       console.error('Thumbnail upload error:', error);
-      alert('Failed to upload thumbnail.');
+      toast.error('Failed to upload thumbnail.');
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -176,7 +199,7 @@ const ProductCreateForm = () => {
     const remainingSlots = 10 - images.length;
 
     if (remainingSlots <= 0) {
-      alert('Maximum 10 product images are allowed.');
+      toast.warning('Maximum 10 product images are allowed.');
       e.target.value = '';
       return;
     }
@@ -184,7 +207,7 @@ const ProductCreateForm = () => {
     const selectedFiles = Array.from(files).slice(0, remainingSlots);
 
     if (files.length > remainingSlots) {
-      alert(
+      toast.warning(
         `Only ${remainingSlots} more image${
           remainingSlots > 1 ? 's are' : ' is'
         } allowed.`,
@@ -198,7 +221,7 @@ const ProductCreateForm = () => {
 
       for (const file of selectedFiles) {
         if (file.size > 2 * 1024 * 1024) {
-          alert(`${file.name} is larger than 2MB.`);
+          toast.warning(`${file.name} is larger than 2MB.`);
           continue;
         }
 
@@ -212,7 +235,7 @@ const ProductCreateForm = () => {
       setImages(prev => [...prev, ...uploaded]);
     } catch (error) {
       console.error('Images upload error:', error);
-      alert('Failed to upload one or more images.');
+      toast.error('Failed to upload one or more images.');
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -279,7 +302,7 @@ const ProductCreateForm = () => {
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
-      alert('Color image must be less than 2MB.');
+      toast.warning('Color image must be less than 2MB.');
       e.target.value = '';
       return;
     }
@@ -303,7 +326,7 @@ const ProductCreateForm = () => {
       }
     } catch (error) {
       console.error('Color image upload error:', error);
-      alert('Failed to upload color image.');
+      toast.error('Failed to upload color image.');
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -402,7 +425,9 @@ const ProductCreateForm = () => {
 
       // Color required
       if (!colorName) {
-        alert(`Please enter color name for Color Variant #${colorIndex + 1}.`);
+        toast.warning(
+          `Please enter color name for Color Variant #${colorIndex + 1}.`,
+        );
         return false;
       }
 
@@ -410,7 +435,7 @@ const ProductCreateForm = () => {
       const normalizedColor = normalizeValue(colorName);
 
       if (usedColors.has(normalizedColor)) {
-        alert(
+        toast.warning(
           `Duplicate color "${colorName}" found. Please use each color only once.`,
         );
         return false;
@@ -420,7 +445,7 @@ const ProductCreateForm = () => {
 
       // At least one size
       if (colorVariant.sizes.length === 0) {
-        alert(`Please add at least one size for ${colorName}.`);
+        toast.warning(`Please add at least one size for ${colorName}.`);
         return false;
       }
 
@@ -438,7 +463,9 @@ const ProductCreateForm = () => {
 
         // Size required
         if (!sizeName) {
-          alert(`Please enter size for ${colorName}, row #${sizeIndex + 1}.`);
+          toast.warning(
+            `Please enter size for ${colorName}, row #${sizeIndex + 1}.`,
+          );
           return false;
         }
 
@@ -446,7 +473,7 @@ const ProductCreateForm = () => {
         const normalizedSize = normalizeValue(sizeName);
 
         if (usedSizes.has(normalizedSize)) {
-          alert(
+          toast.warning(
             `Duplicate size "${sizeName}" found under ${colorName}. ` +
               `The same color cannot have the same size twice.`,
           );
@@ -457,7 +484,7 @@ const ProductCreateForm = () => {
 
         // SKU required
         if (!sku) {
-          alert(`Please enter SKU for ${colorName} - ${sizeName}.`);
+          toast.warning(`Please enter SKU for ${colorName} - ${sizeName}.`);
           return false;
         }
 
@@ -465,7 +492,7 @@ const ProductCreateForm = () => {
         const normalizedSku = normalizeValue(sku);
 
         if (usedSkus.has(normalizedSku)) {
-          alert(
+          toast.warning(
             `Duplicate SKU "${sku}" found. SKU must be unique across the entire product.`,
           );
           return false;
@@ -475,19 +502,23 @@ const ProductCreateForm = () => {
 
         // Price validation
         if (Number(size.price) <= 0) {
-          alert(`Price must be greater than 0 for ${colorName} - ${sizeName}.`);
+          toast.warning(
+            `Price must be greater than 0 for ${colorName} - ${sizeName}.`,
+          );
           return false;
         }
 
         // Stock validation
         if (Number(size.stock) < 0) {
-          alert(`Stock cannot be negative for ${colorName} - ${sizeName}.`);
+          toast.warning(
+            `Stock cannot be negative for ${colorName} - ${sizeName}.`,
+          );
           return false;
         }
 
         // Special price validation
         if (size.specialPrice !== null && Number(size.specialPrice) < 0) {
-          alert(
+          toast.warning(
             `Special price cannot be negative for ${colorName} - ${sizeName}.`,
           );
           return false;
@@ -497,7 +528,7 @@ const ProductCreateForm = () => {
           size.specialPrice !== null &&
           Number(size.specialPrice) > Number(size.price)
         ) {
-          alert(
+          toast.warning(
             `Special price cannot be greater than price for ${colorName} - ${sizeName}.`,
           );
           return false;
@@ -515,45 +546,43 @@ const ProductCreateForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.name.trim()) {
-      alert('Please enter product name.');
+      toast.warning('Please enter product name.');
       return;
     }
 
     if (!thumbnail) {
-      alert('Please upload a thumbnail image.');
+      toast.warning('Please upload a thumbnail image.');
       return;
     }
 
     if (!formData.category.trim()) {
-      alert('Please provide a category ID.');
+      toast.warning('Please provide a category ID.');
       return;
     }
 
     if (Number(formData.price) <= 0) {
-      alert('Base price must be greater than 0.');
+      toast.warning('Base price must be greater than 0.');
       return;
     }
 
     if (formData.specialPrice !== null) {
       if (Number(formData.specialPrice) < 0) {
-        alert('Special price cannot be negative.');
+        toast.warning('Special price cannot be negative.');
         return;
       }
 
       if (Number(formData.specialPrice) > Number(formData.price)) {
-        alert('Special price cannot be greater than base price.');
+        toast.warning('Special price cannot be greater than base price.');
         return;
       }
     }
 
     if (Number(formData.stock) < 0) {
-      alert('Stock cannot be negative.');
+      toast.warning('Stock cannot be negative.');
       return;
     }
 
-    // Validate color variants
     if (colorVariants.length > 0) {
       const isValid = validateColorVariants();
 
@@ -564,8 +593,6 @@ const ProductCreateForm = () => {
 
     try {
       setLoading(true);
-
-      const token = getToken();
 
       const totalVariantStock = colorVariants.reduce(
         (total, color) =>
@@ -579,47 +606,31 @@ const ProductCreateForm = () => {
 
       const payload = {
         name: formData.name.trim(),
-
         slug: formData.slug || generateSlug(formData.name),
-
         description: formData.description.trim() || undefined,
-
         brand: formData.brand.trim() || undefined,
-
         category: formData.category.trim(),
-
         tags: formData.tags
           ? formData.tags
               .split(',')
               .map(tag => tag.trim())
               .filter(Boolean)
           : [],
-
         thumbnail,
-
         images,
-
         videoUrl: formData.videoUrl.trim() || undefined,
-
         model: formData.model.trim() || undefined,
-
         material: formData.material.trim() || undefined,
-
         price: Number(formData.price),
-
         specialPrice:
           formData.specialPrice !== null
             ? Number(formData.specialPrice)
             : undefined,
-
         discount:
           formData.discount !== null ? Number(formData.discount) : undefined,
-
         stock:
           colorVariants.length > 0 ? totalVariantStock : Number(formData.stock),
-
         weight: formData.weight !== null ? Number(formData.weight) : undefined,
-
         dimensions:
           formData.length || formData.width || formData.height
             ? {
@@ -630,75 +641,51 @@ const ProductCreateForm = () => {
                   formData.height !== null ? Number(formData.height) : null,
               }
             : undefined,
-
         dangerousGoods: formData.dangerousGoods,
-
         warrantyType: formData.warrantyType.trim() || undefined,
-
         warrantyPeriod: formData.warrantyPeriod.trim() || undefined,
-
         highlights: formData.highlights
           ? formData.highlights
               .split('\n')
               .map(item => item.trim())
               .filter(Boolean)
           : [],
-
         isFeatured: formData.isFeatured,
-
         isPublished: formData.isPublished,
-
         colorVariants: colorVariants.map(color => ({
           color: color.color.trim(),
-
           image: color.image || undefined,
-
           sizes: color.sizes.map(size => ({
             size: size.size.trim(),
-
             price: Number(size.price),
-
             specialPrice:
               size.specialPrice !== null
                 ? Number(size.specialPrice)
                 : undefined,
-
             stock: Number(size.stock),
-
             sku: size.sku.trim(),
           })),
         })),
       };
 
-      console.log('CREATE PRODUCT PAYLOAD:', payload);
-
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/products`, {
-        method: 'POST',
-
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-
-        body: JSON.stringify(payload),
-      });
-
-      const result = await res.json();
-
-      console.log('CREATE PRODUCT RESPONSE:', result);
-
-      if (!res.ok) {
-        throw new Error(
-          result?.message || result?.error || 'Failed to create product',
-        );
+      if (isEditMode && initialProduct?.id) {
+        await updateProduct(initialProduct.id, payload);
+        toast.success('Product updated successfully.');
+        router.push('/admin/products');
+        return;
       }
 
-      alert('Product created successfully.');
-    } catch (error) {
-      console.error('CREATE PRODUCT ERROR:', error);
+      await createProduct(payload);
+      toast.success('Product created successfully.');
+      router.push('/admin/products');
+    } catch (error: unknown) {
+      console.error(
+        isEditMode ? 'UPDATE PRODUCT ERROR:' : 'CREATE PRODUCT ERROR:',
+        error,
+      );
 
-      alert(
-        error instanceof Error ? error.message : 'Failed to create product',
+      toast.error(
+        isEditMode ? 'Failed to update product' : 'Failed to create product',
       );
     } finally {
       setLoading(false);
@@ -790,7 +777,11 @@ const ProductCreateForm = () => {
           ACTIONS
       ====================================================== */}
 
-      <FormActions loading={loading} uploading={uploading} />
+      <FormActions
+        loading={loading}
+        uploading={uploading}
+        mode={isEditMode ? 'edit' : 'create'}
+      />
     </form>
   );
 };

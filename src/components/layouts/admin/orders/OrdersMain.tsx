@@ -277,14 +277,14 @@ const OrdersMain = () => {
       .filter(Boolean);
 
     if (!phones.length) {
-      alert('Please select at least one order');
+      toast.warning('Please select at least one order');
       return;
     }
 
     try {
       await navigator.clipboard.writeText(phones.join('\n'));
 
-      alert(
+      toast.success(
         `${phones.length} phone number${phones.length > 1 ? 's' : ''} copied`,
       );
     } catch (error) {
@@ -298,7 +298,7 @@ const OrdersMain = () => {
     const exportOrders = selectedIds.length > 0 ? selectedOrders : orders;
 
     if (!exportOrders.length) {
-      alert('No orders to export');
+      toast.warning('No orders to export');
       return;
     }
 

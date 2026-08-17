@@ -101,7 +101,7 @@ const ProductPurchaseOptions = ({ product }: Props) => {
             <span className="text-xs text-gray-500">Size নির্বাচন করুন</span>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-6 gap-1.25 sm:gap-2 sm:flex sm:flex-wrap">
             {Array.from(
               new Map(
                 product.colorVariants
@@ -120,7 +120,7 @@ const ProductPurchaseOptions = ({ product }: Props) => {
                     setSelectedSize(size.size);
                     setOrderSelectedSize(size.size);
                   }}
-                  className={`min-w-[64px] rounded-md border px-3 py-2.5 transition-all ${
+                  className={`min-w-0 rounded-sm border px-1.5 py-2.5 transition-all sm:min-w-[64px] sm:px-3 ${
                     size.stock <= 0
                       ? 'cursor-not-allowed border-gray-100 bg-gray-100 text-gray-400'
                       : isSelected

@@ -75,18 +75,17 @@ const Category = () => {
     <div className="w-full py-10 bg-white">
       <div className="container mx-auto  md:px-0">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-              Categories
-            </h2>
-          </div>
+        <div className="mb-6 sm:mb-8 flex items-center justify-between gap-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+            Categories
+          </h2>
+
           <Link
-            className="inline-flex items-center gap-2 text-title hover:text-hover-text font-semibold mt-3 sm:mt-0 group"
             href="/products"
+            className="inline-flex shrink-0 items-center gap-1 text-sm sm:text-base font-semibold text-title hover:text-hover-text transition-colors group"
           >
-            View more
-            <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <span>View more</span>
+            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 

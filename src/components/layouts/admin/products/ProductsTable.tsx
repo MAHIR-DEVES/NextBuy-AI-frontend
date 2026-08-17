@@ -422,7 +422,7 @@ const ProductsTable = ({
 
                     {/* Update */}
 
-                    <Link href={'/admin/update-product'}>
+                    <Link href={`/admin/update-product?slug=${product.slug}`}>
                       <button
                         type="button"
                         title="Update product"

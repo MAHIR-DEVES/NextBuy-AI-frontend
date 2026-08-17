@@ -16,6 +16,7 @@ import ProductModal from '@/components/layouts/admin/products/ProductModal';
 import ProductView from '@/components/layouts/admin/products/ProductView';
 import ProductsTable from '@/components/layouts/admin/products/ProductsTable';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface ProductMeta {
   total: number;
@@ -127,6 +128,8 @@ const ProductsPage = () => {
       if (res.success) {
         await fetchProducts();
       }
+
+      toast.success('Product Successfully Deleted');
     } catch (error) {
       console.error('Delete product error:', error);
     } finally {

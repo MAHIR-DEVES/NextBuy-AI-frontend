@@ -9,6 +9,7 @@ import {
   PersonalEntryPayload,
 } from '@/types/accounts/personal-entry.types';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface PersonalFormProps {
   entry: PersonalEntry | null;
@@ -96,7 +97,7 @@ const PersonalForm = ({ entry, onClose, onSuccess }: PersonalFormProps) => {
         error,
       );
 
-      alert(
+      toast.error(
         isEdit
           ? 'Failed to update personal entry'
           : 'Failed to create personal entry',

@@ -4,11 +4,17 @@ import { useRouter } from 'next/navigation';
 interface FormActionsProps {
   loading: boolean;
   uploading: boolean;
+  mode?: 'create' | 'edit';
   onSubmit?: () => void;
 }
 
-export const FormActions = ({ loading, uploading }: FormActionsProps) => {
+export const FormActions = ({
+  loading,
+  uploading,
+  mode = 'create',
+}: FormActionsProps) => {
   const isProcessing = loading || uploading;
+  const isEditMode = mode === 'edit';
 
   const router = useRouter();
 
@@ -31,12 +37,16 @@ export const FormActions = ({ loading, uploading }: FormActionsProps) => {
         {isProcessing ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" />
-            {uploading ? 'Uploading Images...' : 'Creating Product...'}
+            {uploading
+              ? 'Uploading Images...'
+              : isEditMode
+                ? 'Updating Product...'
+                : 'Creating Product...'}
           </>
         ) : (
           <>
             <Package className="w-4 h-4" />
-            Create Product
+            {isEditMode ? 'Update Product' : 'Create Product'}
           </>
         )}
       </button>

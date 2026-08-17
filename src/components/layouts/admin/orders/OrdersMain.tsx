@@ -376,6 +376,7 @@ const OrdersMain = () => {
       <OrderSummary {...summary} />
 
       <CustomerContactTable
+        fetchOrders={fetchOrders}
         orders={orders}
         meta={meta}
         selectedIds={selectedIds}

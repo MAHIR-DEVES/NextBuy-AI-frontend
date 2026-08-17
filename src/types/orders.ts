@@ -111,3 +111,13 @@ export interface GetAllOrdersResponse {
     summary: OrdersSummary;
   };
 }
+
+export interface UpdateOrderPayload {
+  name?: string;
+  phone?: string;
+  district?: string;
+  thana?: string;
+  address?: string;
+  note?: string | null;
+  status?: OrderStatus;
+}

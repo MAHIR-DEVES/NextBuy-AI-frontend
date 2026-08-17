@@ -207,7 +207,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
     setMessages([
       {
         id: '1',
-        text: "Hello! I'm NextBuy AI, your personal shopping assistant. How can I help you today?",
+        text: "Hello! I'm Sera Place, your personal shopping assistant. How can I help you today?",
         sender: 'ai',
         timestamp: new Date(),
       },
@@ -394,7 +394,7 @@ const AIChatModal: React.FC<AIChatModalProps> = ({ isOpen, onClose }) => {
                   </button>
                 </div>
                 <p className="text-xs text-gray-400 mt-2 text-center">
-                  Powered by NextBuy AI • Your personal shopping assistant
+                  Powered by Sera Place • Your personal shopping assistant
                 </p>
               </div>
             </>

@@ -6,19 +6,24 @@ import {
   ChevronRight,
   Eye,
   Loader2,
+  Pencil,
+  StickyNote,
   Trash2,
 } from 'lucide-react';
 
 import { Order, OrdersMeta, OrderStatus } from '@/types/orders';
 
 import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
+import { useState } from 'react';
+import EditOrderModal from './EditOrderModal';
+import OrderNoteModal from './OrderNoteModal';
 
 interface CustomerContactTableProps {
   orders: Order[];
   meta: OrdersMeta;
   selectedIds: string[];
   paginationPages: number[];
-
+  fetchOrders: () => Promise<void>;
   onSelectAll: () => void;
   onSelect: (id: string) => void;
   onView: (order: Order) => void;
@@ -39,6 +44,7 @@ const CustomerContactTable = ({
   meta,
   selectedIds,
   paginationPages,
+  fetchOrders,
   onSelectAll,
   onSelect,
   onView,
@@ -51,6 +57,9 @@ const CustomerContactTable = ({
 }: CustomerContactTableProps) => {
   const allSelected =
     orders.length > 0 && orders.every(order => selectedIds.includes(order.id));
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 
   return (
     <div className="w-full overflow-x-auto rounded-md border bg-background [-webkit-overflow-scrolling:touch]">
@@ -93,6 +102,7 @@ const CustomerContactTable = ({
                 <th className="px-4 py-3 text-center">Quantity</th>
 
                 <th className="px-4 py-3 text-center">Status</th>
+                <th className="px-4 py-3 text-center">Note</th>
 
                 <th className="px-4 py-3 text-center">Action</th>
               </tr>
@@ -178,6 +188,8 @@ const CustomerContactTable = ({
                       </div>
                     </td>
 
+                    {/* note */}
+                    <td className="px-4 py-4 text-center">{order?.note}</td>
                     {/* ACTION */}
                     <td className="px-4 py-4 text-center">
                       <div className="flex items-center justify-center gap-2">
@@ -190,7 +202,31 @@ const CustomerContactTable = ({
                           className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-xs font-medium hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           <Eye className="h-4 w-4" />
-                          View
+                        </button>
+                        {/* Edit */}
+                        <button
+                          type="button"
+                          disabled={isDeleting || isUpdating}
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setIsEditModalOpen(true);
+                          }}
+                          className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-xs font-medium hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </button>
+
+                        {/* Note */}
+                        <button
+                          type="button"
+                          disabled={isDeleting || isUpdating}
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setIsNoteModalOpen(true);
+                          }}
+                          className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-xs font-medium hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <StickyNote className="h-4 w-4" />
                         </button>
 
                         {/* DELETE */}
@@ -199,11 +235,13 @@ const CustomerContactTable = ({
                           type="button"
                           disabled={isDeleting || isUpdating}
                           onClick={() => onDelete(order.id)}
-                          className="inline-flex h-9 items-center gap-1.5 rounded-md border border-red-500/20 px-3 text-xs font-medium text-red-600 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+                          className={`inline-flex h-9 items-center gap-1.5 rounded-md border border-red-500/20 px-3 text-xs font-medium text-red-600 hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50`}
                         >
-                          <Trash2 className="h-4 w-4" />
-
-                          {isDeleting ? 'Deleting...' : 'Delete'}
+                          {isDeleting ? (
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-red-600/30 border-t-red-600" />
+                          ) : (
+                            <Trash2 className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
                     </td>
@@ -214,6 +252,23 @@ const CustomerContactTable = ({
           </table>
         )}
       </div>
+      {selectedOrder && (
+        <EditOrderModal
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+          order={selectedOrder}
+          fetchOrders={fetchOrders}
+        />
+      )}
+
+      {selectedOrder && (
+        <OrderNoteModal
+          open={isNoteModalOpen}
+          onOpenChange={setIsNoteModalOpen}
+          order={selectedOrder}
+          fetchOrders={fetchOrders}
+        />
+      )}
 
       {/* PAGINATION */}
 

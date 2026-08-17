@@ -7,6 +7,7 @@ import {
   GetAllOrdersParams,
   ISingleOrder,
   OrderStatus,
+  UpdateOrderPayload,
 } from '@/types/orders';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_API;
@@ -109,6 +110,24 @@ export const updateOrderStatus = async (
   return res.data;
 };
 
+// ==============================
+// UPDATE ORDER
+// ==============================
+
+export const updateOrder = async (
+  orderId: string,
+  payload: UpdateOrderPayload,
+) => {
+  if (!orderId) {
+    throw new Error('Order ID is required');
+  }
+
+  const res = await axios.patch(`${BASE_URL}/orders/${orderId}`, payload, {
+    headers: getAuthHeaders(),
+  });
+
+  return res.data;
+};
 // ==============================
 // DELETE ORDER
 // ==============================

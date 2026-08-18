@@ -303,29 +303,38 @@ const OrdersMain = () => {
     }
 
     const headers = [
-      'Order ID',
+      'Invoice',
       'Name',
-      'Phone',
-      'Email',
       'Address',
-      'Delivery Area',
-      'Quantity',
-      'Total',
-      'Status',
-      'Created At',
+      'Phone',
+      'Amount',
+      'Note',
+      'Lot',
+      'Delivery Type',
+      'Contact Name',
+      'Contact Phone',
     ];
 
-    const rows = exportOrders.map(order => [
-      order.id,
+    const rows = exportOrders.map((order, index) => [
+      index + 1,
+
       order.name || order.user?.name || '',
-      order.phone || order.user?.phone || '',
-      order.user?.email || '',
+
       order.address || '',
-      order.isInsideDhaka ? 'Inside Dhaka' : 'Outside Dhaka',
-      getOrderQuantity(order),
+
+      `="${order.phone || order.user?.phone || ''}"`,
+
       order.total ?? order.totalAmount ?? 0,
-      order.status,
-      order.createdAt ? new Date(order.createdAt).toLocaleString() : '',
+
+      order.note || '',
+
+      getOrderQuantity(order),
+
+      'Home',
+
+      'JonoPrio.com',
+
+      '="01629810013"',
     ]);
 
     const csv = [headers, ...rows]

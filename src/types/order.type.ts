@@ -6,6 +6,8 @@ export interface OrderItem {
   price: number;
   createdAt: string;
   updatedAt: string;
+  size: string | null;
+  color: string | null;
 }
 
 export interface OrderUser {

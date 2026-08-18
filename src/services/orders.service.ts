@@ -17,9 +17,7 @@ const getAuthHeaders = () => ({
   'Content-Type': 'application/json',
 });
 
-// ==============================
 // CREATE ORDER
-// ==============================
 
 export const createOrder = async ({
   name,
@@ -47,9 +45,7 @@ export const createOrder = async ({
   return res.data;
 };
 
-// ==============================
 // BUY NOW
-// ==============================
 
 export const singleOrder = async (payload: ISingleOrder) => {
   const res = await axios.post(`${BASE_URL}/orders/buy-now`, payload, {
@@ -59,9 +55,7 @@ export const singleOrder = async (payload: ISingleOrder) => {
   return res.data;
 };
 
-// ==============================
 // GET ALL ORDERS
-// ==============================
 
 export const getAllOrders = async (params?: GetAllOrdersParams) => {
   const res = await axios.get(`${BASE_URL}/orders/all`, {
@@ -73,9 +67,7 @@ export const getAllOrders = async (params?: GetAllOrdersParams) => {
   return res.data;
 };
 
-// ==============================
 // GET USER ORDERS
-// ==============================
 
 export const getOrdersByUser = async () => {
   const res = await axios.get(`${BASE_URL}/orders`, {
@@ -85,9 +77,15 @@ export const getOrdersByUser = async () => {
   return res.data;
 };
 
-// ==============================
+// get single order
+export const getOrderById = async (orderId: string) => {
+  const response = await axios.get(`${BASE_URL}/orders/${orderId}`);
+  console.log(response);
+
+  return response.data;
+};
+
 // UPDATE ORDER STATUS
-// ==============================
 
 export const updateOrderStatus = async (
   orderId: string,
@@ -110,9 +108,7 @@ export const updateOrderStatus = async (
   return res.data;
 };
 
-// ==============================
 // UPDATE ORDER
-// ==============================
 
 export const updateOrder = async (
   orderId: string,
@@ -128,9 +124,8 @@ export const updateOrder = async (
 
   return res.data;
 };
-// ==============================
+
 // DELETE ORDER
-// ==============================
 
 export const deleteOrder = async (orderId: string) => {
   if (!orderId) {

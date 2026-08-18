@@ -17,6 +17,7 @@ import LoadingSpinner from '../shared/dashboard/LoadingSpinner';
 import { useState } from 'react';
 import EditOrderModal from './EditOrderModal';
 import OrderNoteModal from './OrderNoteModal';
+import Link from 'next/link';
 
 interface CustomerContactTableProps {
   orders: Order[];
@@ -47,7 +48,6 @@ const CustomerContactTable = ({
   fetchOrders,
   onSelectAll,
   onSelect,
-  onView,
   onPageChange,
   onUpdateStatus,
   onDelete,
@@ -195,14 +195,14 @@ const CustomerContactTable = ({
                       <div className="flex items-center justify-center gap-2">
                         {/* VIEW */}
 
-                        <button
-                          type="button"
-                          disabled={isDeleting || isUpdating}
-                          onClick={() => onView(order)}
-                          className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-xs font-medium hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                          <Eye className="h-4 w-4" />
-                        </button>
+                        <Link href={`/admin/order-details/${order.id}`}>
+                          <button
+                            type="button"
+                            className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-xs font-medium hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </button>
+                        </Link>
                         {/* Edit */}
                         <button
                           type="button"

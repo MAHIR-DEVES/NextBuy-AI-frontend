@@ -1,3 +1,5 @@
+import { ProductPayload } from '@/services/product.service';
+
 export type GetAllOrdersParams = {
   page?: number;
   limit?: number;
@@ -49,6 +51,9 @@ export interface OrderItem {
   quantity: number;
   createdAt: string;
   updatedAt: string;
+  size: string | null;
+  color: string | null;
+  product: ProductPayload;
 }
 
 export interface OrderUser {

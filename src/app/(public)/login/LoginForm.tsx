@@ -12,7 +12,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { loginUser } from '@/services/auth.service';
 import { setAuthData } from '@/utils/auth';
@@ -24,7 +24,6 @@ interface FormData {
 
 export default function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,16 +41,11 @@ export default function LoginForm() {
       const res = await loginUser(data);
       setAuthData(res.data.accessToken, res.data.user);
 
-      const redirect = searchParams.get('redirect');
-
-      if (redirect) {
-        router.push(redirect);
-        return;
-      }
-
       const role = res.data.user.role;
-      if (role === 'ADMIN') {
+      if (role === 'ADMIN' || role === 'SUPER_ADMIN') {
         router.push('/admin');
+      } else if (role === 'SELLER') {
+        router.push('/seller');
       } else {
         router.push('/dashboard');
       }

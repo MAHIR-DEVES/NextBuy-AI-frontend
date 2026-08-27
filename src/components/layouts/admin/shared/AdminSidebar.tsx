@@ -46,7 +46,6 @@ const AdminSidebar = ({
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Products', href: '/admin/products', icon: Package },
     { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-    { name: 'Customers', href: '/admin/users', icon: Users },
     {
       name: 'Customers Contact',
       href: '/admin/customer-contact',
@@ -62,6 +61,7 @@ const AdminSidebar = ({
       href: '/admin/hero-management',
       icon: NotebookPen,
     },
+    { name: 'Customers', href: '/admin/users', icon: Users },
     {
       name: 'Category Management',
       href: '/admin/category-management',

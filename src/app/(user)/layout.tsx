@@ -24,8 +24,12 @@ export default function UserLayout({
       return;
     }
 
-    if (user.role !== 'ADMIN') {
-      router.push('/dashboard');
+    if (user.role !== 'CUSTOMER') {
+      if (user.role === 'SELLER') {
+        router.push('/seller');
+      } else {
+        router.push('/admin');
+      }
     }
   }, [router]);
   return (

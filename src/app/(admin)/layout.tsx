@@ -25,8 +25,9 @@ export default function AdminLayout({
       return;
     }
 
-    if (user.role !== 'ADMIN') {
+    if (user.role !== 'ADMIN' && user.role !== 'SUPER_ADMIN') {
       router.push('/dashboard');
+      return;
     }
   }, [router]);
 

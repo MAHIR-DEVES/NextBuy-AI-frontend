@@ -15,7 +15,7 @@ export interface LoginResponse {
     user: {
       id: string;
       email: string;
-      role: 'ADMIN' | 'CUSTOMER' | 'SELLER';
+      role: 'ADMIN' | 'CUSTOMER' | 'SELLER' | 'SUPER_ADMIN';
       name: string;
     };
   };

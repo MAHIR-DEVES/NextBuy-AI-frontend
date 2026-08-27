@@ -1,7 +1,7 @@
 export interface IAuthUser {
   id: string;
   email: string;
-  role: 'ADMIN' | 'CUSTOMER' | 'SELLER';
+  role: 'ADMIN' | 'CUSTOMER' | 'SELLER' | 'SUPER_ADMIN';
   name: string;
 
   avatar?: string;
@@ -20,7 +20,7 @@ export interface IUser {
   email: string;
   phone: string;
 
-  role: 'ADMIN' | 'CUSTOMER' | 'SELLER';
+  role: 'ADMIN' | 'CUSTOMER' | 'SELLER' | 'SUPER_ADMIN';
   status: 'ACTIVE' | 'INACTIVE';
 
   avatar: string;

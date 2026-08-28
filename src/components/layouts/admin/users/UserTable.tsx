@@ -19,7 +19,7 @@ interface UserTableProps {
   users: IUser[];
   loading: boolean;
   updatingRole: string | null;
-  onRoleChange: (userId: string, role: string) => void;
+  onRoleChange: (userId: string, role: IUser['role']) => void;
 }
 
 const UserTable = ({
@@ -168,7 +168,9 @@ const UserTable = ({
                   <select
                     value={user.role}
                     disabled={updatingRole === user.id}
-                    onChange={e => onRoleChange(user.id, e.target.value)}
+                    onChange={e =>
+                      onRoleChange(user.id, e.target.value as IUser['role'])
+                    }
                     className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-sm text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 disabled:opacity-50"
                   >
                     <option value="CUSTOMER">Customer</option>
@@ -287,7 +289,9 @@ const UserTable = ({
                         disabled={
                           role !== 'SUPER_ADMIN' || updatingRole === user.id
                         }
-                        onChange={e => onRoleChange(user.id, e.target.value)}
+                        onChange={e =>
+                          onRoleChange(user.id, e.target.value as IUser['role'])
+                        }
                         className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-sm text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400 disabled:opacity-50"
                       >
                         <option value="CUSTOMER">Customer</option>

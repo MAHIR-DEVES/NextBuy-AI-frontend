@@ -11,7 +11,6 @@ import { updateUserRole } from '@/services/user.service';
 import UserStats from '@/components/layouts/admin/users/UserStats';
 import UserFilters from '@/components/layouts/admin/users/UserFilters';
 import UserTable from '@/components/layouts/admin/users/UserTable';
-import { getUserRole } from '@/utils/auth';
 
 const UserPage = () => {
   const [loading, setLoading] = useState(true);
@@ -91,7 +90,7 @@ const UserPage = () => {
   // Update Role
   // ==========================================
 
-  const handleRoleChange = async (userId: string, newRole: string) => {
+  const handleRoleChange = async (userId: string, newRole: IUser['role']) => {
     const currentUser = users.find(user => user.id === userId);
 
     if (!currentUser) {

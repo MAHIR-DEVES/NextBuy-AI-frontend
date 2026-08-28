@@ -93,7 +93,7 @@ export default function LoginForm() {
         {/* Main Card */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300">
           {/* Header with Gradient */}
-          <div className="bg-gradient-to-r from-orange-500 to-pink-500 dark:from-orange-600 dark:to-pink-600 px-8 py-6">
+          <div className="bg-gradient-primary hover:bg-gradient-primary-hover px-8 py-6">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Sparkles className="w-6 h-6 text-white" />
               <h2 className="text-2xl font-bold text-white text-center">
@@ -175,7 +175,7 @@ export default function LoginForm() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center justify-center gap-2"
+                className="w-full bg-gradient-primary hover:bg-gradient-primary-hover text-white py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -192,7 +192,7 @@ export default function LoginForm() {
             </form>
 
             {/* Demo Buttons */}
-            <div className="space-y-3 mb-6 mt-4">
+            {/* <div className="space-y-3 mb-6 mt-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 text-center uppercase tracking-wider">
                 Quick Demo Access
               </p>
@@ -215,7 +215,7 @@ export default function LoginForm() {
                   Customer Demo
                 </button>
               </div>
-            </div>
+            </div> */}
             {/* Divider */}
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">

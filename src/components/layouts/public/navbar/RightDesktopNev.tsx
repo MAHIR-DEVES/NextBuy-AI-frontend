@@ -32,10 +32,10 @@ const RightDesktopNev = () => {
       ) : (
         <Link
           href="/login"
-          className="flex items-center gap-2 text-sm font-medium hover:text-hover-text"
+          className="group inline-flex items-center gap-2 rounded-md bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-gradient-primary-hover hover:shadow-lg "
         >
-          <User className="h-5 w-5" />
-          Sign in
+          <User className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+          <span>Login</span>
         </Link>
       )}
 

@@ -67,8 +67,22 @@ const PublicNavbar = ({ className }: { className?: string }) => {
               {/* mobile navbar  open + onOpenChange make this a controlled Sheet */}
               <MobileSidebar user={user}></MobileSidebar>
 
-              {/* Logo */}
-              <Link className="flex items-center mr-20 shrink-0" href="/">
+              {/* mobile Logo */}
+              <Link className=" md:hidden items-center mr-20 shrink-0" href="/">
+                <div className="flex items-center">
+                  <Image
+                    src="/images/sera-place-logo.png"
+                    alt="Logo"
+                    width={110}
+                    height={110}
+                  />
+                </div>
+              </Link>
+              {/* desktop Logo */}
+              <Link
+                className="hidden md:flex flex items-center mr-20 shrink-0"
+                href="/"
+              >
                 <div className="flex items-center">
                   <Image
                     src="/images/sera-place-logo.png"

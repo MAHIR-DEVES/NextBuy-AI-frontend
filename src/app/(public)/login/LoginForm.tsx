@@ -91,7 +91,7 @@ export default function LoginForm() {
 
       <div className="relative w-full max-w-md">
         {/* Main Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300">
+        <div className="bg-white dark:bg-gray-800 rounded-md shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300">
           {/* Header with Gradient */}
           <div className="bg-gradient-primary hover:bg-gradient-primary-hover px-8 py-6">
             <div className="flex items-center justify-center gap-2 mb-2">

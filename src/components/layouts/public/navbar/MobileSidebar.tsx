@@ -38,7 +38,7 @@ const MobileNavbar = ({ user }: UserDropdownProps) => {
       <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon">
-            <Menu className="h-5 w-5" />
+            <Menu className="h-8 w-8" />
           </Button>
         </SheetTrigger>
 
@@ -95,7 +95,7 @@ const MobileNavbar = ({ user }: UserDropdownProps) => {
               ) : (
                 <>
                   <Link href="/login" onClick={closeMobileMenu}>
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    <Button className="w-full bg-gradient-primary hover:bg-gradient-primary-hover mb-2">
                       Sign in
                     </Button>
                   </Link>

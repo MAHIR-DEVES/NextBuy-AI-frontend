@@ -1,15 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+
 import ProductCreateForm from '@/components/layouts/admin/create-product/ProductCreateForm';
 import { getSingleProduct } from '@/services/product.service';
 import { IProduct } from '@/types/products.type';
 import LoadingSpinner from '@/components/layouts/admin/shared/dashboard/LoadingSpinner';
 
-export default function UpdateProductPage() {
+function UpdateProductContent() {
   const searchParams = useSearchParams();
   const productSlug = searchParams.get('slug');
+
   const [product, setProduct] = useState<IProduct | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +25,7 @@ export default function UpdateProductPage() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
+
         const response = await getSingleProduct(productSlug);
 
         if (isMounted) {
@@ -69,4 +72,12 @@ export default function UpdateProductPage() {
   }
 
   return <ProductCreateForm mode="edit" initialProduct={product} />;
+}
+
+export default function UpdateProductPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner message="product" />}>
+      <UpdateProductContent />
+    </Suspense>
+  );
 }

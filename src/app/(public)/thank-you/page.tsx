@@ -13,7 +13,7 @@ import {
   User,
 } from 'lucide-react';
 import DownloadOrderButton from '@/components/layouts/public/Thankyou/DownloadOrderButton';
-import PurchaseTracker from '@/components/layouts/shared/analytics/PurchaseTracker';
+import PurchaseEvent from '@/components/layouts/shared/analytics/PurchaseEvent';
 
 interface PageProps {
   searchParams: Promise<{
@@ -131,12 +131,14 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
 
   return (
     <main className="min-h-screen bg-slate-50/70 py-10 md:py-16">
-      {/* send data to pixel */}
-      <PurchaseTracker
-        orderId={order.id}
-        totalAmount={Number(order.total)}
+      <PurchaseEvent
+        transactionId={order.id}
+        value={Number(order.total)}
+        shipping={Number(order.shippingFee)}
         items={order.items.map(item => ({
           productId: item.productId,
+          name: item.name,
+          price: Number(item.price),
           quantity: item.quantity,
         }))}
       />

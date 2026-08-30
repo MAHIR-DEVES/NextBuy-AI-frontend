@@ -21,7 +21,7 @@ import { singleOrder } from '@/services/orders.service';
 import { useRouter } from 'next/navigation';
 import { useOrderStore } from '@/store/order.store';
 import { useProductStore } from '@/store/product.store';
-import MetaInitiateCheckout from '../../shared/analytics/MetaInitiateCheckout';
+import { trackBeginCheckout } from '../../shared/analytics/events';
 
 interface BuyNowProps {
   product: IProduct;
@@ -144,6 +144,19 @@ const BuyNow = ({ product }: BuyNowProps) => {
 
     try {
       setLoading(true);
+      // send data to data layer
+      trackBeginCheckout({
+        value: totalPrice,
+        items: [
+          {
+            item_id: product.id,
+            item_name: product.name,
+            price: Number(unitPrice),
+            quantity,
+            item_category: product.category?.name,
+          },
+        ],
+      });
 
       const payload = {
         productId: product.id,
@@ -198,12 +211,6 @@ const BuyNow = ({ product }: BuyNowProps) => {
 
   return (
     <div className="min-h-screen bg-slate-50/70 py-8 md:py-12">
-      {/* send data to pixel */}
-      <MetaInitiateCheckout
-        value={subtotal}
-        numItems={quantity}
-        contentIds={[product.id]}
-      />
       <div className="container mx-auto max-w-7xl px-4 sm:px-6">
         {/* PAGE HEADER */}
         <div className="mb-6 border-b border-slate-200/80 pb-4">

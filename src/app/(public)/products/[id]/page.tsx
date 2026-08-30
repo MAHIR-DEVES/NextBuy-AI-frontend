@@ -2,7 +2,7 @@ import ProductGallery from '@/components/layouts/public/product-details/ProductG
 import ProductPurchaseOptions from '@/components/layouts/public/product-details/ProductPurchaseOptions';
 import ProductReviews from '@/components/layouts/public/product-details/ProductReviews';
 import RelatedProduct from '@/components/layouts/public/product-details/RelatedProduct';
-import MetaViewContent from '@/components/layouts/shared/analytics/MetaViewContent';
+import ProductViewTracker from '@/components/layouts/shared/analytics/ProductViewTracker';
 import { getSingleProduct } from '@/services/product.service';
 import { Star, Truck, MapPin, CheckCircle, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
@@ -50,12 +50,12 @@ export default async function ProductDetailsPage({
 
   return (
     <div className="container mx-auto px-3 md:px-4 py-8 md:py-10">
-      {/* send data to pixel */}
-      <MetaViewContent
+      {/* send data to gtm */}
+      <ProductViewTracker
         productId={product.id}
         productName={product.name}
-        price={Number(currentPrice)}
-        categoryName={product.category?.name}
+        price={Number(product.specialPrice ?? product.price)}
+        category={product.category?.name}
       />
       {/* =====================================================
           BREADCRUMB

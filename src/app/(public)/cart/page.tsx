@@ -15,7 +15,6 @@ import Image from 'next/image';
 
 const CartPage = () => {
   const [items, setItems] = useState<CartItem[]>([]);
-  console.log(items);
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -298,7 +297,7 @@ const CartPage = () => {
         {/* CHECKOUT FORM */}
         {showCheckout && (
           <div className="lg:col-span-2">
-            <CheckoutForm subtotal={subtotal} />
+            <CheckoutForm items={items} subtotal={subtotal} />
           </div>
         )}
         {/* RIGHT SIDE */}

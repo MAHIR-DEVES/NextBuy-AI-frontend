@@ -10,7 +10,7 @@ import { getUser } from '@/utils/auth';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useOrderStore } from '@/store/order.store';
-import { trackMetaEvent } from '@/lib/meta-pixel';
+import { trackAddToCart } from '../../shared/analytics/events';
 
 type Props = {
   productId: string;
@@ -62,15 +62,12 @@ const ProductActions = ({ productId, product }: Props) => {
 
       await addToCart(productId, quantity);
 
-      const currentPrice = product.specialPrice ?? product.price;
-
-      trackMetaEvent('AddToCart', {
-        content_ids: [product.id],
-        content_name: product.name,
-        content_type: 'product',
-        value: Number(currentPrice) * quantity,
-        currency: 'BDT',
-        num_items: quantity,
+      trackAddToCart({
+        productId: product.id,
+        productName: product.name,
+        price: Number(product.specialPrice ?? product.price),
+        quantity,
+        category: product.category?.name,
       });
 
       increase(quantity);

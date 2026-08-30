@@ -4,12 +4,15 @@ import { createOrder } from '@/services/orders.service';
 import { useCartStore } from '@/store/cart.store';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
+import { trackBeginCheckout } from '../../shared/analytics/events';
+import { CartItem } from '@/types/cart.type';
 
 type CheckoutFormProps = {
   subtotal: number;
+  items: CartItem[];
 };
 
-const CheckoutForm = ({ subtotal }: CheckoutFormProps) => {
+const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
   const [insideDhaka, setInsideDhaka] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -37,6 +40,16 @@ const CheckoutForm = ({ subtotal }: CheckoutFormProps) => {
     try {
       setLoading(true);
 
+      trackBeginCheckout({
+        value: total,
+        items: items.map(item => ({
+          item_id: item.product.id,
+          item_name: item.product.name,
+          price: Number(item.product.price),
+          quantity: item.quantity,
+          item_category: item.product.category?.name,
+        })),
+      });
       await createOrder({
         name,
         phone,

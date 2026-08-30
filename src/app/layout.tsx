@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from 'sonner';
 import GoogleTagManager from '@/components/layouts/shared/analytics/GoogleTagManager';
 import PageViewTracker from '@/components/layouts/shared/analytics/PageViewTracker';
+import { Suspense } from 'react';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -27,7 +28,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <GoogleTagManager />
-        <PageViewTracker />
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
         {children} {/*  Toast Provider */}
         <Toaster richColors position="top-right" />
       </body>

@@ -13,5 +13,6 @@ export type CartItem = {
     thumbnail: string;
     brand: string;
     rating: number;
+    category: string;
   };
 };

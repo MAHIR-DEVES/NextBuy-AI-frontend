@@ -47,7 +47,7 @@ const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
           item_name: item.product.name,
           price: Number(item.product.price),
           quantity: item.quantity,
-          item_category: item.product.category,
+          item_category: item.product.category.name,
         })),
       });
       await createOrder({

@@ -7,12 +7,23 @@ export type CartItem = {
 
   product: {
     id: string;
+    category: Category;
     name: string;
     price: number;
     discount: number;
     thumbnail: string;
     brand: string;
     rating: number;
-    category: string;
   };
+};
+
+export type Category = {
+  id: string;
+  name: string;
+  slug: string;
+  image: string;
+  description: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 };

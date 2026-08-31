@@ -40,16 +40,27 @@ const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
     try {
       setLoading(true);
 
+      // ==============================
+      // BEGIN CHECKOUT EVENT
+      // ==============================
+
       trackBeginCheckout({
         value: total,
-        items: items.map(item => ({
+        items: items.map((item, index) => ({
           item_id: item.product.id,
           item_name: item.product.name,
-          price: Number(item.product.price),
+          price: Number(item.product.specialPrice ?? item.product.price),
+          discount: Number(item.product.discount ?? 0),
+          index,
+          item_brand: item.product.brand || '',
+          item_category: item.product.category?.name || '',
+          item_variant: '',
+          item_size: '',
+          item_color: '',
           quantity: item.quantity,
-          item_category: item.product.category.name,
         })),
       });
+
       await createOrder({
         name,
         phone,

@@ -56,6 +56,7 @@ export default async function ProductDetailsPage({
         productName={product.name}
         price={Number(product.specialPrice ?? product.price)}
         category={product.category?.name}
+        brand={product.brand || ''}
       />
       {/* =====================================================
           BREADCRUMB

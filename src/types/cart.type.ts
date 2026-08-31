@@ -12,6 +12,7 @@ export type CartItem = {
     price: number;
     discount: number;
     thumbnail: string;
+    specialPrice: number;
     brand: string;
     rating: number;
   };

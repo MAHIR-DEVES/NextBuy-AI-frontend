@@ -139,24 +139,31 @@ const BuyNow = ({ product }: BuyNowProps) => {
     return true;
   };
 
+  //  BEGIN CHECKOUT - SINGLE PRODUCT
+  trackBeginCheckout({
+    value: totalPrice,
+    items: [
+      {
+        item_id: product.id,
+        item_name: product.name,
+        price: Number(unitPrice),
+        quantity,
+
+        item_brand: product.brand || '',
+        item_category: product.category?.name || '',
+        item_variant: selectedColor
+          ? `${selectedSize || ''} ${selectedColor}`.trim()
+          : selectedSize || '',
+        item_size: selectedSize || '',
+        item_color: selectedColor || '',
+      },
+    ],
+  });
   const handleOrder = async () => {
     if (!validateForm()) return;
 
     try {
       setLoading(true);
-      // send data to data layer
-      trackBeginCheckout({
-        value: totalPrice,
-        items: [
-          {
-            item_id: product.id,
-            item_name: product.name,
-            price: Number(unitPrice),
-            quantity,
-            item_category: product.category?.name,
-          },
-        ],
-      });
 
       const payload = {
         productId: product.id,

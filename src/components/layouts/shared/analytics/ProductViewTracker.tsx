@@ -8,6 +8,7 @@ interface ProductViewTrackerProps {
   productName: string;
   price: number;
   category?: string;
+  brand?: string;
 }
 
 const ProductViewTracker = ({

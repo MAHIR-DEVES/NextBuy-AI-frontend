@@ -27,8 +27,10 @@ interface OrderItem {
   name: string;
   price: number;
   quantity: number;
+  category: string;
   product: {
     thumbnail: string;
+    category?: string;
   };
 }
 
@@ -140,6 +142,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
           name: item.name,
           price: Number(item.price),
           quantity: item.quantity,
+          category: item.product.category,
         }))}
       />
       {/* PAGE WIDTH INCREASED TO 5XL */}

@@ -65,7 +65,13 @@ const ProductActions = ({ productId, product }: Props) => {
         productName: product.name,
         price: Number(product.specialPrice ?? product.price),
         quantity,
-        category: product.category?.name,
+        category: product.category?.name || '',
+        brand: product.brand || '',
+        variant: selectedSize
+          ? `${selectedSize}${product.colorVariants?.length ? ` ${selectedSize}` : ''}`
+          : '',
+        size: selectedSize || '',
+        color: '',
       });
 
       increase(quantity);

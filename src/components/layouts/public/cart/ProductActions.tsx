@@ -11,6 +11,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useOrderStore } from '@/store/order.store';
 import { trackAddToCart } from '../../shared/analytics/events';
+import { useProductStore } from '@/store/product.store';
 
 type Props = {
   productId: string;
@@ -41,8 +42,13 @@ const ProductActions = ({ productId, product }: Props) => {
 
   const setSelectedProduct = useOrderStore(state => state.setSelectedProduct);
   const selectedSize = useOrderStore(state => state.selectedSize);
+  const selectedColor = useProductStore(state => state.selectedColor);
 
   const handleBuyNow = () => {
+    if (product.colorVariants?.length > 0 && !selectedColor) {
+      toast.error('দয়া করে একটি কালার নির্বাচন করুন।');
+      return;
+    }
     if (product.colorVariants?.length > 0 && !selectedSize) {
       toast.error('দয়া করে একটি সাইজ নির্বাচন করুন।');
       return;

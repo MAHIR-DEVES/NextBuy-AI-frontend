@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import {
   Minus,
@@ -30,8 +30,10 @@ interface BuyNowProps {
 const BuyNow = ({ product }: BuyNowProps) => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+
   const selectedSize = useOrderStore(state => state.selectedSize);
   const selectedColor = useProductStore(state => state.selectedColor);
+
   const router = useRouter();
 
   const [form, setForm] = useState({
@@ -44,10 +46,10 @@ const BuyNow = ({ product }: BuyNowProps) => {
     isInsideDhaka: true,
   });
 
-  // Updated delivery fee structure (Inside Dhaka: ৳90, Outside Dhaka: ৳130)
+  // Delivery charge
   const shippingFee = form.isInsideDhaka ? 90 : 130;
 
-  // Determine effective unit price (uses specialPrice if valid, falls back to regular price)
+  // Effective unit price
   const unitPrice =
     product.specialPrice && product.specialPrice > 0
       ? product.specialPrice
@@ -65,6 +67,34 @@ const BuyNow = ({ product }: BuyNowProps) => {
   }, [unitPrice, quantity]);
 
   const totalPrice = subtotal + shippingFee;
+
+  const beginCheckoutTracked = useRef(false);
+
+  useEffect(() => {
+    if (!product || beginCheckoutTracked.current) return;
+
+    beginCheckoutTracked.current = true;
+
+    trackBeginCheckout({
+      value: totalPrice,
+      items: [
+        {
+          item_id: product.id,
+          item_name: product.name,
+          price: Number(unitPrice),
+          quantity,
+
+          item_brand: product.brand || '',
+          item_category: product.category?.name || '',
+          item_variant: selectedColor
+            ? `${selectedSize || ''} ${selectedColor}`.trim()
+            : selectedSize || '',
+          item_size: selectedSize || '',
+          item_color: selectedColor || '',
+        },
+      ],
+    });
+  }, [product]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -139,26 +169,6 @@ const BuyNow = ({ product }: BuyNowProps) => {
     return true;
   };
 
-  //  BEGIN CHECKOUT - SINGLE PRODUCT
-  trackBeginCheckout({
-    value: totalPrice,
-    items: [
-      {
-        item_id: product.id,
-        item_name: product.name,
-        price: Number(unitPrice),
-        quantity,
-
-        item_brand: product.brand || '',
-        item_category: product.category?.name || '',
-        item_variant: selectedColor
-          ? `${selectedSize || ''} ${selectedColor}`.trim()
-          : selectedSize || '',
-        item_size: selectedSize || '',
-        item_color: selectedColor || '',
-      },
-    ],
-  });
   const handleOrder = async () => {
     if (!validateForm()) return;
 

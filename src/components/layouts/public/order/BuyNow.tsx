@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import {
   Minus,
@@ -68,12 +68,8 @@ const BuyNow = ({ product }: BuyNowProps) => {
 
   const totalPrice = subtotal + shippingFee;
 
-  const beginCheckoutTracked = useRef(false);
-
   useEffect(() => {
-    if (!product || beginCheckoutTracked.current) return;
-
-    beginCheckoutTracked.current = true;
+    if (!product) return;
 
     trackBeginCheckout({
       value: totalPrice,
@@ -94,7 +90,7 @@ const BuyNow = ({ product }: BuyNowProps) => {
         },
       ],
     });
-  }, [product]);
+  }, [product, totalPrice, unitPrice, quantity, selectedColor, selectedSize]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

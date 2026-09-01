@@ -23,6 +23,25 @@ declare global {
 }
 
 /**
+ * Track recently pushed event IDs to prevent duplicates from React Strict Mode
+ * Key: eventId, Value: timestamp
+ */
+const recentlyPushedEvents = new Map<string, number>();
+const DEDUP_WINDOW_MS = 100; // Time window to consider events as duplicates
+
+/**
+ * Clean up old entries from recentlyPushedEvents
+ */
+const cleanupOldEvents = () => {
+  const now = Date.now();
+  for (const [eventId, timestamp] of recentlyPushedEvents.entries()) {
+    if (now - timestamp > DEDUP_WINDOW_MS) {
+      recentlyPushedEvents.delete(eventId);
+    }
+  }
+};
+
+/**
  * Generate unique event ID
  */
 const generateEventId = (eventName: string) => {
@@ -33,6 +52,7 @@ const generateEventId = (eventName: string) => {
 
 /**
  * Push event to Google Tag Manager dataLayer
+ * Automatically deduplicates events fired multiple times in React Strict Mode
  */
 export const pushEvent = (
   event: string,
@@ -40,6 +60,18 @@ export const pushEvent = (
   eventId?: string,
 ) => {
   if (typeof window === 'undefined') return;
+
+  // Clean up old entries periodically
+  cleanupOldEvents();
+
+  // Prevent duplicate events within the deduplication window
+  if (eventId) {
+    if (recentlyPushedEvents.has(eventId)) {
+      console.debug(`[Analytics] Skipped duplicate event: ${eventId}`);
+      return;
+    }
+    recentlyPushedEvents.set(eventId, Date.now());
+  }
 
   window.dataLayer = window.dataLayer || [];
 

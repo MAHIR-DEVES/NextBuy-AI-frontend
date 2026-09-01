@@ -28,14 +28,19 @@ interface OrderItem {
   price: number;
   quantity: number;
   category: string;
+  size?: string;
+  color?: string;
   product: {
     thumbnail: string;
     category?: string;
+    brand?: string;
+    variant?: string;
   };
 }
 
 interface Order {
   id: string;
+  userId?: string;
   total: number;
   status: string;
   name: string;
@@ -141,10 +146,31 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
           productId: item.productId,
           name: item.name,
           price: Number(item.price),
-          quantity: item.quantity,
-          category: item.product.category,
+          quantity: Number(item.quantity),
+
+          // Product information
+          category:
+            typeof item.product.category === 'string'
+              ? item.product.category
+              : '',
+
+          brand: item.product.brand || '',
+
+          // Selected variant information
+          variant: `${item.size || ''} ${item.color || ''}`.trim(),
+
+          size: item.size || '',
+          color: item.color || '',
         }))}
+        customer={{
+          // if Guest order not need to send external_id
+          // events.ts won create external_id if not provided
+          first_name: order.name,
+          phone: order.phone,
+          address: order.address,
+        }}
       />
+
       {/* PAGE WIDTH INCREASED TO 5XL */}
       <div className="mx-auto max-w-2xl px-4 sm:px-6">
         {/* SUCCESS HEADER (INCREASED TEXT SIZES) */}

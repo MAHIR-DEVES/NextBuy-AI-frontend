@@ -8,9 +8,10 @@ import { IProduct } from '@/types/products.type';
 
 interface ProductCard1Props {
   product: IProduct;
+  isFeatured?: boolean;
 }
 
-const ProductCard1 = ({ product }: ProductCard1Props) => {
+const ProductCard1 = ({ product, isFeatured }: ProductCard1Props) => {
   const salePrice = product.specialPrice ?? product.price;
   const hasDiscount =
     (product.discount && product.discount > 0) ||
@@ -49,7 +50,7 @@ const ProductCard1 = ({ product }: ProductCard1Props) => {
           </AspectRatio>
 
           {/* FEATURED BADGE */}
-          {product.isFeatured && (
+          {isFeatured && (
             <Badge className="absolute top-2.5 left-2.5 bg-emerald-600/90 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-0.5 rounded-full border-0 shadow-xs">
               Featured
             </Badge>
@@ -77,6 +78,10 @@ const ProductCard1 = ({ product }: ProductCard1Props) => {
             <h3 className="font-semibold text-gray-800 dark:text-gray-100 text-xs sm:text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
               {product.name}
             </h3>
+            {/*  description*/}
+            <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-1">
+              {product.description}
+            </p>
           </div>
 
           <div className="space-y-1.5 pt-1">

@@ -2,15 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Search,
-  Star,
-  X,
-  TrendingUp,
-  Clock,
-  Package,
-  ChevronRight,
-} from 'lucide-react';
+import { Search, Star, X, Clock, Package, ChevronRight } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { getProducts } from '@/services/product.service';
 import { IProduct } from '@/types/products.type';
@@ -193,7 +185,7 @@ const SearchBar = () => {
           {!loading && products.length > 0 && (
             <div className="max-h-[380px] overflow-y-auto divide-y divide-gray-50">
               {products.map(product => (
-                <Link key={product.id} href={`/products/${product.id}`}>
+                <Link key={product.id} href={`/products/${product.slug}`}>
                   <div
                     onClick={() => {
                       setProducts([]);

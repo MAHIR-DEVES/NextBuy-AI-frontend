@@ -87,7 +87,7 @@ export default async function ProductDetailsPage({
           MAIN PRODUCT
       ====================================================== */}
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-3 md:p-7">
           {/* =================================================
               LEFT SIDE - IMAGE GALLERY
@@ -167,7 +167,7 @@ export default async function ProductDetailsPage({
                 PRICE
             ================================================== */}
 
-            <div className="bg-gray-50 rounded-lg p-4 mt-5">
+            <div className="bg-gray-50 rounded-sm p-4 mt-5">
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="text-3xl font-bold text-title">
                   ৳{currentPrice.toLocaleString()}
@@ -306,7 +306,7 @@ export default async function ProductDetailsPage({
           PRODUCT DETAILS
       ====================================================== */}
 
-      <div className="mt-8 bg-white rounded-lg border border-gray-100 shadow-sm">
+      <div className="mt-8 bg-white rounded-sm border border-gray-100 shadow-sm">
         <div className="p-5 md:p-7">
           <h2 className="text-xl font-semibold text-gray-800 mb-5">
             Product Details

@@ -100,7 +100,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
               <div className="relative">
                 <Link href="/cart">
                   <ShoppingCart className="h-5 w-5" />
-                  <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white">
+                  <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white">
                     {count}
                   </span>
                 </Link>

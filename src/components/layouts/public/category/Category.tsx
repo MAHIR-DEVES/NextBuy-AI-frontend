@@ -107,10 +107,6 @@ const Category = () => {
                     className="w-16 h-16 object-cover "
                   />
                 </div>
-
-                <p className="text-xs mt-2 text-gray-600 group-hover:text-orange-500 transition">
-                  {cat.name}
-                </p>
               </div>
             ))}
           </div>

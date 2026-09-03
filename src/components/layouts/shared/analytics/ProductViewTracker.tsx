@@ -17,7 +17,8 @@ const ProductViewTracker = ({
   price,
 }: ProductViewTrackerProps) => {
   useEffect(() => {
-    console.log('🔥 ProductViewTracker mounted');
+    if (!productId) return;
+
     trackViewItem({
       productId,
       productName,

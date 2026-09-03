@@ -42,8 +42,8 @@ const PAGE_STATE_EVENTS = new Set([
 ]);
 
 /**
- * Track recently pushed event IDs to prevent duplicates
- * caused by React Strict Mode.
+ * Track recently pushed event IDs
+ * to prevent duplicate events.
  */
 const recentlyPushedEvents = new Map<string, number>();
 
@@ -51,39 +51,29 @@ const DEDUP_WINDOW_MS = 100;
 
 /**
  * Storage key for guest users.
- *
- * Logged-in users use their database user.id.
- * Guest users use a persistent UUID stored in localStorage.
  */
 const ANALYTICS_EXTERNAL_ID_KEY = 'analytics_external_id';
 
 /**
- * Get external_id for both logged-in and guest users.
+ * Get external_id for logged-in and guest users.
  *
  * Logged-in:
- *   external_id = user.id
+ *   external_id = database user.id
  *
  * Guest:
- *   external_id = persistent UUID from localStorage
+ *   external_id = persistent UUID
  */
 const getAnalyticsExternalId = (): string => {
   if (typeof window === 'undefined') {
     return '';
   }
 
-  /**
-   * First try to get logged-in user.
-   */
   const user = getUser();
 
   if (user?.id) {
     return user.id;
   }
 
-  /**
-   * If user is not logged in,
-   * create/reuse a persistent guest ID.
-   */
   let externalId = localStorage.getItem(ANALYTICS_EXTERNAL_ID_KEY);
 
   if (!externalId) {
@@ -97,9 +87,6 @@ const getAnalyticsExternalId = (): string => {
 
 /**
  * Get current logged-in customer information.
- *
- * This is optional and only used when customer information
- * is required inside the analytics event.
  */
 const getAnalyticsCustomer = (): AnalyticsCustomer | undefined => {
   if (typeof window === 'undefined') {
@@ -122,7 +109,7 @@ const getAnalyticsCustomer = (): AnalyticsCustomer | undefined => {
 };
 
 /**
- * Clean up old event IDs.
+ * Clean old event IDs.
  */
 const cleanupOldEvents = () => {
   const now = Date.now();
@@ -135,18 +122,20 @@ const cleanupOldEvents = () => {
 };
 
 /**
- * Remove only custom analytics state events.
+ * Clear only our custom analytics events.
  *
  * IMPORTANT:
- * GTM lifecycle events such as:
- *   gtm.js
- *   gtm.dom
- *   gtm.load
- *
- * are NOT removed.
+ * Do NOT remove GTM lifecycle events:
+ * - gtm.js
+ * - gtm.dom
+ * - gtm.load
+ * - gtm.historyChange
+ * - gtm.historyChange-v2
  */
 const clearStaleAnalyticsState = () => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {
+    return;
+  }
 
   window.dataLayer = window.dataLayer || [];
 
@@ -173,20 +162,19 @@ const generateEventId = (eventName: string) => {
 /**
  * Push event to Google Tag Manager dataLayer.
  *
- * external_id is automatically added here.
- *
- * Logged-in user:
- *   external_id = database user.id
- *
- * Guest user:
- *   external_id = persistent anonymous UUID
+ * - Prevent duplicate events
+ * - Add external_id automatically
+ * - Add event_id when available
+ * - Clear previous ecommerce object before ecommerce events
  */
 export const pushEvent = (
   event: string,
   data: AnalyticsEventData = {},
   eventId?: string,
 ) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {
+    return;
+  }
 
   cleanupOldEvents();
 
@@ -203,20 +191,28 @@ export const pushEvent = (
     recentlyPushedEvents.set(eventId, Date.now());
   }
 
+  /**
+   * Initialize dataLayer.
+   */
   window.dataLayer = window.dataLayer || [];
 
   /**
-   * Clear only our custom state events.
-   *
-   * GTM's:
-   * gtm.js
-   * gtm.dom
-   * gtm.load
-   *
-   * remain untouched.
+   * Clear stale custom page-state events.
    */
   if (PAGE_STATE_EVENTS.has(event)) {
     clearStaleAnalyticsState();
+  }
+
+  /**
+   * Clear previous ecommerce object.
+   *
+   * This prevents previous ecommerce data from
+   * being retained when the next ecommerce event fires.
+   */
+  if ('ecommerce' in data) {
+    window.dataLayer.push({
+      ecommerce: null,
+    });
   }
 
   /**
@@ -225,9 +221,7 @@ export const pushEvent = (
   const externalId = getAnalyticsExternalId();
 
   /**
-   * Build final dataLayer event.
-   *
-   * external_id is available at top level.
+   * Build final event.
    */
   const currentEvent = {
     event,
@@ -243,6 +237,10 @@ export const pushEvent = (
     ...data,
   };
 
+  /**
+   * IMPORTANT:
+   * Always use dataLayer.push().
+   */
   window.dataLayer.push(currentEvent);
 
   console.debug('[Analytics] Event pushed:', currentEvent);
@@ -270,12 +268,6 @@ export const trackPageView = ({
  * ============================
  * VIEW ITEM
  * ============================
- *
- * GTM:
- * view_item
- *
- * Meta:
- * ViewContent
  */
 export const trackViewItem = ({
   productId,
@@ -286,6 +278,10 @@ export const trackViewItem = ({
   productName: string;
   price: number;
 }) => {
+  if (!productId) {
+    return;
+  }
+
   const eventId = generateEventId('view_item');
 
   pushEvent(
@@ -294,6 +290,7 @@ export const trackViewItem = ({
       ecommerce: {
         currency: 'BDT',
         value: price,
+
         items: [
           {
             item_id: productId,
@@ -312,12 +309,6 @@ export const trackViewItem = ({
  * ============================
  * ADD TO CART
  * ============================
- *
- * GTM:
- * add_to_cart
- *
- * Meta:
- * AddToCart
  */
 export const trackAddToCart = ({
   productId,
@@ -340,6 +331,10 @@ export const trackAddToCart = ({
   size?: string;
   color?: string;
 }) => {
+  if (!productId) {
+    return;
+  }
+
   const eventId = generateEventId('add_to_cart');
 
   const value = price * quantity;
@@ -347,7 +342,7 @@ export const trackAddToCart = ({
   const externalId = getAnalyticsExternalId();
   const customer = getAnalyticsCustomer();
 
-  const item = {
+  const item: AnalyticsItem = {
     item_name: productName,
     item_id: productId,
     price,
@@ -379,7 +374,6 @@ export const trackAddToCart = ({
       meta_pixel: {
         event_name: 'AddToCart',
         event_id: eventId,
-
         external_id: externalId,
 
         content_ids: [productId],
@@ -406,12 +400,6 @@ export const trackAddToCart = ({
  * ============================
  * VIEW CART
  * ============================
- *
- * GTM:
- * view_cart
- *
- * Meta:
- * ViewCart
  */
 export const trackViewCart = ({
   value,
@@ -447,12 +435,6 @@ export const trackViewCart = ({
  * ============================
  * BEGIN CHECKOUT
  * ============================
- *
- * GTM:
- * begin_checkout
- *
- * Meta:
- * InitiateCheckout
  */
 export const trackBeginCheckout = ({
   value,
@@ -488,14 +470,7 @@ export const trackBeginCheckout = ({
  * ============================
  * PURCHASE
  * ============================
- *
- * GTM:
- * purchase
- *
- * Meta:
- * Purchase
  */
-
 export const trackPurchase = ({
   transactionId,
   value,
@@ -511,6 +486,10 @@ export const trackPurchase = ({
   items: AnalyticsItem[];
   customer?: AnalyticsCustomer;
 }) => {
+  if (!transactionId) {
+    return;
+  }
+
   const eventId = `purchase_${transactionId}`;
 
   const externalId = getAnalyticsExternalId();
@@ -527,7 +506,9 @@ export const trackPurchase = ({
         items,
       },
 
-      // Customer information
+      /**
+       * Customer information
+       */
       ...(customer
         ? {
             customer: {
@@ -544,11 +525,13 @@ export const trackPurchase = ({
             },
           }),
 
+      /**
+       * Meta Pixel
+       */
       meta_pixel: {
         event_name: 'Purchase',
         event_id: eventId,
 
-        // Logged-in user ID অথবা guest UUID
         external_id: externalId,
 
         content_type: 'product',

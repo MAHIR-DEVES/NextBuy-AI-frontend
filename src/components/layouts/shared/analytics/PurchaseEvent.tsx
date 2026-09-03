@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
-
+import { useEffect, useRef } from 'react';
 import { trackPurchase } from './events';
 
 interface PurchaseEventProps {
@@ -38,8 +37,15 @@ const PurchaseEvent = ({
   items,
   customer,
 }: PurchaseEventProps) => {
+  const hasTracked = useRef(false);
+
   useEffect(() => {
     if (!transactionId || !items?.length) return;
+
+    // Prevent duplicate purchase event
+    if (hasTracked.current) return;
+
+    hasTracked.current = true;
 
     trackPurchase({
       transactionId,
@@ -53,11 +59,15 @@ const PurchaseEvent = ({
         price: Number(item.price),
         quantity: Number(item.quantity),
 
-        item_category: item.category || '',
-        item_brand: item.brand || '',
-        item_variant: item.variant || '',
-        item_size: item.size || '',
-        item_color: item.color || '',
+        ...(item.category ? { item_category: item.category } : {}),
+
+        ...(item.brand ? { item_brand: item.brand } : {}),
+
+        ...(item.variant ? { item_variant: item.variant } : {}),
+
+        ...(item.size ? { item_size: item.size } : {}),
+
+        ...(item.color ? { item_color: item.color } : {}),
       })),
 
       customer,

@@ -281,69 +281,25 @@ export const trackViewItem = ({
   productId,
   productName,
   price,
-  category = '',
-  brand = '',
 }: {
   productId: string;
   productName: string;
   price: number;
-  category?: string;
-  brand?: string;
 }) => {
   const eventId = generateEventId('view_item');
-
-  const externalId = getAnalyticsExternalId();
-  const customer = getAnalyticsCustomer();
-
-  const item = {
-    item_name: productName,
-    item_id: productId,
-    price,
-    item_brand: brand,
-    item_category: category,
-
-    currency: 'BDT',
-    quantity: 1,
-  };
 
   pushEvent(
     'view_item',
     {
-      /**
-       * external_id is already added automatically
-       * by pushEvent().
-       */
-
       ecommerce: {
         currency: 'BDT',
         value: price,
-        items: [item],
-      },
-
-      ...(customer
-        ? {
-            customer,
-          }
-        : {}),
-
-      meta_pixel: {
-        event_name: 'ViewContent',
-        event_id: eventId,
-
-        external_id: externalId,
-
-        content_ids: [productId],
-        content_name: productName,
-        content_type: 'product',
-
-        currency: 'BDT',
-        value: price,
-
-        contents: [
+        items: [
           {
-            id: productId,
+            item_id: productId,
+            item_name: productName,
+            price,
             quantity: 1,
-            item_price: price,
           },
         ],
       },

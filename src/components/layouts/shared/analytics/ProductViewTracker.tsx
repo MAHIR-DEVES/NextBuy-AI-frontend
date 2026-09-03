@@ -15,8 +15,6 @@ const ProductViewTracker = ({
   productId,
   productName,
   price,
-  category,
-  brand,
 }: ProductViewTrackerProps) => {
   useEffect(() => {
     console.log('🔥 ProductViewTracker mounted');
@@ -24,10 +22,8 @@ const ProductViewTracker = ({
       productId,
       productName,
       price,
-      category,
-      brand,
     });
-  }, [productId, productName, price, category, brand]);
+  }, [productId, productName, price]);
 
   return null;
 };

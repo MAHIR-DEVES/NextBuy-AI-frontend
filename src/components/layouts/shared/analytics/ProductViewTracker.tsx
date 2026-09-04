@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { trackViewItem } from './events';
 
 interface ProductViewTrackerProps {
@@ -16,13 +16,20 @@ const ProductViewTracker = ({
   productName,
   price,
 }: ProductViewTrackerProps) => {
+  const hasTracked = useRef(false);
+
   useEffect(() => {
     if (!productId) return;
+
+    // Prevent duplicate firing for the same component instance
+    if (hasTracked.current) return;
+
+    hasTracked.current = true;
 
     trackViewItem({
       productId,
       productName,
-      price,
+      price: Number(price),
     });
   }, [productId, productName, price]);
 

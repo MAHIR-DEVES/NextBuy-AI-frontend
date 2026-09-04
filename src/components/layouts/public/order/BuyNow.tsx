@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import {
   Minus,
@@ -30,6 +30,7 @@ interface BuyNowProps {
 const BuyNow = ({ product }: BuyNowProps) => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const hasTrackedCheckout = useRef(false);
 
   const selectedSize = useOrderStore(state => state.selectedSize);
   const selectedColor = useProductStore(state => state.selectedColor);
@@ -70,6 +71,11 @@ const BuyNow = ({ product }: BuyNowProps) => {
 
   useEffect(() => {
     if (!product) return;
+
+    // Prevent duplicate begin_checkout
+    if (hasTrackedCheckout.current) return;
+
+    hasTrackedCheckout.current = true;
 
     trackBeginCheckout({
       value: totalPrice,

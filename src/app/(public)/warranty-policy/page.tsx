@@ -156,18 +156,18 @@ export default function WarrantyPolicyPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 pt-1 text-sm">
               <a
-                href="mailto:support@Sera Place.com"
+                href="mailto:seraplace@gmail.com"
                 className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium"
               >
                 <Mail className="w-4 h-4 text-primary" />
-                support@Sera Place.com
+                seraplace@gmail.com
               </a>
               <a
-                href="tel:01629810013"
+                href="tel:01310520842"
                 className="inline-flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium"
               >
                 <Phone className="w-4 h-4 text-primary" />
-                01629810013
+                01310520842
               </a>
             </div>
           </div>

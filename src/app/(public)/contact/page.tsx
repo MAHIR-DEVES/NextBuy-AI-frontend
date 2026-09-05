@@ -30,10 +30,10 @@ export default function ContactPage() {
               <span>Direct Call</span>
             </div>
             <a
-              href="tel:01629810013"
+              href="tel:01310520842"
               className="text-2xl md:text-3xl font-extrabold text-foreground hover:text-primary transition-colors block"
             >
-              01629810013
+              01310520842
             </a>
             <p className="text-sm text-muted-foreground">
               Available 9:00 AM – 10:00 PM for instant assistance.
@@ -47,10 +47,10 @@ export default function ContactPage() {
               <span>Email Support</span>
             </div>
             <a
-              href="mailto:support@Sera Place.com"
+              href="mailto:seraplace@gmail.com"
               className="text-2xl md:text-3xl font-extrabold text-foreground hover:text-primary transition-colors block break-all"
             >
-              support@Sera Place.com
+              seraplace@gmail.com
             </a>
             <p className="text-sm text-muted-foreground">
               Send us your inquiries anytime. We reply promptly.

@@ -11,7 +11,7 @@ const FloatingIcon = () => {
 
   const handleWhatsAppClick = () => {
     // Replace with your WhatsApp number
-    const phoneNumber = '1234567890';
+    const phoneNumber = '+8801310520842';
     const message = 'Hello! I need help with my order.';
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,

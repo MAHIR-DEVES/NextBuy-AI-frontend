@@ -162,10 +162,10 @@ export default function AboutPage() {
                     Email Us
                   </div>
                   <a
-                    href="mailto:support@Sera Place.com"
+                    href="mailto:seraplace@gmail.com"
                     className="text-lg font-bold hover:underline"
                   >
-                    support@Sera Place.com
+                    seraplace@gmail.com
                   </a>
                 </div>
               </div>

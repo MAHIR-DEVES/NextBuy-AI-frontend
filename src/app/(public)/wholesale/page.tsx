@@ -106,7 +106,7 @@ export default function WholesalePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 text-left">
               {/* Phone Card */}
               <a
-                href="tel:01629810013"
+                href="tel:01310520842"
                 className="flex items-center gap-4 p-4 rounded-md bg-background/10 backdrop-blur-md border border-primary-foreground/20 hover:bg-background/20 transition-all duration-200"
               >
                 <div className="p-3 rounded-full bg-primary-foreground/10">
@@ -116,13 +116,13 @@ export default function WholesalePage() {
                   <span className="text-xs uppercase tracking-wider text-primary-foreground/80 font-medium block">
                     ফোন করুন
                   </span>
-                  <span className="text-lg font-bold">01629810013</span>
+                  <span className="text-lg font-bold">01310520842</span>
                 </div>
               </a>
 
               {/* Email Card */}
               <a
-                href="mailto:support@Sera Place.com"
+                href="mailto:seraplace@gmail.com"
                 className="flex items-center gap-4 p-4 rounded-md bg-background/10 backdrop-blur-md border border-primary-foreground/20 hover:bg-background/20 transition-all duration-200"
               >
                 <div className="p-3 rounded-full bg-primary-foreground/10">
@@ -133,7 +133,7 @@ export default function WholesalePage() {
                     ইমেইল পাঠান
                   </span>
                   <span className="text-base font-bold break-all">
-                    support@Sera Place.com
+                    seraplace@gmail.com
                   </span>
                 </div>
               </a>

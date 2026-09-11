@@ -5,6 +5,7 @@ import { MessageCircle, Bot } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { RiRobot2Fill } from 'react-icons/ri';
 import AIChatModal from './AIChatModal';
+import { BiSolidMessage } from 'react-icons/bi';
 
 const FloatingIcon = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -40,7 +41,7 @@ const FloatingIcon = () => {
           className="w-14 h-14 rounded-full bg-gradient-primary text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-300 group relative"
           title="Chat with AI Assistant"
         >
-          <RiRobot2Fill size={30} />
+          <BiSolidMessage size={30} />
           <span className="absolute right-full mr-3 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
             AI Assistant
           </span>

@@ -4,7 +4,6 @@ interface OrderSummaryProps {
   totalShipped: number;
   totalDelivered: number;
   totalCancelled: number;
-  totalPartial: number;
 }
 
 const OrderSummary = ({
@@ -13,7 +12,6 @@ const OrderSummary = ({
   totalShipped,
   totalDelivered,
   totalCancelled,
-  totalPartial,
 }: OrderSummaryProps) => {
   const items = [
     { label: 'Total Orders', value: totalOrders },
@@ -21,11 +19,10 @@ const OrderSummary = ({
     { label: 'Shipped', value: totalShipped },
     { label: 'Delivered', value: totalDelivered },
     { label: 'Cancelled', value: totalCancelled },
-    { label: 'Partial', value: totalPartial },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
       {items.map(item => (
         <div key={item.label} className="rounded-md border bg-background p-4">
           <p className="text-sm text-muted-foreground">{item.label}</p>

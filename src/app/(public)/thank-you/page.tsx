@@ -1,17 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  CheckCircle2,
-  MapPin,
-  Phone,
-  Truck,
-  Package,
-  Calendar,
-  Clock,
   ArrowLeft,
+  CalendarDays,
+  CheckCircle2,
+  Clock3,
   FileText,
+  MapPin,
+  Package,
+  Phone,
+  ShieldCheck,
+  Truck,
   User,
 } from 'lucide-react';
+
 import DownloadOrderButton from '@/components/layouts/public/Thankyou/DownloadOrderButton';
 import PurchaseEvent from '@/components/layouts/shared/analytics/PurchaseEvent';
 
@@ -35,6 +37,8 @@ interface OrderItem {
     category?: string;
     brand?: string;
     variant?: string;
+    specialPrice?: number;
+    price: number;
   };
 }
 
@@ -42,6 +46,7 @@ interface Order {
   id: string;
   userId?: string;
   total: number;
+  totalAmount: number;
   status: string;
   name: string;
   phone: string;
@@ -66,11 +71,43 @@ const getSingleOrder = async (orderId: string): Promise<Order | null> => {
     if (!response.ok) return null;
 
     const result = await response.json();
+
     return result.data;
   } catch (error) {
     console.error('Failed to fetch order:', error);
+
     return null;
   }
+};
+
+const EmptyOrderState = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => {
+  return (
+    <main className="flex min-h-[70vh] items-center justify-center bg-slate-50 px-4">
+      <div className="w-full max-w-md text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
+          <Package className="h-7 w-7 text-slate-400" />
+        </div>
+
+        <h2 className="mt-5 text-xl font-bold text-slate-900">{title}</h2>
+
+        <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+
+        <Link
+          href="/"
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:opacity-80"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          হোম পেজে ফিরে যান
+        </Link>
+      </div>
+    </main>
+  );
 };
 
 const ThankYouPage = async ({ searchParams }: PageProps) => {
@@ -78,25 +115,10 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
 
   if (!orderId) {
     return (
-      <div className="flex min-h-[70vh] items-center justify-center px-4 bg-slate-50/50">
-        <div className="max-w-md w-full text-center py-12">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-slate-400 mb-4">
-            <Package className="h-8 w-8" />
-          </div>
-          <h2 className="text-2xl font-bold text-slate-800">
-            অর্ডারের তথ্য পাওয়া যায়নি
-          </h2>
-          <p className="mt-2 text-sm text-slate-500">
-            দুঃখিত, কোনো অর্ডার আইডি প্রদান করা হয়নি।
-          </p>
-          <Link
-            href="/"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-          >
-            <ArrowLeft className="h-4 w-4" /> হোম পেজে ফিরে যান
-          </Link>
-        </div>
-      </div>
+      <EmptyOrderState
+        title="অর্ডারের তথ্য পাওয়া যায়নি"
+        description="দুঃখিত, কোনো অর্ডার আইডি প্রদান করা হয়নি।"
+      />
     );
   }
 
@@ -104,32 +126,14 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
 
   if (!order) {
     return (
-      <div className="flex min-h-[70vh] items-center justify-center px-4 bg-slate-50/50">
-        <div className="max-w-md w-full text-center py-12">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-50 text-amber-500 mb-4">
-            <Package className="h-8 w-8" />
-          </div>
-          <h2 className="text-2xl font-bold text-slate-800">
-            অর্ডার খুঁজে পাওয়া যায়নি
-          </h2>
-          <p className="mt-2 text-sm text-slate-500">
-            আপনার প্রদানকৃত অর্ডার আইডি দিয়ে কোনো রেকর্ড পাওয়া যায়নি।
-          </p>
-          <Link
-            href="/"
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-          >
-            <ArrowLeft className="h-4 w-4" /> হোম পেজে ফিরে যান
-          </Link>
-        </div>
-      </div>
+      <EmptyOrderState
+        title="অর্ডার খুঁজে পাওয়া যায়নি"
+        description="আপনার প্রদানকৃত অর্ডার আইডি দিয়ে কোনো রেকর্ড পাওয়া যায়নি।"
+      />
     );
   }
 
-  const subtotal = order.items.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
+  console.log(order);
 
   const formattedDate = new Date(order.createdAt).toLocaleString('en-BD', {
     dateStyle: 'medium',
@@ -137,7 +141,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
   });
 
   return (
-    <main className="min-h-screen bg-slate-50/70 py-10 md:py-16">
+    <main className="min-h-screen bg-slate-50 py-8 sm:py-12">
       <PurchaseEvent
         transactionId={order.id}
         value={Number(order.total)}
@@ -147,203 +151,250 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
           name: item.name,
           price: Number(item.price),
           quantity: Number(item.quantity),
-
-          // Product information
           category:
             typeof item.product.category === 'string'
               ? item.product.category
               : '',
-
           brand: item.product.brand || '',
-
-          // Selected variant information
           variant: `${item.size || ''} ${item.color || ''}`.trim(),
-
           size: item.size || '',
           color: item.color || '',
         }))}
         customer={{
-          // if Guest order not need to send external_id
-          // events.ts won create external_id if not provided
           first_name: order.name,
           phone: order.phone,
           address: order.address,
         }}
       />
 
-      {/* PAGE WIDTH INCREASED TO 5XL */}
-      <div className="mx-auto max-w-2xl px-4 sm:px-6">
-        {/* SUCCESS HEADER (INCREASED TEXT SIZES) */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-50 text-emerald-600 mb-4">
-            <CheckCircle2 className="h-10 w-10" />
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+        {/* SUCCESS */}
+        <div className="mb-8 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
+            <CheckCircle2 className="h-8 w-8 text-emerald-600" />
           </div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
-            ধন্যবাদ! অর্ডারটি সফল হয়েছে
+
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+            অর্ডার সফলভাবে সম্পন্ন হয়েছে
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-500 max-w-lg mx-auto leading-relaxed">
-            আপনার অর্ডারটি প্রসেসিংয়ে রয়েছে। খুব শীঘ্রই প্রতিনিধি আপনাকে ফোন
-            করবেন।
+
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-500">
+            ধন্যবাদ! আপনার অর্ডারটি আমরা পেয়েছি। খুব শীঘ্রই আমাদের প্রতিনিধি
+            আপনাকে ফোন করে অর্ডারটি নিশ্চিত করবেন।
           </p>
         </div>
 
-        {/* UNIFIED RECEIPT CARD */}
+        {/* MAIN ORDER CARD */}
         <div
           id="order-receipt"
-          className="relative overflow-hidden rounded-3xl bg-white shadow-xl shadow-slate-200/50 border border-slate-100"
+          className="overflow-hidden rounded-sm border border-slate-200 bg-white shadow-sm"
         >
-          {/* ACCENT BAR */}
-          <div className="h-2 w-full bg-gradient-to-r from-primary via-emerald-500 to-primary" />
-
-          <div className="p-6 sm:p-10 md:p-12 space-y-10">
-            {/* INVOICE HEADER & META */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-slate-100">
+          {/* ORDER HEADER */}
+          <div className="border-b border-slate-200 px-5 py-5 sm:px-7">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
-                  অর্ডার ইনভয়েস
-                </span>
-                <h2 className="text-xs sm:text-md font-black text-slate-900 tracking-tight mt-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  Order ID
+                </p>
+
+                <p className="mt-1 break-all text-sm font-bold text-slate-900">
                   #{order.id}
-                </h2>
+                </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 sm:text-right">
-                <span className="inline-flex items-center gap-1.5 font-medium">
-                  <Calendar className="h-4 w-4 text-slate-400" />
+              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarDays className="h-4 w-4" />
                   {formattedDate}
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 font-bold text-amber-700 text-xs">
-                  <Clock className="h-3.5 w-3.5" />
+
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 font-semibold text-amber-700">
+                  <Clock3 className="h-3.5 w-3.5" />
                   {order.status}
                 </span>
               </div>
             </div>
+          </div>
 
-            {/* CUSTOMER & DELIVERY META */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pb-8 border-b border-slate-100 text-sm">
-              {/* CUSTOMER */}
-              <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                  <User className="h-4 w-4 text-slate-400" /> গ্রাহকের তথ্য
-                </span>
-                <p className="font-bold text-slate-900 text-base">
-                  {order.name}
-                </p>
-                <p className="flex items-center gap-2 text-slate-600 font-medium">
-                  <Phone className="h-4 w-4 text-slate-400" />
-                  {order.phone}
-                </p>
+          {/* CUSTOMER / DELIVERY */}
+          <div className="grid border-b border-slate-200 sm:grid-cols-2">
+            {/* CUSTOMER */}
+            <div className="border-b border-slate-200 p-5 sm:border-b-0 sm:border-r sm:p-7">
+              <div className="mb-4 flex items-center gap-2">
+                <User className="h-4 w-4 text-slate-400" />
+
+                <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  গ্রাহকের তথ্য
+                </h2>
               </div>
 
-              {/* ADDRESS */}
-              <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-slate-400" /> ডেলিভারি ঠিকানা
-                </span>
-                <p className="text-slate-800 font-medium leading-relaxed text-base">
-                  {order.address}
-                </p>
-                <p className="text-slate-500 font-medium">
-                  {order.thana}, {order.district}
-                </p>
-                <p className="inline-flex items-center gap-1.5 text-xs font-bold text-primary pt-1">
-                  <Truck className="h-4 w-4" />
-                  {order.isInsideDhaka
-                    ? 'ঢাকার ভেতরে (৳৯০)'
-                    : 'ঢাকার বাইরে (৳১৩০)'}
-                </p>
+              <p className="text-sm font-semibold text-slate-900">
+                {order.name}
+              </p>
+
+              <div className="mt-2 flex items-center gap-2 text-sm text-slate-600">
+                <Phone className="h-4 w-4 text-slate-400" />
+                {order.phone}
               </div>
             </div>
 
-            {/* PRODUCT LIST */}
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 block">
-                পণ্যসমূহ
+            {/* DELIVERY */}
+            <div className="p-5 sm:p-7">
+              <div className="mb-4 flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-slate-400" />
+
+                <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  ডেলিভারি ঠিকানা
+                </h2>
+              </div>
+
+              <p className="text-sm font-medium leading-6 text-slate-800">
+                {order.address}
+              </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                {order.thana}, {order.district}
+              </p>
+
+              <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
+                <Truck className="h-3.5 w-3.5" />
+
+                {order.isInsideDhaka
+                  ? 'ঢাকার ভেতরে • ৳৯০'
+                  : 'ঢাকার বাইরে • ৳১৩০'}
+              </div>
+            </div>
+          </div>
+
+          {/* PRODUCTS */}
+          <div className="px-5 py-6 sm:px-7 sm:py-7">
+            <div className="mb-5 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-slate-900">
+                অর্ডার করা পণ্য
+              </h2>
+
+              <span className="text-xs text-slate-400">
+                {order.items.length} টি পণ্য
               </span>
+            </div>
 
-              <div className="divide-y divide-slate-100">
-                {order.items.map(item => (
-                  <div
-                    key={item.id}
-                    className="py-4 first:pt-0 last:pb-0 flex items-center gap-5"
-                  >
-                    {/* LARGER PRODUCT IMAGE (h-20 w-20) */}
-                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl bg-slate-50 border border-slate-100">
-                      <Image
-                        src={item.product.thumbnail}
-                        alt={item.name}
-                        fill
-                        sizes="80px"
-                        className="object-contain p-1.5"
-                      />
-                    </div>
+            <div className="divide-y divide-slate-100">
+              {order.items.map(item => (
+                <div
+                  key={item.id}
+                  className="flex gap-4 py-4 first:pt-0 last:pb-0"
+                >
+                  {/* IMAGE */}
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-slate-50 sm:h-20 sm:w-20">
+                    <Image
+                      src={item.product.thumbnail}
+                      alt={item.name}
+                      fill
+                      sizes="80px"
+                      className="object-contain p-1"
+                    />
+                  </div>
 
-                    <div className="min-w-0 flex-1 space-y-1">
-                      <h3 className="text-sm sm:text-base font-semibold text-slate-900 line-clamp-1">
-                        {item.name}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-500">
-                        ৳{item.price.toLocaleString()} × {item.quantity}টি
-                      </p>
-                    </div>
+                  {/* INFO */}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="line-clamp-2 text-sm font-semibold leading-5 text-slate-900">
+                      {item.name}
+                    </h3>
 
-                    <div className="text-right shrink-0">
-                      <p className="text-base sm:text-lg font-extrabold text-slate-900">
-                        ৳{(item.price * item.quantity).toLocaleString()}
-                      </p>
+                    <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500">
+                      <span>
+                        ৳
+                        {(
+                          item.product.specialPrice ?? item.product.price
+                        ).toLocaleString()}
+                        × {item.quantity}
+                      </span>
+
+                      {item.size && <span>Size: {item.size}</span>}
+
+                      {item.color && <span>Color: {item.color}</span>}
                     </div>
                   </div>
-                ))}
-              </div>
+
+                  {/* PRICE */}
+                  <div className="shrink-0 text-right">
+                    <p className="text-sm font-bold text-slate-900 sm:text-base">
+                      ৳
+                      {(
+                        item.product.specialPrice ??
+                        item.product.price * item.quantity
+                      ).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
 
-            {/* ORDER NOTE */}
-            {order.note && (
-              <div className="text-sm bg-slate-50/80 rounded-2xl p-5 text-slate-700 space-y-1.5">
-                <span className="font-bold text-slate-900 flex items-center gap-2 text-xs uppercase tracking-wider">
-                  <FileText className="h-4 w-4 text-slate-400" /> নোট:
-                </span>
-                <p className="italic leading-relaxed">{order.note}</p>
-              </div>
-            )}
-
-            {/* SUMMARY BREAKDOWN */}
-            <div className="pt-6 border-t border-slate-100 space-y-3 text-sm">
-              <div className="flex justify-between text-slate-600">
-                <span>পণ্যের সাবটোটাল</span>
-                <span className="font-semibold text-slate-800 text-base">
-                  ৳{subtotal.toLocaleString()}
-                </span>
+          {/* NOTE */}
+          {order.note && (
+            <div className="mx-5 mb-6 border-l-2 border-slate-300 bg-slate-50 px-4 py-3 sm:mx-7">
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
+                <FileText className="h-4 w-4" />
+                অর্ডার নোট
               </div>
 
-              <div className="flex justify-between text-slate-600">
+              <p className="mt-1.5 text-sm leading-6 text-slate-600">
+                {order.note}
+              </p>
+            </div>
+          )}
+
+          {/* SUMMARY */}
+          <div className="border-t border-slate-200 bg-slate-50/70 px-5 py-6 sm:px-7">
+            <div className="ml-auto max-w-sm space-y-3">
+              <div className="flex justify-between text-sm text-slate-500">
+                <span>পণ্যের মূল্য</span>
+
+                <span className="font-medium text-slate-700">
+                  ৳{order.totalAmount}
+                </span>
+              </div>
+
+              <div className="flex justify-between text-sm text-slate-500">
                 <span>ডেলিভারি চার্জ</span>
-                <span className="font-semibold text-slate-800 text-base">
+
+                <span className="font-medium text-slate-700">
                   ৳{order.shippingFee.toLocaleString()}
                 </span>
               </div>
 
-              <div className="pt-4 border-t border-slate-200 flex items-baseline justify-between">
-                <span className="text-base sm:text-lg font-bold text-slate-900">
-                  সর্বমোট
-                </span>
-                <span className="text-2xl sm:text-3xl font-black text-primary">
-                  ৳{order.total.toLocaleString()}
-                </span>
+              <div className="border-t border-slate-200 pt-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold text-slate-900">
+                    সর্বমোট
+                  </span>
+
+                  <span className="text-2xl font-extrabold tracking-tight text-primary">
+                    ৳{order.total.toLocaleString()}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* TRUST */}
+          <div className="flex items-center justify-center gap-2 border-t border-slate-200 px-5 py-4 text-xs text-slate-500">
+            <ShieldCheck className="h-4 w-4 text-emerald-600" />
+            আপনার অর্ডারটি নিরাপদে সংরক্ষিত হয়েছে
+          </div>
         </div>
 
-        {/* BOTTOM ACTIONS */}
-        <div className="mt-8 flex flex-col items-center gap-4 print:hidden">
+        {/* ACTIONS */}
+        <div className="mt-6 flex flex-col items-center gap-4 print:hidden">
           <DownloadOrderButton />
 
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition mt-1"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-900"
           >
-            <ArrowLeft className="h-4 w-4" /> হোম পেজে ফিরে যান
+            <ArrowLeft className="h-4 w-4" />
+            কেনাকাটা চালিয়ে যান
           </Link>
         </div>
       </div>

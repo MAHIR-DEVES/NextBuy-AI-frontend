@@ -77,7 +77,7 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
       {/* Printable Content */}
       <div id="order-details-print">
         {/* Order Information */}
-        <section className="rounded-md border bg-background p-5">
+        <section className="rounded-sm border bg-background p-5">
           <h2 className="mb-4 text-lg font-semibold">Order Information</h2>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -98,7 +98,7 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
         </section>
         {/* Customer Order Summary */}
         {history?.summary && (
-          <section className="mt-6 rounded-md border bg-background p-5">
+          <section className="mt-6 rounded-sm border bg-background p-5">
             <h2 className="mb-4 text-lg font-semibold">
               Customer Order History
             </h2>
@@ -125,7 +125,7 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
         )}
 
         {/* Customer Information */}
-        <section className="mt-6 rounded-md border bg-background p-5">
+        <section className="mt-6 rounded-sm border bg-background p-5">
           <h2 className="mb-4 text-lg font-semibold">Customer Information</h2>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -167,7 +167,7 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
         </section>
 
         {/* Order Items */}
-        <section className="mt-6 rounded-md border bg-background">
+        <section className="mt-6 rounded-sm border bg-background">
           <div className="border-b p-5">
             <h2 className="text-lg font-semibold">Order Items</h2>
           </div>
@@ -193,58 +193,67 @@ const OrderDetailsPage = async ({ params }: OrderDetailsPageProps) => {
               </thead>
 
               <tbody className="divide-y">
-                {order.items?.map((item: OrderItem) => (
-                  <tr key={item.id}>
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        {item.product?.thumbnail && (
-                          <Image
-                            src={item.product.thumbnail}
-                            alt={item.name}
-                            width={48}
-                            height={48}
-                            className="h-12 w-12 rounded-md border object-cover"
-                          />
-                        )}
+                {order.items?.map((item: OrderItem) => {
+                  const productPrice =
+                    item.product?.specialPrice ??
+                    item.product?.price ??
+                    item.price;
 
-                        <div>
-                          <p className="max-w-[300px] font-medium">
-                            {item.name}
-                          </p>
+                  const subtotal = productPrice * item.quantity;
 
-                          <p className="text-xs text-muted-foreground">
-                            {item.product?.brand || '-'}
-                          </p>
+                  return (
+                    <tr key={item.id}>
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-3">
+                          {item.product?.thumbnail && (
+                            <Image
+                              src={item.product.thumbnail}
+                              alt={item.name}
+                              width={48}
+                              height={48}
+                              className="h-12 w-12 rounded-sm border object-cover"
+                            />
+                          )}
+
+                          <div>
+                            <p className="max-w-[300px] font-medium">
+                              {item.name}
+                            </p>
+
+                            <p className="text-xs text-muted-foreground">
+                              {item.product?.brand || '-'}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td className="px-5 py-4">{item.color || '-'}</td>
+                      <td className="px-5 py-4">{item.color || '-'}</td>
 
-                    <td className="px-5 py-4">{item.size || '-'}</td>
+                      <td className="px-5 py-4">{item.size || '-'}</td>
 
-                    <td className="px-5 py-4 text-center">{item.quantity}</td>
+                      <td className="px-5 py-4 text-center">{item.quantity}</td>
 
-                    <td className="px-5 py-4 text-right">
-                      ৳{Number(item.price).toFixed(2)}
-                    </td>
+                      <td className="px-5 py-4 text-right">
+                        ৳{productPrice.toLocaleString()}
+                      </td>
 
-                    <td className="px-5 py-4 text-right font-medium">
-                      ৳{(Number(item.price) * item.quantity).toFixed(2)}
-                    </td>
+                      <td className="px-5 py-4 text-right font-medium">
+                        ৳{subtotal.toLocaleString()}
+                      </td>
 
-                    <td className="px-5 py-4 text-center">
-                      {item.product?.stock ?? '-'}
-                    </td>
-                  </tr>
-                ))}
+                      <td className="px-5 py-4 text-center">
+                        {item.product?.stock ?? '-'}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </section>
 
         {/* Payment & Shipping */}
-        <section className="mt-6 rounded-md border bg-background p-5">
+        <section className="mt-6 rounded-sm border bg-background p-5">
           <h2 className="mb-5 text-lg font-semibold">
             Payment & Shipping Summary
           </h2>
@@ -307,7 +316,9 @@ const SummaryRow = ({
 
 const getSubtotal = (order: Order): number => {
   return order.items.reduce(
-    (total, item) => total + Number(item.price) * item.quantity,
+    (total, item) =>
+      total +
+      Number(item.product?.specialPrice ?? item.product?.price) * item.quantity,
     0,
   );
 };

@@ -4,7 +4,7 @@ import ProductActions from '@/components/layouts/public/cart/ProductActions';
 import { IProduct } from '@/types/products.type';
 import { useProductStore } from '@/store/product.store';
 import { Check, ShieldCheck, Truck } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOrderStore } from '@/store/order.store';
 
 interface Props {
@@ -17,6 +17,17 @@ const ProductPurchaseOptions = ({ product }: Props) => {
   const { setSelectedImage, setSelectedColor, selectedColor } =
     useProductStore();
   const setOrderSelectedSize = useOrderStore(state => state.setSelectedSize);
+  useEffect(() => {
+    const firstColor = product.colorVariants?.[0];
+
+    if (firstColor) {
+      setSelectedColor(firstColor.color);
+      setSelectedImage(firstColor.image);
+    } else {
+      setSelectedColor(null);
+      setSelectedImage(null);
+    }
+  }, [product, setSelectedColor, setSelectedImage]);
 
   const handleColorClick = (image: string | null, color: string) => {
     setSelectedImage(image);

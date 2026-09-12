@@ -50,7 +50,6 @@ const OrdersMain = () => {
     totalShipped: 0,
     totalDelivered: 0,
     totalCancelled: 0,
-    totalPartial: 0,
   });
 
   // FETCH ORDERS

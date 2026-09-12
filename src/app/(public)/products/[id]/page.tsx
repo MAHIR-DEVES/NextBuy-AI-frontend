@@ -65,11 +65,11 @@ export default async function ProductDetailsPage({
           Home
         </Link>
 
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="h-3.5 w-3.5 hidden sm:block" />
 
         <Link
           href={`/products?category=${product.category?.slug}`}
-          className="hover:text-primary"
+          className="hover:text-primary hidden sm:block"
         >
           {product.category?.name}
         </Link>
@@ -304,7 +304,7 @@ export default async function ProductDetailsPage({
           PRODUCT DETAILS
       ====================================================== */}
 
-      <div className="mt-8 bg-white rounded-sm border border-gray-100 shadow-sm">
+      {/* <div className="mt-8 bg-white rounded-sm border border-gray-100 shadow-sm">
         <div className="p-5 md:p-7">
           <h2 className="text-xl font-semibold text-gray-800 mb-5">
             Product Details
@@ -348,7 +348,7 @@ export default async function ProductDetailsPage({
             )}
           </div>
 
-          {/* Highlights */}
+       
 
           {product.highlights?.length > 0 && (
             <div className="mt-6">
@@ -369,7 +369,7 @@ export default async function ProductDetailsPage({
             </div>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* =====================================================
           REVIEWS

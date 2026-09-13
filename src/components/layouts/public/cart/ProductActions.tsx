@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState } from 'react';
-import { Heart, Loader2, Minus, Plus, ShoppingCart } from 'lucide-react';
-import { addToCart } from '@/services/cart.service';
+import { Heart, Loader2, ShoppingCart } from 'lucide-react';
 import { createWishlist } from '@/services/wishlist.service';
 import { useCartStore } from '@/store/cart.store';
 import { IProduct } from '@/types/products.type';
@@ -10,8 +10,6 @@ import { getUser } from '@/utils/auth';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useOrderStore } from '@/store/order.store';
-import { trackAddToCart } from '../../shared/analytics/events';
-import { useProductStore } from '@/store/product.store';
 
 type Props = {
   productId: string;
@@ -19,7 +17,7 @@ type Props = {
 };
 
 const ProductActions = ({ productId, product }: Props) => {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
 
@@ -28,7 +26,11 @@ const ProductActions = ({ productId, product }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const increase = useCartStore(state => state.increase);
+  // Zustand Cart Store
+  const addToCart = useCartStore(state => state.addToCart);
+
+  // Zustand Order Store
+  const setSelectedProduct = useOrderStore(state => state.setSelectedProduct);
 
   // LOGIN CHECK
   const handleRequireLogin = () => {
@@ -40,20 +42,18 @@ const ProductActions = ({ productId, product }: Props) => {
     return true;
   };
 
-  const setSelectedProduct = useOrderStore(state => state.setSelectedProduct);
-  const selectedSize = useOrderStore(state => state.selectedSize);
-  const selectedColor = useProductStore(state => state.selectedColor);
+  // PRICE
+  const currentPrice = product.specialPrice ?? product.price;
 
+  const originalPrice =
+    product.specialPrice != null && product.specialPrice < product.price
+      ? product.price
+      : product.discount && product.discount > 0
+        ? Math.round(product.price / (1 - product.discount / 100))
+        : null;
+
+  // BUY NOW
   const handleBuyNow = () => {
-    // if (product.colorVariants?.length > 0 && !selectedColor) {
-    //   toast.error('দয়া করে একটি কালার নির্বাচন করুন।');
-    //   return;
-    // }
-    if (product.colorVariants?.length > 0 && !selectedSize) {
-      toast.error('দয়া করে একটি সাইজ নির্বাচন করুন।');
-      return;
-    }
-
     setSelectedProduct(product);
 
     router.push('/order-now');
@@ -61,29 +61,15 @@ const ProductActions = ({ productId, product }: Props) => {
 
   // ADD TO CART
   const handleAddToCart = async () => {
-    if (!handleRequireLogin()) return;
     try {
       setLoading(true);
 
-      await addToCart(productId, quantity);
+      // Add product to Zustand cart
+      addToCart(product, quantity);
 
-      trackAddToCart({
-        productId: product.id,
-        productName: product.name,
-        price: Number(product.specialPrice ?? product.price),
-        quantity,
-        category: product.category?.name || '',
-        brand: product.brand || '',
-        variant: selectedSize
-          ? `${selectedSize}${product.colorVariants?.length ? ` ${selectedSize}` : ''}`
-          : '',
-        size: selectedSize || '',
-        color: '',
-      });
-
-      increase(quantity);
       toast.success('Added to cart!');
     } catch (error) {
+      console.error('Add to cart error:', error);
       toast.error('Products Add Failed!');
     } finally {
       setLoading(false);
@@ -102,44 +88,17 @@ const ProductActions = ({ productId, product }: Props) => {
       });
 
       toast.success('Added to wishlist!');
-
-      setWishlistLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      const message = error.response?.data?.error || 'Failed to add wishlist';
-      toast.error(message);
+      const message = error?.response?.data?.error || 'Failed to add wishlist';
 
+      toast.error(message);
+    } finally {
       setWishlistLoading(false);
     }
   };
 
   return (
-    <div className="space-y-4">
-      {/* Quantity */}
-      {/* <div>
-        <span className="text-sm text-gray-600 block mb-2">Quantity</span>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setQuantity(q => Math.max(1, q - 1))}
-            className="w-9 h-9 border rounded-lg flex items-center justify-center hover:bg-gray-100 transition"
-          >
-            <Minus className="h-4 w-4" />
-          </button>
-
-          <span className="w-12 text-center font-semibold text-lg">
-            {quantity}
-          </span>
-
-          <button
-            onClick={() => setQuantity(q => q + 1)}
-            className="w-9 h-9 border rounded-lg flex items-center justify-center hover:bg-gray-100 transition"
-          >
-            <Plus className="h-4 w-4" />
-          </button>
-        </div>
-      </div> */}
-
+    <div className="space-y-2">
       {/* Buttons */}
       <div className="flex gap-2 sm:gap-3">
         {/* Add To Cart */}

@@ -7,6 +7,13 @@ export type GetAllOrdersParams = {
   status?: string;
 };
 
+export interface CheckoutItem {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 export type CheckoutPayload = {
   name: string;
   phone: string;
@@ -16,6 +23,7 @@ export type CheckoutPayload = {
   district: string;
   size?: string;
   isInsideDhaka: boolean;
+  items: CheckoutItem[];
 };
 
 export interface ISingleOrder {

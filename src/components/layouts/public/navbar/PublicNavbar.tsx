@@ -20,8 +20,11 @@ import { IUser } from '@/types/auth';
 const PublicNavbar = ({ className }: { className?: string }) => {
   const [scrolled, setScrolled] = useState(false);
 
-  const fetchCart = useCartStore(state => state.fetchCart);
-  const count = useCartStore(state => state.count);
+  // Get cart items from Zustand
+  const cartItems = useCartStore(state => state.items);
+
+  // Total quantity
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const [user, setUser] = useState<IUser | null>(null);
 
@@ -32,10 +35,6 @@ const PublicNavbar = ({ className }: { className?: string }) => {
       queueMicrotask(() => setUser(currentUser));
     }
   }, []);
-
-  useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,7 +100,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
                 <Link href="/cart">
                   <ShoppingCart className="h-5 w-5" />
                   <span className="absolute -top-4 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white">
-                    {count}
+                    {cartCount}
                   </span>
                 </Link>
               </div>

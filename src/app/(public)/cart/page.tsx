@@ -1,61 +1,28 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { HeartIcon, Loader2, Minus, Plus, Trash2 } from 'lucide-react';
 
-import {
-  deleteCartItem,
-  getCartItems,
-  updateCartItem,
-} from '@/services/cart.service';
 import { useCartStore } from '@/store/cart.store';
 import CheckoutForm from '@/components/layouts/public/cart/CheckoutForm';
-import { CartItem } from '@/types/cart.type';
 import Image from 'next/image';
 
 const CartPage = () => {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [showCheckout, setShowCheckout] = useState(false);
+
+  // Zustand cart store
+  const items = useCartStore(state => state.items);
+  const increase = useCartStore(state => state.increase);
   const decrease = useCartStore(state => state.decrease);
+  const removeFromCart = useCartStore(state => state.removeFromCart);
 
-  // fetch cart
-  const fetchCart = async () => {
+  // Increase quantity
+  const handleIncrease = async (productId: string) => {
     try {
-      setLoading(true);
+      setUpdatingId(productId);
 
-      const res = await getCartItems();
-
-      setItems(res.data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCart();
-  }, []);
-
-  // increase quantity
-  const handleIncrease = async (cartId: string, currentQty: number) => {
-    try {
-      setUpdatingId(cartId);
-
-      await updateCartItem(cartId, currentQty + 1);
-
-      setItems(prev =>
-        prev.map(item =>
-          item.id === cartId
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item,
-        ),
-      );
+      increase(productId);
     } catch (err) {
       console.log(err);
     } finally {
@@ -63,25 +30,14 @@ const CartPage = () => {
     }
   };
 
-  // decrease quantity
-  const handleDecrease = async (cartId: string, currentQty: number) => {
+  // Decrease quantity
+  const handleDecrease = async (productId: string, currentQty: number) => {
     if (currentQty <= 1) return;
 
     try {
-      setUpdatingId(cartId);
+      setUpdatingId(productId);
 
-      await updateCartItem(cartId, currentQty - 1);
-
-      setItems(prev =>
-        prev.map(item =>
-          item.id === cartId
-            ? {
-                ...item,
-                quantity: item.quantity - 1,
-              }
-            : item,
-        ),
-      );
+      decrease(productId);
     } catch (err) {
       console.log(err);
     } finally {
@@ -89,23 +45,12 @@ const CartPage = () => {
     }
   };
 
-  // delete item
-  const handleDelete = async (cartId: string) => {
+  // Delete item
+  const handleDelete = async (productId: string) => {
     try {
-      setUpdatingId(cartId);
+      setUpdatingId(productId);
 
-      // find item before delete
-      const deletedItem = items.find(item => item.id === cartId);
-
-      await deleteCartItem(cartId);
-
-      // remove from ui
-      setItems(prev => prev.filter(item => item.id !== cartId));
-
-      // update zustand count
-      if (deletedItem) {
-        decrease(deletedItem.quantity);
-      }
+      removeFromCart(productId);
     } catch (err) {
       console.log(err);
     } finally {
@@ -113,9 +58,10 @@ const CartPage = () => {
     }
   };
 
-  // subtotal
+  // Subtotal
   const subtotal = items.reduce(
-    (acc, item) => acc + item.product.price * item.quantity,
+    (acc, item) =>
+      acc + (item.product.specialPrice ?? item.product.price) * item.quantity,
     0,
   );
 
@@ -137,60 +83,22 @@ const CartPage = () => {
               </div>
 
               {/* Products */}
-              {loading ? (
-                <>
-                  <div>
-                    {[1, 2].map((_, index) => (
-                      <div key={index} className="p-4 border-b animate-pulse">
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                          {/* LEFT */}
-                          <div className="flex gap-4 flex-1">
-                            {/* Image skeleton */}
-                            <div className="w-28 h-28 bg-gray-200 rounded flex-shrink-0" />
-
-                            {/* Info skeleton */}
-                            <div className="space-y-3 w-full">
-                              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                              <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-                            </div>
-                          </div>
-
-                          {/* Price skeleton */}
-                          <div className="flex items-center gap-3">
-                            <div className="h-6 w-16 bg-gray-200 rounded"></div>
-                            <div className="h-5 w-10 bg-gray-200 rounded"></div>
-                          </div>
-
-                          {/* Actions skeleton */}
-                          <div className="flex items-center gap-4">
-                            <div className="w-6 h-6 bg-gray-200 rounded"></div>
-                            <div className="w-6 h-6 bg-gray-200 rounded"></div>
-                          </div>
-
-                          {/* Quantity skeleton */}
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 bg-gray-200 rounded"></div>
-                            <div className="w-6 h-4 bg-gray-200 rounded"></div>
-                            <div className="w-9 h-9 bg-gray-200 rounded"></div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              ) : items.length === 0 ? (
-                /* EMPTY STATE (only after loading) */
+              {items.length === 0 ? (
+                /* EMPTY STATE */
                 <div className="p-10 text-center">
                   <h2 className="text-2xl font-semibold text-gray-700">
                     Your cart is empty
                   </h2>
                 </div>
               ) : (
-                <>
-                  <div>
-                    {items.map((item, index) => (
+                <div>
+                  {items.map((item, index) => {
+                    const productPrice =
+                      item.product.specialPrice ?? item.product.price;
+
+                    return (
                       <div
-                        key={item.id}
+                        key={item.product.id}
                         className={`p-4 ${
                           index !== items.length - 1 ? 'border-b' : ''
                         }`}
@@ -198,7 +106,6 @@ const CartPage = () => {
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                           {/* LEFT */}
                           <div className="flex gap-3 flex-1 min-w-0">
-                            {/* Image */}
                             {/* Image */}
                             <div className="w-24 h-24 sm:w-28 sm:h-28 border rounded-lg overflow-hidden shrink-0">
                               <Image
@@ -227,30 +134,27 @@ const CartPage = () => {
                                 {/* Price */}
                                 <div className="flex items-center gap-2">
                                   <span className="text-title text-lg sm:text-xl font-semibold">
-                                    ${item.product.price}
+                                    ${productPrice}
                                   </span>
-
-                                  {item.product.discount > 0 && (
-                                    <span className="bg-button-hover-1 text-subtitle text-[10px] sm:text-xs px-2 py-1 rounded hidden md:block">
-                                      -{item.product.discount}%
-                                    </span>
-                                  )}
                                 </div>
 
                                 {/* Quantity */}
                                 <div className="flex items-center gap-2">
                                   <button
-                                    disabled={updatingId === item.id}
+                                    disabled={updatingId === item.product.id}
                                     onClick={() =>
-                                      handleDecrease(item.id, item.quantity)
+                                      handleDecrease(
+                                        item.product.id,
+                                        item.quantity,
+                                      )
                                     }
                                     className="w-8 h-8 border rounded-md flex items-center justify-center hover:bg-gray-100 transition"
                                   >
                                     <Minus size={14} />
                                   </button>
 
-                                  <span className="font-medium min-w-[20px] text-center">
-                                    {updatingId === item.id ? (
+                                  <span className="font-medium min-w-[20px] text-center flex justify-center">
+                                    {updatingId === item.product.id ? (
                                       <Loader2 className="w-4 h-4 animate-spin" />
                                     ) : (
                                       item.quantity
@@ -258,9 +162,9 @@ const CartPage = () => {
                                   </span>
 
                                   <button
-                                    disabled={updatingId === item.id}
+                                    disabled={updatingId === item.product.id}
                                     onClick={() =>
-                                      handleIncrease(item.id, item.quantity)
+                                      handleIncrease(item.product.id)
                                     }
                                     className="w-8 h-8 border rounded-md flex items-center justify-center hover:bg-gray-100 transition"
                                   >
@@ -275,8 +179,11 @@ const CartPage = () => {
                                   </button>
 
                                   <button
-                                    onClick={() => handleDelete(item.id)}
-                                    className="text-gray-400 hover:text-red-500 transition"
+                                    onClick={() =>
+                                      handleDelete(item.product.id)
+                                    }
+                                    disabled={updatingId === item.product.id}
+                                    className="text-gray-400 hover:text-red-500 transition disabled:opacity-50"
                                   >
                                     <Trash2 size={18} />
                                   </button>
@@ -286,9 +193,9 @@ const CartPage = () => {
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </>
+                    );
+                  })}
+                </div>
               )}
             </div>
           </div>
@@ -297,9 +204,10 @@ const CartPage = () => {
         {/* CHECKOUT FORM */}
         {showCheckout && (
           <div className="lg:col-span-2">
-            <CheckoutForm items={items} subtotal={subtotal} />
+            <CheckoutForm subtotal={subtotal} items={items} />
           </div>
         )}
+
         {/* RIGHT SIDE */}
         <div className="bg-white border rounded-xs p-5 h-fit sticky top-24">
           <h2 className="text-2xl font-semibold mb-6">Order Summary</h2>
@@ -338,19 +246,16 @@ const CartPage = () => {
 
               <span className="text-title">$ {subtotal}</span>
             </div>
-            {showCheckout ? (
-              ''
-            ) : (
-              <>
-                {' '}
-                {/* button */}
-                <button
-                  onClick={() => setShowCheckout(true)}
-                  className="w-full bg-button hover:bg-button-hover transition text-white py-3 rounded-md font-medium cursor-pointer"
-                >
-                  PROCEED TO CHECKOUT ({items.length})
-                </button>
-              </>
+
+            {/* button */}
+            {!showCheckout && (
+              <button
+                onClick={() => setShowCheckout(true)}
+                disabled={items.length === 0}
+                className="w-full bg-button hover:bg-button-hover transition text-white py-3 rounded-md font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                PROCEED TO CHECKOUT ({items.length})
+              </button>
             )}
           </div>
         </div>

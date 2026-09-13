@@ -1,11 +1,10 @@
 'use client';
 
 import { createOrder } from '@/services/orders.service';
-import { useCartStore } from '@/store/cart.store';
+import { CartItem, useCartStore } from '@/store/cart.store';
+
 import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { trackBeginCheckout } from '../../shared/analytics/events';
-import { CartItem } from '@/types/cart.type';
 
 type CheckoutFormProps = {
   subtotal: number;
@@ -23,7 +22,7 @@ const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
   const [address, setAddress] = useState('');
   const [note, setNote] = useState('');
 
-  const { reset, fetchCart } = useCartStore.getState();
+  const { clearCart } = useCartStore.getState();
 
   // shipping fee match in Backend
   const shippingFee = insideDhaka ? 90 : 130;
@@ -37,31 +36,22 @@ const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
   const handleOrder = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!items || items.length === 0) {
+      toast.error('Your cart is empty!');
+      return;
+    }
+
     try {
       setLoading(true);
 
-      // ==============================
-      // BEGIN CHECKOUT EVENT
-      // ==============================
+      const orderItems = items.map(item => ({
+        productId: item.product.id,
+        name: item.product.name,
+        price: Number(item.product.specialPrice ?? item.product.price),
+        quantity: item.quantity,
+      }));
 
-      trackBeginCheckout({
-        value: total,
-        items: items.map((item, index) => ({
-          item_id: item.product.id,
-          item_name: item.product.name,
-          price: Number(item.product.specialPrice ?? item.product.price),
-          discount: Number(item.product.discount ?? 0),
-          index,
-          item_brand: item.product.brand || '',
-          item_category: item.product.category?.name || '',
-          item_variant: '',
-          item_size: '',
-          item_color: '',
-          quantity: item.quantity,
-        })),
-      });
-
-      await createOrder({
+      const res = await createOrder({
         name,
         phone,
         district,
@@ -69,15 +59,16 @@ const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
         address,
         note: note || undefined,
         isInsideDhaka: insideDhaka,
+        items: orderItems,
       });
 
-      toast.success('Order placed successfully!');
+      console.log(res);
+      if (res.success) {
+        toast.success('Order placed successfully!');
+      }
 
-      // Clear cart state
-      reset();
-
-      // Refresh cart
-      await fetchCart();
+      // Clear Zustand cart
+      clearCart();
 
       // Reset form
       setName('');
@@ -89,8 +80,6 @@ const CheckoutForm = ({ subtotal, items }: CheckoutFormProps) => {
       setInsideDhaka(true);
     } catch (error) {
       console.error('Order failed:', error);
-
-      toast.error('Order failed! Please try again.');
     } finally {
       setLoading(false);
     }

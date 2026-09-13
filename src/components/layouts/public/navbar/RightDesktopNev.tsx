@@ -18,13 +18,11 @@ const RightDesktopNev = () => {
     }
   }, []);
 
-  const fetchCart = useCartStore(state => state.fetchCart);
-  const count = useCartStore(state => state.count);
+  // Get cart items from Zustand
+  const cartItems = useCartStore(state => state.items);
 
-  useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
-
+  // Total quantity
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   return (
     <div className="flex items-center gap-5 ml-4 hidden md:flex">
       {user ? (
@@ -45,9 +43,9 @@ const RightDesktopNev = () => {
         <Link href="/cart" className="block">
           <ShoppingCart className="h-6 w-6 transition-colors hover:text-hover-text" />
 
-          {count > 0 && (
+          {cartCount > 0 && (
             <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
-              {count}
+              {cartCount}
             </span>
           )}
         </Link>

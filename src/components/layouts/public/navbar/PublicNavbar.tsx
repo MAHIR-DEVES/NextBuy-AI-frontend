@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { PromoBanner1 } from '@/components/promo-banner1';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
 import { useCartStore } from '@/store/cart.store';
@@ -54,7 +53,7 @@ const PublicNavbar = ({ className }: { className?: string }) => {
           scrolled ? 'max-h-0 opacity-0' : 'max-h-[100px] opacity-100'
         }`}
       >
-        <PromoBanner1 />
+        {/* <PromoBanner1 /> */}
       </div>
 
       <div className="container mx-auto px-3 sm:px-4">

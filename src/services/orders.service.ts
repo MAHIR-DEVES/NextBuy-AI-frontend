@@ -17,29 +17,11 @@ const getAuthHeaders = () => ({
   'Content-Type': 'application/json',
 });
 
-// CREATE ORDER
-
-export const createOrder = async ({
-  name,
-  phone,
-  district,
-  thana,
-  address,
-  note,
-  isInsideDhaka,
-}: CheckoutPayload) => {
-  const payload = {
-    name,
-    phone,
-    district,
-    thana,
-    address,
-    note,
-    isInsideDhaka,
-  };
-
+export const createOrder = async (payload: CheckoutPayload) => {
   const res = await axios.post(`${BASE_URL}/orders/checkout`, payload, {
-    headers: getAuthHeaders(),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   return res.data;
@@ -49,7 +31,9 @@ export const createOrder = async ({
 
 export const singleOrder = async (payload: ISingleOrder) => {
   const res = await axios.post(`${BASE_URL}/orders/buy-now`, payload, {
-    headers: getAuthHeaders(),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   return res.data;

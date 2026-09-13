@@ -5,12 +5,19 @@ import { IProduct } from '@/types/products.type';
 export interface CartItem {
   product: IProduct;
   quantity: number;
+  size?: string | null;
+  color?: string | null;
 }
 
 interface CartStore {
   items: CartItem[];
 
-  addToCart: (product: IProduct, quantity?: number) => void;
+  addToCart: (
+    product: IProduct,
+    quantity?: number,
+    size?: string | null,
+    color?: string | null,
+  ) => void;
   removeFromCart: (productId: string) => void;
   increase: (productId: string) => void;
   decrease: (productId: string) => void;
@@ -25,16 +32,21 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       items: [],
 
-      addToCart: (product, quantity = 1) => {
+      addToCart: (product, quantity = 1, size = null, color = null) => {
         set(state => {
           const existingItem = state.items.find(
-            item => item.product.id === product.id,
+            item =>
+              item.product.id === product.id &&
+              item.size === size &&
+              item.color === color,
           );
 
           if (existingItem) {
             return {
               items: state.items.map(item =>
-                item.product.id === product.id
+                item.product.id === product.id &&
+                item.size === size &&
+                item.color === color
                   ? {
                       ...item,
                       quantity: item.quantity + quantity,
@@ -50,6 +62,8 @@ export const useCartStore = create<CartStore>()(
               {
                 product,
                 quantity,
+                size,
+                color,
               },
             ],
           };

@@ -68,7 +68,6 @@ const BuyNow = ({ product }: BuyNowProps) => {
   }, [unitPrice, quantity]);
 
   const totalPrice = subtotal + shippingFee;
-  console.log(totalPrice);
 
   useEffect(() => {
     if (!product) return;
@@ -202,7 +201,6 @@ const BuyNow = ({ product }: BuyNowProps) => {
 
       // order form backend response
       const orderId = res?.data?.id;
-      console.log(orderId);
 
       if (orderId) {
         router.push(`/thank-you?orderId=${orderId}`);

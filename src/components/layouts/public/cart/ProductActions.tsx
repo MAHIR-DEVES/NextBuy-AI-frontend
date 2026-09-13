@@ -10,6 +10,7 @@ import { getUser } from '@/utils/auth';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useOrderStore } from '@/store/order.store';
+import { useProductStore } from '@/store/product.store';
 
 type Props = {
   productId: string;
@@ -28,6 +29,9 @@ const ProductActions = ({ productId, product }: Props) => {
 
   // Zustand Cart Store
   const addToCart = useCartStore(state => state.addToCart);
+  const selectedColor = useProductStore(state => state.selectedColor);
+  const selectedSize = useOrderStore(state => state.selectedSize);
+  console.log(selectedColor, selectedSize);
 
   // Zustand Order Store
   const setSelectedProduct = useOrderStore(state => state.setSelectedProduct);
@@ -42,18 +46,16 @@ const ProductActions = ({ productId, product }: Props) => {
     return true;
   };
 
-  // PRICE
-  const currentPrice = product.specialPrice ?? product.price;
-
-  const originalPrice =
-    product.specialPrice != null && product.specialPrice < product.price
-      ? product.price
-      : product.discount && product.discount > 0
-        ? Math.round(product.price / (1 - product.discount / 100))
-        : null;
-
   // BUY NOW
   const handleBuyNow = () => {
+    // if (product.colorVariants?.length > 0 && !selectedColor) {
+    //   toast.error('দয়া করে একটি কালার নির্বাচন করুন।');
+    //   return;
+    // }
+    if (product.colorVariants?.length > 0 && !selectedSize) {
+      toast.error('দয়া করে একটি সাইজ নির্বাচন করুন।');
+      return;
+    }
     setSelectedProduct(product);
 
     router.push('/order-now');
@@ -62,10 +64,17 @@ const ProductActions = ({ productId, product }: Props) => {
   // ADD TO CART
   const handleAddToCart = async () => {
     try {
+      // if (product.colorVariants?.length > 0 && !selectedColor) {
+      //   toast.error('দয়া করে একটি কালার নির্বাচন করুন।');
+      //   return;
+      // }
+      if (product.colorVariants?.length > 0 && !selectedSize) {
+        toast.error('দয়া করে একটি সাইজ নির্বাচন করুন।');
+        return;
+      }
       setLoading(true);
 
-      // Add product to Zustand cart
-      addToCart(product, quantity);
+      addToCart(product, quantity, selectedSize || null, selectedColor || null);
 
       toast.success('Added to cart!');
     } catch (error) {

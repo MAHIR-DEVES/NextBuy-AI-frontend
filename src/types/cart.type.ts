@@ -15,6 +15,8 @@ export type CartItem = {
     specialPrice: number;
     brand: string;
     rating: number;
+    color: string;
+    size: string;
   };
 };
 

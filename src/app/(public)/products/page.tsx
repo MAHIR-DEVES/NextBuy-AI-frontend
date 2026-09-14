@@ -40,6 +40,7 @@ export default async function ProductListing({
   const [res, categoryResponse] = await Promise.all([
     getProducts({
       page: Number(sp?.page || 1),
+      limit: 12,
       search: sp?.search,
       categoryId: sp?.categoryId,
       sortBy: sp?.sortBy,
@@ -55,6 +56,11 @@ export default async function ProductListing({
 
   const products = res?.data?.data || [];
   const categories = categoryResponse?.data || [];
+
+  const meta = res?.data?.meta;
+
+  const currentPage = Number(sp?.page || 1);
+  const totalPages = meta?.totalPages || 1;
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -631,6 +637,65 @@ export default async function ProductListing({
               </div>
             ) : (
               <div className="bg-white p-10 text-center">No products found</div>
+            )}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-8">
+                {currentPage > 1 && (
+                  <Link
+                    href={`?${new URLSearchParams({
+                      ...Object.fromEntries(
+                        Object.entries(sp).filter(
+                          ([, value]) => value !== undefined && value !== '',
+                        ),
+                      ),
+                      page: String(currentPage - 1),
+                    })}`}
+                    className="px-4 py-2 border rounded-xs text-sm hover:bg-gray-100"
+                  >
+                    Previous
+                  </Link>
+                )}
+
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1,
+                ).map(page => (
+                  <Link
+                    key={page}
+                    href={`?${new URLSearchParams({
+                      ...Object.fromEntries(
+                        Object.entries(sp).filter(
+                          ([, value]) => value !== undefined && value !== '',
+                        ),
+                      ),
+                      page: String(page),
+                    })}`}
+                    className={`px-4 py-2 border rounded-xs text-sm ${
+                      currentPage === page
+                        ? 'bg-primary text-white'
+                        : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    {page}
+                  </Link>
+                ))}
+
+                {currentPage < totalPages && (
+                  <Link
+                    href={`?${new URLSearchParams({
+                      ...Object.fromEntries(
+                        Object.entries(sp).filter(
+                          ([, value]) => value !== undefined && value !== '',
+                        ),
+                      ),
+                      page: String(currentPage + 1),
+                    })}`}
+                    className="px-4 py-2 border rounded-xs text-sm hover:bg-gray-100"
+                  >
+                    Next
+                  </Link>
+                )}
+              </div>
             )}
           </div>
         </div>

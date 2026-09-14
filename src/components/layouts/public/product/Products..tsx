@@ -4,12 +4,12 @@ import { IProduct } from '@/types/products.type';
 import React from 'react';
 
 const Products = async () => {
-  const response = await getProducts();
+  const response = await getProducts({ limit: 50 });
 
   const products = response?.data?.data || [];
 
   return (
-    <div className="w-full pb-10 bg-white">
+    <div className="w-full  bg-white">
       <div className="container mx-auto md:px-0">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8">
           <div>

@@ -14,7 +14,7 @@ const TopDeal = async () => {
   const isProducts: IProduct[] = data?.data?.data || [];
 
   return (
-    <div className="w-full bg-gradient-to-b from-white to-gray-50 pb-8 sm:pb-10">
+    <div className="w-full  ">
       <div className="container mx-auto sm:px-4 md:px-5 lg:px-0">
         {/* Header Section */}
         <div className="mb-5 flex items-center justify-between gap-3 sm:mb-6 md:mb-8">

@@ -385,3 +385,44 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #d8255d;
 }
+
+@layer utilities {
+  @keyframes orderRing {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    8% {
+      transform: translateX(-7px);
+    }
+
+    16% {
+      transform: translateX(7px);
+    }
+
+    24% {
+      transform: translateX(-7px);
+    }
+
+    32% {
+      transform: translateX(7px);
+    }
+
+    40% {
+      transform: translateX(-5px);
+    }
+
+    48% {
+      transform: translateX(5px);
+    }
+
+    56% {
+      transform: translateX(0);
+    }
+  }
+
+  .order-ring {
+    animation: orderRing 2s ease-in-out infinite;
+  }
+}

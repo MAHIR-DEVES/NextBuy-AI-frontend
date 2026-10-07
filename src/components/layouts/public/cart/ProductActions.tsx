@@ -2,7 +2,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, Loader2, ShoppingCart } from 'lucide-react';
+import {
+  Heart,
+  Loader2,
+  MessageCircle,
+  Phone,
+  ShoppingCart,
+} from 'lucide-react';
 import { createWishlist } from '@/services/wishlist.service';
 import { useCartStore } from '@/store/cart.store';
 import { IProduct } from '@/types/products.type';
@@ -106,9 +112,27 @@ const ProductActions = ({ productId, product }: Props) => {
     }
   };
 
+  const handleWhatsAppOrder = () => {
+    const phone = '8801903354883';
+
+    const message = `আসসালামু আলাইকুম, আমি এই প্রোডাক্টটি অর্ডার করতে চাই।
+
+Product: ${product.name}
+Price: ৳${product.specialPrice || product.price}`;
+
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+      '_blank',
+    );
+  };
+
+  const handleCallOrder = () => {
+    window.location.href = 'tel:+8801310520842';
+  };
+
   return (
     <div className="space-y-2">
-      {/* Buttons */}
+      {/* First Row */}
       <div className="flex gap-2 sm:gap-3">
         {/* Add To Cart */}
         <button
@@ -116,26 +140,27 @@ const ProductActions = ({ productId, product }: Props) => {
           onClick={handleAddToCart}
           disabled={loading || wishlistLoading}
           className="
-            flex-1
-            border-2
-            border-primary-light
-            text-title
-            py-2.5
-            sm:py-3
-            rounded-sm
-            text-xs
-            sm:text-sm
-            font-semibold
-            hover:bg-button-hover-1
-            transition-colors
-            flex
-            items-center
-            justify-center
-            gap-1.5
-            sm:gap-2
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-          "
+        flex-1
+        border-2
+        border-primary-light
+        text-title
+        py-2.5
+        sm:py-3
+        rounded-sm
+        text-xs
+        sm:text-sm
+        font-semibold
+        hover:bg-button-hover-1
+        transition-colors
+        flex
+        items-center
+        justify-center
+        gap-1.5
+        sm:gap-2
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+        cursor-pointer
+      "
         >
           {loading ? (
             <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin" />
@@ -152,27 +177,30 @@ const ProductActions = ({ productId, product }: Props) => {
           onClick={handleBuyNow}
           disabled={loading || wishlistLoading}
           className="
-            flex-1
-            bg-button
-            text-button-text
-            py-2.5
-            sm:py-3
-            rounded-sm
-            text-xs
-            sm:text-sm
-            font-semibold
-            hover:bg-button-hover
-            transition-colors
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-            cursor-pointer
-          "
+    flex-1
+    bg-button
+    text-button-text
+    py-2.5
+    sm:py-3
+    rounded-sm
+    text-xs
+    sm:text-sm
+    font-semibold
+    hover:bg-button-hover
+    transition-colors
+    flex
+    items-center
+    justify-center
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+    cursor-pointer
+  "
         >
-          অর্ডার করুন
+          <span className="order-ring inline-block">অর্ডার করুন</span>
         </button>
 
         {/* Wishlist */}
-        <button
+        {/* <button
           type="button"
           onClick={handleAddWishlist}
           disabled={wishlistLoading || loading}
@@ -198,6 +226,73 @@ const ProductActions = ({ productId, product }: Props) => {
           ) : (
             <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
+        </button> */}
+      </div>
+
+      {/* Second Row */}
+      <div className="flex gap-2 sm:gap-3">
+        {/* WhatsApp Order */}
+        <button
+          type="button"
+          onClick={handleWhatsAppOrder}
+          disabled={loading || wishlistLoading}
+          className="
+        flex-1
+         bg-green-600
+      
+         hover:bg-green-700
+        text-button-text
+        py-2.5
+        sm:py-3
+        rounded-sm
+        text-xs
+        sm:text-sm
+        font-semibold
+        transition-colors
+        flex
+        items-center
+        justify-center
+        gap-1.5
+        sm:gap-2
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+        cursor-pointer
+      "
+        >
+          <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+          <span>WhatsApp-এ অর্ডার</span>
+        </button>
+
+        {/* Call Order */}
+        <button
+          type="button"
+          onClick={handleCallOrder}
+          disabled={loading || wishlistLoading}
+          className="
+        flex-1
+        bg-blue-600
+      
+        text-button-text
+        py-2.5
+        sm:py-3
+        rounded-sm
+        text-xs
+        sm:text-sm
+        hover:bg-blue-700
+        font-semibold
+        transition-colors
+        flex
+        items-center
+        justify-center
+        gap-1.5
+        sm:gap-2
+        disabled:opacity-50
+        disabled:cursor-not-allowed
+        cursor-pointer
+      "
+        >
+          <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+          <span>কল করে অর্ডার</span>
         </button>
       </div>
     </div>

@@ -368,7 +368,7 @@ const OrdersMain = () => {
   // UI
 
   return (
-    <div className="space-y-6 p-2 md:p-4">
+    <div className="space-y-6 ">
       <CustomerContactHeader
         search={search}
         status={status}

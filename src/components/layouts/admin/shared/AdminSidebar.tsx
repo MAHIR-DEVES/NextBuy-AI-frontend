@@ -16,6 +16,7 @@ import {
   UserStar,
   NotebookPen,
   ChevronDown,
+  HomeIcon,
 } from 'lucide-react';
 import { BiSolidCategory } from 'react-icons/bi';
 import Image from 'next/image';
@@ -68,6 +69,7 @@ const AdminSidebar = ({
       icon: BiSolidCategory,
     },
     { name: 'Profile', href: '/admin/profile', icon: User },
+    { name: 'Home', href: '/', icon: HomeIcon },
   ];
 
   const accountSubItems = [
@@ -109,11 +111,15 @@ const AdminSidebar = ({
   ];
 
   const isActive = (href: string) => {
-    if (href === '/admin') {
-      return pathname === href;
+    if (href === '/') {
+      return pathname === '/';
     }
 
-    return pathname?.startsWith(href);
+    if (href === '/admin') {
+      return pathname === '/admin';
+    }
+
+    return pathname?.startsWith(`${href}/`) || pathname === href;
   };
 
   const handleMenuClick = () => {
